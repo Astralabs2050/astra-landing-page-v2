@@ -1,14 +1,12 @@
 import { PrismaClient } from '@prisma/client'
+import { Session } from 'next-auth'
 import { NextRequest } from 'next/server'
 
 export type CreateTrpcContext = (_opts: { req: NextRequest }) => {
   req?: NextRequest
   prisma: PrismaClient
   nextReq: NextRequest | null
-  session: {
-    access_token: string
-    refresh_token: string
-  } | null // replace with actual type from auth provider
+  session: Session | null
 
   /**
    * you can add extra data types
