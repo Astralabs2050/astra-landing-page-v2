@@ -1,5 +1,3 @@
-'use client'
-
 import superjson from 'superjson'
 import { PropsWithChildren, useState } from 'react'
 import { api } from '@/services/trpc-client'

@@ -1,14 +1,20 @@
 'use client'
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useAuth } from '@/providers/auth-provider'
+import { GoogleLogin } from '@react-oauth/google'
 
 export default function SignIn() {
-  const { signIn, signOut, session } = useAuth()
+  const { signIn, signOut } = useAuth()
 
   return (
-    <div className="grid h-screen w-screen place-items-center">
-      <button onClick={session?.email ? signOut : signIn}>Sign In</button>
-    </div>
+    <Fragment>
+      <div className="flex h-screen w-screen flex-col items-center justify-center">
+        <GoogleLogin onSuccess={signIn} />
+        <button className="h-12 w-60 rounded-lg bg-green-500" onClick={signOut}>
+          Sign Out
+        </button>
+      </div>
+    </Fragment>
   )
 }

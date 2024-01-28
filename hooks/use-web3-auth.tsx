@@ -1,75 +1,82 @@
-import { useCallback, useEffect, useState } from 'react'
-import { web3auth, web3authConnector } from '@/constants/web3auth'
-import { ADAPTER_EVENTS, WALLET_ADAPTERS } from '@web3auth/base'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from 'react'
+import {
+  getPublicKey,
+  parseToken,
+  privateKeyProvider,
+  web3auth,
+  web3authConnector,
+} from '@/lib/web3auth'
+import { ADAPTER_EVENTS } from '@web3auth/base'
 import { useDisconnect, useConnect } from 'wagmi'
-import { OpenloginUserInfo } from '@web3auth/openlogin-adapter'
-import { getPublicCompressed } from '@toruslabs/eccrypto'
 import { setCookie } from '@/lib/cookies'
 import { Cookies } from '@/constants/enums'
+import { CredentialResponse, googleLogout } from '@react-oauth/google'
+import { $auth } from '@/store/auth'
+import { useStore } from '@nanostores/react'
 
 export const useWeb3Auth = () => {
-  const [user, setUser] = useState(null)
-  const [session, setSession] = useState<Partial<OpenloginUserInfo> | null>(
-    null,
-  )
+  const auth = useStore($auth)
 
   const { disconnect } = useDisconnect()
   const { connectAsync } = useConnect()
 
-  const signIn = async () => {
-    await web3auth.connectTo(WALLET_ADAPTERS.OPENLOGIN, {
-      loginProvider: 'google',
-    })
-  }
-
   const signOut = async () => {
-    await web3auth.logout()
-    setSession(null)
-    setUser(null)
+    disconnect()
+    googleLogout()
+
+    $auth.setKey('session', null)
+    $auth.setKey('user', null)
+
+    await web3auth.logout().catch(err => console.log(err))
   }
 
-  const setUserData = useCallback(async (auth: typeof web3auth) => {
-    try {
-      const session = await auth.getUserInfo()
+  const signIn = async (response: CredentialResponse) => {
+    $auth.setKey('loading', true)
 
-      if (!session) {
-        return signOut()
+    try {
+      const idToken = response.credential
+
+      if (idToken) {
+        const { email } = parseToken(idToken)
+
+        await web3auth.connect({
+          verifierId: email,
+          idToken: idToken,
+          verifier: 'astra-google-auth',
+        })
       }
 
-      /** set cookies */
-      const app_scoped_privkey = await web3auth.provider?.request({
-        method: 'eth_private_key',
-      })
-
-      const app_pub_key: string = getPublicCompressed(
-        Buffer.from((app_scoped_privkey as string).padStart(64, '0'), 'hex'),
-      ).toString('hex')
-
-      setCookie(Cookies.ID_TOKEN, session.idToken)
-      setCookie(Cookies.APP_PUBLIC_KEY, app_pub_key)
-
-      setSession(session)
-    } catch (error) {
-      console.log(error)
+      throw new Error('No ID Token present')
+    } catch (err) {
+      console.error(err)
+    } finally {
+      $auth.setKey('loading', false)
     }
-  }, [])
+  }
 
   useEffect(() => {
-    web3auth.init().then(() => {
-      web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
-        console.log('connecting...')
+    web3auth.init(privateKeyProvider).then(() => {
+      web3auth.on(ADAPTER_EVENTS.READY, () => {
+        $auth.setKey('initialising', false)
       })
 
       web3auth.on(ADAPTER_EVENTS.CONNECTED, async () => {
-        await connectAsync({
-          connector: web3authConnector,
-        })
+        try {
+          await connectAsync({
+            connector: web3authConnector,
+          })
 
-        setUserData(web3auth)
-      })
+          const session = await web3auth.getUserInfo()
+          const publicKey = await getPublicKey()
 
-      web3auth.on(ADAPTER_EVENTS.DISCONNECTED, () => {
-        disconnect()
+          setCookie(Cookies.ID_TOKEN, session.idToken)
+          setCookie(Cookies.APP_PUBLIC_KEY, publicKey)
+
+          $auth.setKey('session', session)
+        } catch (error) {
+          console.log(error)
+        }
       })
 
       web3auth.on(ADAPTER_EVENTS.ERRORED, error => {
@@ -80,12 +87,11 @@ export const useWeb3Auth = () => {
     return () => {
       web3auth.removeAllListeners()
     }
-  }, [connectAsync, disconnect, setUserData])
+  }, [])
 
   return {
-    signIn,
+    ...auth,
     signOut,
-    session,
-    user,
+    signIn,
   }
 }

@@ -10,7 +10,9 @@
     "postinstall": "prisma generate && husky"
   },
   "dependencies": {
+    "@nanostores/react": "^0.7.1",
     "@prisma/client": "^5.8.1",
+    "@react-oauth/google": "^0.12.1",
     "@t3-oss/env-nextjs": "^0.8.0",
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-devtools": "^4.28.0",
@@ -22,9 +24,11 @@
     "@web3auth/ethereum-provider": "^7.3.1",
     "@web3auth/no-modal": "^7.3.1",
     "@web3auth/openlogin-adapter": "^7.3.1",
+    "@web3auth/single-factor-auth": "^7.3.0",
     "@web3auth/web3auth-wagmi-connector": "^5.0.1",
     "clsx": "^2.1.0",
     "jose": "^5.2.0",
+    "nanostores": "^0.9.5",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
@@ -36,6 +40,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@builder.io/partytown": "^0.9.0",
     "@commitlint/cli": "^18.6.0",
     "@commitlint/config-conventional": "^18.6.0",
     "@types/node": "^20",

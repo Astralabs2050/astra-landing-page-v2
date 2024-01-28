@@ -70,6 +70,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@builder.io/partytown@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "@builder.io/partytown@npm:0.9.0"
+  bin:
+    partytown: bin/partytown.cjs
+  checksum: a160090a4a85a0150ced8a05eef240f783c037b6b5e2bcf44fdebdc584546a3d8b5d19b9c61ad961fe67f6f560e9de9ecfcf5f62faccc027fe34571c8f9dce0e
+  languageName: node
+  linkType: hard
+
 "@coinbase/wallet-sdk@npm:^3.6.6":
   version: 3.9.1
   resolution: "@coinbase/wallet-sdk@npm:3.9.1"
@@ -703,6 +712,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nanostores/react@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "@nanostores/react@npm:0.7.1"
+  peerDependencies:
+    nanostores: ^0.9.0
+    react: ">=18.0.0"
+  checksum: d494a5b3b81f686d7b43cdd79436433b8b4676426eab359726496bd56d07ea7b4751d802b1235a2ec728c82d4b84472e392698b1561bf54137ffde35e317d6fa
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:14.1.0":
   version: 14.1.0
   resolution: "@next/env@npm:14.1.0"
@@ -1077,6 +1096,16 @@ __metadata:
   dependencies:
     "@prisma/debug": "npm:5.8.1"
   checksum: c46c8d21892d44d459b2567aef5f9db8d4801adb04e4be08d58d4c0ef3a450eaaa58b868e09fc2b1a05fd7f603fe8b3e2bd5c06ea665d959f3828828509ad535
+  languageName: node
+  linkType: hard
+
+"@react-oauth/google@npm:^0.12.1":
+  version: 0.12.1
+  resolution: "@react-oauth/google@npm:0.12.1"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: fe23e3c0a4d0b9999fcd7b932b1a42bf94fdab526473931d780d08742455b8861fc647857b3b491e258ecef4a407dbf7321440c0d00890e23059d487795f92fb
   languageName: node
   linkType: hard
 
@@ -1531,6 +1560,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@toruslabs/fetch-node-details@npm:^13.1.1":
+  version: 13.1.1
+  resolution: "@toruslabs/fetch-node-details@npm:13.1.1"
+  dependencies:
+    "@toruslabs/constants": "npm:^13.1.0"
+    "@toruslabs/fnd-base": "npm:^13.1.1"
+    "@toruslabs/http-helpers": "npm:^5.0.0"
+    loglevel: "npm:^1.8.1"
+  peerDependencies:
+    "@babel/runtime": 7.x
+  checksum: 53a1110391b33a025fdfea30b7c4cb31698ff0993c239987e599f889e24c29e33d1ea3b15f1ead2562787ebe239c1a5fcf67ad3ae88b52d0834e1ec3020faf78
+  languageName: node
+  linkType: hard
+
+"@toruslabs/ffjavascript@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@toruslabs/ffjavascript@npm:2.0.0"
+  checksum: 2e92ef273c371a7bf4777ed4ca1bb0b203d1cddb8de3a5a72676496371efd716d6204411bc739ef87f4beb4ad90ad135b389bbdd0b369f7c5df1e72228a218bb
+  languageName: node
+  linkType: hard
+
+"@toruslabs/fnd-base@npm:^13.1.1":
+  version: 13.1.1
+  resolution: "@toruslabs/fnd-base@npm:13.1.1"
+  dependencies:
+    "@toruslabs/constants": "npm:^13.1.0"
+  peerDependencies:
+    "@babel/runtime": 7.x
+  checksum: 21bc0b5e73c8269bddf0c72f6945b41c03cfd4ff862e6c8a967374e03a97c97095167e351fb4a50f70ca2c705c77679c0a28dfe54c172da73b052a9b57243b84
+  languageName: node
+  linkType: hard
+
 "@toruslabs/http-helpers@npm:^5.0.0":
   version: 5.0.0
   resolution: "@toruslabs/http-helpers@npm:5.0.0"
@@ -1578,7 +1639,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@toruslabs/openlogin-jrpc@npm:^6.1.0, @toruslabs/openlogin-jrpc@npm:^6.2.2":
+"@toruslabs/openlogin-jrpc@npm:^6.1.0, @toruslabs/openlogin-jrpc@npm:^6.2.2, @toruslabs/openlogin-jrpc@npm:^6.2.5":
   version: 6.2.7
   resolution: "@toruslabs/openlogin-jrpc@npm:6.2.7"
   dependencies:
@@ -1606,6 +1667,20 @@ __metadata:
   peerDependencies:
     "@babel/runtime": 7.x
   checksum: 4c889be488bfb1c2c8a56366dd1d019ce3a3a57ec9884e79abded48106966beee22488de5c661dcad3c28b2750e51786d69e6e74ed5d147486aaca5dc9c56e18
+  languageName: node
+  linkType: hard
+
+"@toruslabs/openlogin-subkey@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "@toruslabs/openlogin-subkey@npm:6.0.0"
+  dependencies:
+    "@toruslabs/ffjavascript": "npm:^2.0.0"
+    "@toruslabs/metadata-helpers": "npm:^5.0.0"
+    bn.js: "npm:^5.2.1"
+  peerDependencies:
+    "@babel/runtime": 7.x
+    "@types/bn.js": ^5.1.1
+  checksum: eda58cf52f0861765bf8359adcf4ef751ed0aeb9b202764640b4f83346c563e621951838b3ca8f5ed2aec80e6d7abac23186225291ba022cfd82ebd79f29af03
   languageName: node
   linkType: hard
 
@@ -1652,6 +1727,24 @@ __metadata:
   peerDependencies:
     "@babel/runtime": 7.x
   checksum: 7e17e14f0b8b35eaf852497103014f20e85c6c320716766e4b577456e219c30e212841d612b07b7ebb508d636c091516be4d0b4537d1b2e5052508b3ae77c83d
+  languageName: node
+  linkType: hard
+
+"@toruslabs/torus.js@npm:^12.1.0":
+  version: 12.1.1
+  resolution: "@toruslabs/torus.js@npm:12.1.1"
+  dependencies:
+    "@toruslabs/constants": "npm:^13.1.0"
+    "@toruslabs/eccrypto": "npm:^4.0.0"
+    "@toruslabs/http-helpers": "npm:^5.0.0"
+    bn.js: "npm:^5.2.1"
+    elliptic: "npm:^6.5.4"
+    ethereum-cryptography: "npm:^2.1.2"
+    json-stable-stringify: "npm:^1.1.0"
+    loglevel: "npm:^1.8.1"
+  peerDependencies:
+    "@babel/runtime": 7.x
+  checksum: d752f89379c0c68530b88d3027f2c87d22227e2ddf5182bb2da4be5d2748d3a237b9665ff68877199ba72ef6dab9da813d01e21e1bfa162912e7a0bd3e0e5553
   languageName: node
   linkType: hard
 
@@ -2511,6 +2604,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@web3auth/single-factor-auth@npm:^7.3.0":
+  version: 7.3.0
+  resolution: "@web3auth/single-factor-auth@npm:7.3.0"
+  dependencies:
+    "@toruslabs/constants": "npm:^13.1.0"
+    "@toruslabs/fetch-node-details": "npm:^13.1.1"
+    "@toruslabs/openlogin-jrpc": "npm:^6.2.5"
+    "@toruslabs/openlogin-session-manager": "npm:^3.0.0"
+    "@toruslabs/openlogin-subkey": "npm:^6.0.0"
+    "@toruslabs/openlogin-utils": "npm:^6.2.5"
+    "@toruslabs/torus.js": "npm:^12.1.0"
+    "@web3auth/base": "npm:^7.3.1"
+    jwt-decode: "npm:^4.0.0"
+  peerDependencies:
+    "@babel/runtime": ^7.x
+  checksum: 2b2e6e211a9adc454c41ccef2eeaf9524157a7e37c4d3a69a33a0309e0bd05a4cea298f2214b9e796dc5b731af48f549e8e1850efbc6f90ddef75c2cf444c45b
+  languageName: node
+  linkType: hard
+
 "@web3auth/web3auth-wagmi-connector@npm:^5.0.1":
   version: 5.0.1
   resolution: "@web3auth/web3auth-wagmi-connector@npm:5.0.1"
@@ -2886,9 +2998,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "astra-mvp@workspace:."
   dependencies:
+    "@builder.io/partytown": "npm:^0.9.0"
     "@commitlint/cli": "npm:^18.6.0"
     "@commitlint/config-conventional": "npm:^18.6.0"
+    "@nanostores/react": "npm:^0.7.1"
     "@prisma/client": "npm:^5.8.1"
+    "@react-oauth/google": "npm:^0.12.1"
     "@t3-oss/env-nextjs": "npm:^0.8.0"
     "@tanstack/react-query": "npm:^4.28.0"
     "@tanstack/react-query-devtools": "npm:^4.28.0"
@@ -2904,6 +3019,7 @@ __metadata:
     "@web3auth/ethereum-provider": "npm:^7.3.1"
     "@web3auth/no-modal": "npm:^7.3.1"
     "@web3auth/openlogin-adapter": "npm:^7.3.1"
+    "@web3auth/single-factor-auth": "npm:^7.3.0"
     "@web3auth/web3auth-wagmi-connector": "npm:^5.0.1"
     autoprefixer: "npm:^10.0.1"
     clsx: "npm:^2.1.0"
@@ -2914,6 +3030,7 @@ __metadata:
     husky: "npm:^9.0.6"
     jose: "npm:^5.2.0"
     lint-staged: "npm:^15.2.0"
+    nanostores: "npm:^0.9.5"
     next: "npm:14.1.0"
     postcss: "npm:^8"
     prettier: "npm:^3.2.4"
@@ -5700,7 +5817,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-stable-stringify@npm:^1.0.2":
+"json-stable-stringify@npm:^1.0.2, json-stable-stringify@npm:^1.1.0":
   version: 1.1.1
   resolution: "json-stable-stringify@npm:1.1.1"
   dependencies:
@@ -6442,6 +6559,13 @@ __metadata:
   bin:
     nanoid: bin/nanoid.cjs
   checksum: e3fb661aa083454f40500473bb69eedb85dc160e763150b9a2c567c7e9ff560ce028a9f833123b618a6ea742e311138b591910e795614a629029e86e180660f3
+  languageName: node
+  linkType: hard
+
+"nanostores@npm:^0.9.5":
+  version: 0.9.5
+  resolution: "nanostores@npm:0.9.5"
+  checksum: 5d6a33647428bd3adcd4ddb2745a01420eae3cc1c3c49e48c307b078152603a26ac78f25d30d17f3c4e51b43ee18e2fcd5b80a8c704336366cbcc86a5d5210b5
   languageName: node
   linkType: hard
 

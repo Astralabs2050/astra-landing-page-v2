@@ -1,6 +1,4 @@
-'use client'
-
-import { wagmiConfig } from '@/constants/web3auth'
+import { wagmiConfig } from '@/lib/web3auth'
 import { PropsWithChildren } from 'react'
 import { WagmiConfig } from 'wagmi'
 

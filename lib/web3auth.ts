@@ -1,15 +1,14 @@
 import { env } from '@/env.mjs'
 
-import { CHAIN_NAMESPACES } from '@web3auth/base'
-import { Web3AuthNoModal } from '@web3auth/no-modal'
-import { OpenloginAdapter } from '@web3auth/openlogin-adapter'
-import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider'
-import { Web3AuthConnector } from '@web3auth/web3auth-wagmi-connector'
-
 import { numberToHex } from 'viem'
 import { createConfig, configureChains } from 'wagmi'
 import { baseGoerli, base } from 'wagmi/chains'
+import { CHAIN_NAMESPACES } from '@web3auth/base'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
+import { Web3AuthConnector } from '@web3auth/web3auth-wagmi-connector'
+import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider'
+import { Web3Auth } from '@web3auth/single-factor-auth'
+import { getPublicCompressed } from '@toruslabs/eccrypto'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [baseGoerli, base],
@@ -32,38 +31,16 @@ const chainConfig = {
   tickerName: baseGoerli.name,
 }
 
-export const web3auth = new Web3AuthNoModal({
-  chainConfig,
-  web3AuthNetwork: 'sapphire_devnet',
-  clientId: env.NEXT_PUBLIC_WEB3_CLIENT_ID,
-})
-
-const privateKeyProvider = new EthereumPrivateKeyProvider({
+export const privateKeyProvider = new EthereumPrivateKeyProvider({
   config: {
     chainConfig,
   },
 })
 
-const openloginAdapter = new OpenloginAdapter({
-  adapterSettings: {
-    uxMode: 'popup',
-    whiteLabel: {
-      useLogoLoader: false,
-      appName: 'Astra',
-      appUrl: 'http://localhost:3000',
-      logoLight: 'https://web3auth.io/images/web3auth-logo.svg',
-      logoDark: 'https://web3auth.io/images/web3auth-logo---Dark.svg',
-      defaultLanguage: 'en',
-      mode: 'light',
-      theme: {
-        primary: '#000000',
-      },
-    },
-  },
-  privateKeyProvider,
+export const web3auth = new Web3Auth({
+  web3AuthNetwork: 'sapphire_devnet',
+  clientId: env.NEXT_PUBLIC_WEB3_CLIENT_ID,
 })
-
-web3auth.configureAdapter(openloginAdapter)
 
 export const web3authConnector = new Web3AuthConnector({
   chains,
@@ -81,3 +58,19 @@ export const wagmiConfig = createConfig({
   autoConnect: false,
   connectors: [web3authConnector],
 })
+
+export const parseToken = (token: string) => {
+  const base64Url = token.split('.')[1]
+  const base64 = base64Url.replace('-', '+').replace('_', '/')
+  return JSON.parse(window.atob(base64 || ''))
+}
+
+export const getPublicKey = async () => {
+  const app_scoped_privkey = await web3auth.provider?.request({
+    method: 'eth_private_key',
+  })
+
+  return getPublicCompressed(
+    Buffer.from((app_scoped_privkey as string).padStart(64, '0'), 'hex'),
+  ).toString('hex')
+}
