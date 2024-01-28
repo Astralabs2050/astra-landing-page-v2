@@ -9,8 +9,9 @@ datasource db {
 }
 
 model User {
-  key   Int    @id @default(autoincrement())
-  id    String @unique
-  name  String
-  email String
+  key       Int    @id @default(autoincrement())
+  id        String @unique
+  email     String
+  fullname  String
+  avatarUrl String
 }

@@ -1,33 +1,28 @@
+import * as jose from 'jose'
 import { Cookies } from '@/constants/enums'
 import { cookies } from 'next/headers'
+import { web3authJWKSEndpoint } from '@/constants/urls'
 
-/**
- * reads the cookies from request headers
- * and then you can validate the user's session
- * however you wish depending on the auth service you make
- * use of.
- */
 export async function getServerSession() {
   const cookiestore = cookies()
 
-  const refresh_token = cookiestore.get(Cookies.REFRESH_TOKEN_KEY)
-  const access_token = cookiestore.get(Cookies.ACCESS_TOKEN_KEY)
+  const id_token = cookiestore.get(Cookies.ID_TOKEN)
+  const app_public_key = cookiestore.get(Cookies.APP_PUBLIC_KEY)
 
-  if (!access_token || !refresh_token) {
+  if (!id_token || !app_public_key) {
     return null
   }
 
-  /**
-   * get and validate user's session
-   * from auth service here
-   * eg: supabase.auth.getSession({
-   *        refresh_token: refreshToken.value,
-   *        access_token: accessToken.value,
-   *     })
-   */
+  const jwks = jose.createRemoteJWKSet(new URL(web3authJWKSEndpoint))
 
-  return {
-    access_token: access_token.value,
-    refresh_token: refresh_token.value,
-  }
+  const decoded = await jose.jwtVerify(id_token.value, jwks, {
+    algorithms: ['ES256'],
+  })
+
+  const isValidToken =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (decoded.payload as any).wallets[0].public_key.toLowerCase() ===
+    app_public_key.value.toLowerCase()
+
+  return isValidToken ? decoded.payload : null
 }

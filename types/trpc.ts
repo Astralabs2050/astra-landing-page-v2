@@ -1,12 +1,14 @@
 import { PrismaClient } from '@prisma/client'
-import { Session } from 'next-auth'
 import { NextRequest } from 'next/server'
+import * as jose from 'jose'
+
+export type JwtSessionData = jose.JWTVerifyResult<jose.JWTPayload>['payload']
 
 export type CreateTrpcContext = (_opts: { req: NextRequest }) => {
   req?: NextRequest
   prisma: PrismaClient
   nextReq: NextRequest | null
-  session: Session | null
+  session: JwtSessionData | null
 
   /**
    * you can add extra data types
