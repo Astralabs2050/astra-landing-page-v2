@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
-import { web3auth } from '@/constants/web3auth'
-import {
-  ADAPTER_EVENTS,
-  CONNECTED_EVENT_DATA,
-  WALLET_ADAPTERS,
-} from '@web3auth/base'
+import { web3auth, web3authConnector } from '@/constants/web3auth'
+import { ADAPTER_EVENTS, WALLET_ADAPTERS } from '@web3auth/base'
+import { useDisconnect, useConnect } from 'wagmi'
 
 export const useWeb3Auth = () => {
+  const { disconnect } = useDisconnect()
+  const { connect } = useConnect()
+
   const signIn = async () => {
     await web3auth.connectTo(WALLET_ADAPTERS.OPENLOGIN, {
       loginProvider: 'google',
@@ -15,20 +15,18 @@ export const useWeb3Auth = () => {
 
   useEffect(() => {
     web3auth.init().then(() => {
-      web3auth.on(ADAPTER_EVENTS.CONNECTED, (data: CONNECTED_EVENT_DATA) => {
-        console.log('connected to wallet', data)
+      web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
+        console.log('connecting...')
       })
 
-      web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
-        console.log('connecting')
+      web3auth.on(ADAPTER_EVENTS.CONNECTED, () => {
+        connect({
+          connector: web3authConnector,
+        })
       })
 
       web3auth.on(ADAPTER_EVENTS.DISCONNECTED, () => {
-        console.log('disconnected')
-      })
-
-      web3auth.on(ADAPTER_EVENTS.ERRORED, error => {
-        console.log('error', error)
+        disconnect()
       })
 
       web3auth.on(ADAPTER_EVENTS.ERRORED, error => {
@@ -39,7 +37,7 @@ export const useWeb3Auth = () => {
     return () => {
       web3auth.removeAllListeners()
     }
-  }, [])
+  }, [connect, disconnect])
 
   return {
     signIn,
