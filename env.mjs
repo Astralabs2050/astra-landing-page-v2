@@ -1,10 +1,6 @@
 import { z } from 'zod'
 import { createEnv } from '@t3-oss/env-nextjs'
 
-/**
- * provides type safe env variables
- * @see https://env.t3.gg/docs/introduction
- */
 export const env = createEnv({
   server: {
     NODE_ENV: z.enum(['development', 'test', 'production']),
@@ -12,6 +8,11 @@ export const env = createEnv({
     DIRECT_URL: z.string().url(),
     DATABASE_URL: z.string().url(),
     GOOGLE_CLIENT_SECRET: z.string(),
+    AUTH0_SECRET: z.string(),
+    AUTH0_BASE_URL: z.string().url(),
+    AUTH0_ISSUER_BASE_URL: z.string().url(),
+    AUTH0_CLIENT_ID: z.string(),
+    AUTH0_CLIENT_SECRET: z.string(),
   },
 
   client: {

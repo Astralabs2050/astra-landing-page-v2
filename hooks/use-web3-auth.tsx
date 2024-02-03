@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import {
-  getPublicKey,
   parseToken,
   privateKeyProvider,
   web3auth,
@@ -9,79 +8,77 @@ import {
 } from '@/lib/web3auth'
 import { ADAPTER_EVENTS } from '@web3auth/base'
 import { useDisconnect, useConnect } from 'wagmi'
-import { setCookie } from '@/lib/cookies'
-import { Cookies } from '@/constants/enums'
-import { CredentialResponse, googleLogout } from '@react-oauth/google'
 import { $auth } from '@/store/auth'
 import { useStore } from '@nanostores/react'
+import { useUser } from '@auth0/nextjs-auth0/client'
+import { useRouter } from 'next/navigation'
 
 export const useWeb3Auth = () => {
   const auth = useStore($auth)
+  const router = useRouter()
 
+  const { user } = useUser()
   const { disconnect } = useDisconnect()
   const { connectAsync } = useConnect()
 
-  const signOut = async () => {
-    disconnect()
-    googleLogout()
-
-    $auth.setKey('session', null)
-    $auth.setKey('user', null)
-
-    await web3auth.logout().catch(err => console.log(err))
-  }
-
-  const signIn = async (response: CredentialResponse) => {
-    $auth.setKey('loading', true)
-
+  const connectWeb3Auth = useCallback(async () => {
     try {
-      const idToken = response.credential
+      const res = await fetch('/api/auth/id-token')
+      const token = await res.text()
 
-      if (idToken) {
-        const { email } = parseToken(idToken)
+      const { sub } = parseToken(token)
 
-        await web3auth.connect({
-          verifierId: email,
-          idToken: idToken,
-          verifier: 'astra-google-auth',
-        })
-      }
-
-      throw new Error('No ID Token present')
-    } catch (err) {
-      console.error(err)
-    } finally {
-      $auth.setKey('loading', false)
+      await web3auth.connect({
+        verifier: 'astra-auth0-agg',
+        verifierId: sub,
+        idToken: token,
+        subVerifierInfoArray: [
+          {
+            idToken: token,
+            verifier: (sub as string).includes('google')
+              ? 'astra-auth0-google-agg'
+              : 'astra-auth0-ep-agg',
+          },
+        ],
+      })
+    } catch (error) {
+      console.log(error, '>>>>>')
+      router.push('/api/auth/logout')
     }
-  }
+  }, [])
 
   useEffect(() => {
+    if (web3auth.status === 'ready') {
+      return
+    }
+
     web3auth.init(privateKeyProvider).then(() => {
-      web3auth.on(ADAPTER_EVENTS.READY, () => {
-        $auth.setKey('initialising', false)
+      /** subscribe to web3auth events */
+      web3auth.on(ADAPTER_EVENTS.CONNECTED, async () => {
+        await connectAsync({
+          connector: web3authConnector,
+        }).catch(err => console.log(err))
+
+        console.log('web3Auth connected')
       })
 
-      web3auth.on(ADAPTER_EVENTS.CONNECTED, async () => {
-        try {
-          await connectAsync({
-            connector: web3authConnector,
-          })
-
-          const session = await web3auth.getUserInfo()
-          const publicKey = await getPublicKey()
-
-          setCookie(Cookies.ID_TOKEN, session.idToken)
-          setCookie(Cookies.APP_PUBLIC_KEY, publicKey)
-
-          $auth.setKey('session', session)
-        } catch (error) {
-          console.log(error)
-        }
+      web3auth.on(ADAPTER_EVENTS.DISCONNECTED, async () => {
+        disconnect()
+        console.log('web3Auth disconnected')
       })
 
       web3auth.on(ADAPTER_EVENTS.ERRORED, error => {
         console.log('error', error)
       })
+
+      if (web3auth.status === 'connected' && !user) {
+        web3auth.logout()
+      }
+
+      /** connect web3auth */
+      if (web3auth.status === 'ready') {
+        connectWeb3Auth()
+      }
     })
 
     return () => {
@@ -91,7 +88,6 @@ export const useWeb3Auth = () => {
 
   return {
     ...auth,
-    signOut,
-    signIn,
+    web3auth,
   }
 }

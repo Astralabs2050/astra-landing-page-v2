@@ -40,15 +40,13 @@ export const privateKeyProvider = new EthereumPrivateKeyProvider({
 export const web3auth = new Web3Auth({
   web3AuthNetwork: 'sapphire_devnet',
   clientId: env.NEXT_PUBLIC_WEB3_CLIENT_ID,
+  usePnPKey: false,
 })
 
 export const web3authConnector = new Web3AuthConnector({
   chains,
   options: {
     web3AuthInstance: web3auth,
-    loginParams: {
-      loginProvider: 'google',
-    },
   },
 })
 
