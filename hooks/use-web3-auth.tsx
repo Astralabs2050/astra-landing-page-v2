@@ -11,11 +11,13 @@ import { useDisconnect, useConnect } from 'wagmi'
 import { $auth } from '@/store/auth'
 import { useStore } from '@nanostores/react'
 import { useUser } from '@auth0/nextjs-auth0/client'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { routes } from '@/constants/app-routes'
 
 export const useWeb3Auth = () => {
   const auth = useStore($auth)
   const router = useRouter()
+  const pathname = usePathname()
 
   const { user } = useUser()
   const { disconnect } = useDisconnect()
@@ -43,12 +45,15 @@ export const useWeb3Auth = () => {
       })
     } catch (error) {
       console.log(error, '>>>>>')
-      router.push('/api/auth/logout')
+      router.push(routes.logout)
     }
   }, [])
 
   useEffect(() => {
-    if (web3auth.status === 'ready') {
+    const ready = web3auth.status === 'ready'
+    const isVerifyPage = pathname.includes('/verify-email')
+
+    if (ready || isVerifyPage) {
       return
     }
 
