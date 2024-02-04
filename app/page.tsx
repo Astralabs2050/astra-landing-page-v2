@@ -1,17 +1,12 @@
-import { routes } from '@/constants/app-routes'
-import Link from 'next/link'
+import { Logo } from '@/components/common'
 
 export default function Home() {
   return (
-    <main>
-      <header className="flex items-center justify-between px-6 py-3">
-        <h1 className="text-2xl uppercase">Astra</h1>
-        <Link href={routes.logout}>
-          <button className="h-10 rounded-md bg-black px-8 font-medium text-white">
-            Sign Out
-          </button>
-        </Link>
+    <main className="flex h-screen w-screen flex-col bg-gray-6">
+      <header className="flex h-[var(--header-height)] items-center justify-between px-12">
+        <Logo />
       </header>
+      <div className="mx-[8.3rem] mb-[2.8rem] grow bg-white"></div>
     </main>
   )
 }

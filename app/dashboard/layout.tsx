@@ -1,10 +1,10 @@
 import React, { PropsWithChildren } from 'react'
-import { Header, Sidebar } from '@/components/layout'
+import { Header, Sidebar } from '@/components/common'
 
 export default function BrandLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex w-[100vw] flex-col">
-      <main className="flex h-screen w-full flex-grow flex-col">
+      <main className="flex h-screen w-full grow flex-col">
         <Header />
         <div className="grid grow grid-cols-[var(--sidebar-width),1fr] border-t border-solid border-gray-6">
           <Sidebar />

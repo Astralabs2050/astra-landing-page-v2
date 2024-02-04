@@ -1,11 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
-import { Logo } from '@/components/shared'
+import { Logo } from '@/components/common'
 import { routes } from '@/constants/app-routes'
 
 export function Header() {
   return (
-    <div className="flex h-[var(--header-height)] items-center justify-between px-6">
+    <div className="flex h-[var(--header-height)] items-center justify-between px-12">
       <Logo />
       <Link href={routes.logout}>
         <button className="h-10 rounded-md bg-black px-8 font-medium text-white">

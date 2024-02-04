@@ -8,10 +8,15 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User {
-  key       Int    @id @default(autoincrement())
-  id        String @unique
-  email     String
-  fullname  String
-  avatarUrl String
+model Brand {
+  key      Int    @id @default(autoincrement())
+  id       String @unique
+  email    String
+  name     String
+  location String
+}
+
+model Look {
+  key Int    @id @default(autoincrement())
+  id  String @unique
 }

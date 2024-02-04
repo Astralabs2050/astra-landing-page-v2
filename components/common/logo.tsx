@@ -9,11 +9,11 @@ interface LogoProps {
 export function Logo({ className }: LogoProps) {
   return (
     <Image
-      width={311}
-      height={74}
+      width={155}
+      height={37}
       priority
       alt="Astra logo"
-      className={clsxm('w-40', className)}
+      className={clsxm('w-[9.69rem]', className)}
       src="https://res.cloudinary.com/kadet/image/upload/v1706456259/ASTRA_NEW_LOGO_5_1_aqppqf.png"
     />
   )

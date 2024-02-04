@@ -1,2 +1,4 @@
+export * from './logo'
+export * from './logomark'
 export * from './header'
 export * from './sidebar'
