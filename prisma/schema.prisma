@@ -8,12 +8,49 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum RoleId {
+  BRAND
+  DESIGNER
+  MANUFACTURER
+}
+
+model Role {
+  id          RoleId
+  key         Int    @id @default(autoincrement())
+  title       String
+  description String
+  icon        String
+}
+
+model User {
+  key            Int              @id @default(autoincrement())
+  id             String           @unique
+  email          String
+  fullname       String
+  avatar         String
+  role           RoleId
+  Brand          Brand[]
+  CreatorProfile CreatorProfile[]
+}
+
 model Brand {
   key      Int    @id @default(autoincrement())
   id       String @unique
   email    String
   name     String
   location String
+  ownerId  String
+  owner    User   @relation(fields: [ownerId], references: [id])
+}
+
+model CreatorProfile {
+  key      Int    @id @default(autoincrement())
+  id       String @unique
+  email    String
+  name     String
+  location String
+  ownerId  String
+  owner    User   @relation(fields: [ownerId], references: [id])
 }
 
 model Look {

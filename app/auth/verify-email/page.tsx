@@ -1,4 +1,4 @@
-import { LogoMark } from '@/components/shared'
+import { LogoMark } from '@/components/common'
 import { routes } from '@/constants/app-routes'
 import Link from 'next/link'
 import React from 'react'

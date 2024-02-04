@@ -21,7 +21,7 @@ export const createInnerTRPCContext: CreateTrpcInnerContext = async () => {
  * initialises trpc
  * @see https://trpc.io/docs/router
  * */
-const t = initTRPC.context<CreateTrpcContext>().create({
+export const t = initTRPC.context<CreateTrpcContext>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
     return {

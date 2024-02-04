@@ -1,12 +1,55 @@
 import { Logo } from '@/components/common'
+import { Roles, Stepper } from '@/components/onboarding'
+import ProfileForm from '@/components/onboarding/profile-form'
+import { Button } from '@/components/ui/button'
+import { trpcCaller } from '@/server/utils'
+import { getSession } from '@auth0/nextjs-auth0'
+import { ArrowLeft } from 'lucide-react'
+import { redirect } from 'next/navigation'
 
-export default function Home() {
+export default async function Home() {
+  const session = await getSession()
+
+  const trpc = await trpcCaller(session)
+  const roles = await trpc.user.getRoles()
+  const user = await trpc.user.get()
+
+  async function onboardingProgress() {
+    if (user && user.role === 'BRAND') {
+      const brands = await trpc.brand.getUserBrands()
+      return brands.length ? 'completed' : 2
+    }
+
+    return 1
+  }
+
+  const progress = await onboardingProgress()
+
+  if (progress === 'completed') {
+    return redirect('/dashboard/brand')
+  }
+
   return (
     <main className="flex h-screen w-screen flex-col bg-gray-6">
       <header className="flex h-[var(--header-height)] items-center justify-between px-12">
         <Logo />
       </header>
-      <div className="mx-[8.3rem] mb-[2.8rem] grow bg-white"></div>
+      <div className="mx-[8.3rem] mb-[2.8rem] grow bg-white px-6 py-16">
+        <div className="mb-6 grid grid-cols-3 place-items-start">
+          <Button variant="ghost">
+            <ArrowLeft className="h-4" /> Go Back
+          </Button>
+          <div className="grid w-full place-items-center">
+            <Stepper count={2} current={progress} />
+          </div>
+          <span />
+        </div>
+        {
+          [<Roles key={1} roles={roles} />, <ProfileForm key={2} />][
+            progress - 1
+          ]
+        }
+      </div>
     </main>
   )
 }

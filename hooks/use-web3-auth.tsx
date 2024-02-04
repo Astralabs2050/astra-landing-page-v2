@@ -13,20 +13,22 @@ import { useStore } from '@nanostores/react'
 import { useUser } from '@auth0/nextjs-auth0/client'
 import { usePathname, useRouter } from 'next/navigation'
 import { routes } from '@/constants/app-routes'
+import { api } from '@/services/trpc-client'
 
 export const useWeb3Auth = () => {
   const auth = useStore($auth)
   const router = useRouter()
   const pathname = usePathname()
 
-  const { user } = useUser()
+  const { user, isLoading } = useUser()
   const { disconnect } = useDisconnect()
   const { connectAsync } = useConnect()
+  const { mutateAsync } = api.user.getToken.useMutation()
 
   const connectWeb3Auth = useCallback(async () => {
     try {
-      const res = await fetch('/api/auth/id-token')
-      const token = await res.text()
+      const response = await mutateAsync()
+      const token = response as string
 
       const { sub } = parseToken(token)
 
@@ -44,10 +46,19 @@ export const useWeb3Auth = () => {
         ],
       })
     } catch (error) {
-      console.log(error, '>>>>>')
       router.push(routes.logout)
     }
   }, [])
+
+  useEffect(() => {
+    if (!isLoading) {
+      const connected = web3auth.status === 'connected'
+
+      if (connected && !user) {
+        web3auth.logout()
+      }
+    }
+  }, [user, isLoading])
 
   useEffect(() => {
     const ready = web3auth.status === 'ready'
@@ -75,10 +86,6 @@ export const useWeb3Auth = () => {
       web3auth.on(ADAPTER_EVENTS.ERRORED, error => {
         console.log('error', error)
       })
-
-      if (web3auth.status === 'connected' && !user) {
-        web3auth.logout()
-      }
 
       /** connect web3auth */
       if (web3auth.status === 'ready') {
