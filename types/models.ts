@@ -10,4 +10,12 @@ type RouterOutput = inferRouterOutputs<AppRouter>
  * export the complete type data with relations,
  * we have to get them from trpc
  */
-export type User = RouterOutput['users']['getUser'] | null
+export type User = RouterOutput['user']['get'] | null
+export type City = {
+  name: string
+  lat: string
+  lng: string
+  country: string
+  admin1: string
+  admin2: string
+}

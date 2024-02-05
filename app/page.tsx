@@ -40,14 +40,22 @@ export default async function Home() {
             <ArrowLeft className="h-4" /> Go Back
           </Button>
           <div className="grid w-full place-items-center">
-            <Stepper count={2} current={progress} />
+            <Stepper
+              current={progress}
+              count={
+                user?.role !== 'DESIGNER' && user?.role !== 'MANUFACTURER'
+                  ? 2
+                  : 4
+              }
+            />
           </div>
           <span />
         </div>
         {
-          [<Roles key={1} roles={roles} />, <ProfileForm key={2} />][
-            progress - 1
-          ]
+          [
+            <Roles key={1} roles={roles} />,
+            <ProfileForm key={2} user={user} />,
+          ][progress - 1]
         }
       </div>
     </main>
