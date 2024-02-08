@@ -50,7 +50,10 @@ export const authenticatedProcedure = t.procedure.use(async function isAuthed({
     return next({
       ctx: {
         ...ctx,
-        session: ctx.session,
+        session: {
+          ...ctx.session,
+          userId: ctx.session.user.sub as string,
+        },
       },
     })
   }

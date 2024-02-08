@@ -5,10 +5,7 @@ function filterCities(query, cities) {
     const matches = city.name.toLowerCase().startsWith(query.toLowerCase())
 
     if (matches) {
-      results.push({
-        label: city.name,
-        value: `${city.country}.${city.admin1}`,
-      })
+      results.push(city)
     }
   }
 

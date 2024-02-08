@@ -23,34 +23,48 @@ model Role {
 }
 
 model User {
-  key            Int              @id @default(autoincrement())
-  id             String           @unique
+  key            Int             @id @default(autoincrement())
+  onboarded      Boolean         @default(false)
+  id             String          @unique
   email          String
   fullname       String
   avatar         String
   role           RoleId
-  Brand          Brand[]
-  CreatorProfile CreatorProfile[]
+  brand          Brand?
+  creatorProfile CreatorProfile?
 }
 
 model Brand {
-  key      Int    @id @default(autoincrement())
-  id       String @unique
-  email    String
-  name     String
-  location String
-  ownerId  String
-  owner    User   @relation(fields: [ownerId], references: [id])
+  key        Int      @id @default(autoincrement())
+  email      String
+  name       String
+  bio        String
+  ownerId    String   @unique
+  owner      User     @relation(fields: [ownerId], references: [id])
+  location   Location @relation(fields: [locationId], references: [id])
+  locationId String
 }
 
 model CreatorProfile {
   key      Int    @id @default(autoincrement())
-  id       String @unique
   email    String
   name     String
+  bio      String
   location String
-  ownerId  String
+  ownerId  String @unique
   owner    User   @relation(fields: [ownerId], references: [id])
+}
+
+model Location {
+  key         Int     @id @default(autoincrement())
+  id          String  @unique
+  name        String
+  lat         String
+  lng         String
+  countryCode String
+  admin1      String?
+  zip         String?
+  Brand       Brand[]
 }
 
 model Look {

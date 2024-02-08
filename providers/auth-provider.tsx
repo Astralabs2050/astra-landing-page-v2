@@ -1,4 +1,4 @@
-import { useWeb3Auth } from '@/hooks/use-web3-auth'
+import { useWeb3Auth } from '@/hooks'
 import React, { createContext, PropsWithChildren, useContext } from 'react'
 
 type AuthContextType = ReturnType<typeof useWeb3Auth>

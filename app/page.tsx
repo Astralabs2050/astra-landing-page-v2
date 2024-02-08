@@ -3,21 +3,18 @@ import { Roles, Stepper } from '@/components/onboarding'
 import ProfileForm from '@/components/onboarding/profile-form'
 import { Button } from '@/components/ui/button'
 import { trpcCaller } from '@/server/utils'
-import { getSession } from '@auth0/nextjs-auth0'
 import { ArrowLeft } from 'lucide-react'
 import { redirect } from 'next/navigation'
 
 export default async function Home() {
-  const session = await getSession()
-
-  const trpc = await trpcCaller(session)
+  const trpc = await trpcCaller()
   const roles = await trpc.user.getRoles()
   const user = await trpc.user.get()
 
   async function onboardingProgress() {
     if (user && user.role === 'BRAND') {
-      const brands = await trpc.brand.getUserBrands()
-      return brands.length ? 'completed' : 2
+      const brand = await trpc.brand.getUserBrand()
+      return brand ? 'completed' : 2
     }
 
     return 1
@@ -26,7 +23,7 @@ export default async function Home() {
   const progress = await onboardingProgress()
 
   if (progress === 'completed') {
-    return redirect('/dashboard/brand')
+    return redirect('/dashboard')
   }
 
   return (

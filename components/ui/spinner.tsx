@@ -18,7 +18,7 @@ export const Spinner: React.FC<SpinnerProps> = ({
   return (
     <div
       className={cn(
-        'flex h-full items-center justify-center gap-3 text-xs',
+        'flex h-full items-center justify-center gap-3 text-base',
         { 'fixed inset-0': fullScreen },
         className,
       )}>
@@ -38,7 +38,7 @@ export const Spinner: React.FC<SpinnerProps> = ({
           fill="currentcolor"
         />
       </svg>
-      {text && <p className="text-gray-3">{text}</p>}
+      {text && <p className=" text-gray-3">{text}</p>}
     </div>
   )
 }

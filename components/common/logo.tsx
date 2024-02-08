@@ -11,6 +11,8 @@ export function Logo({ className }: LogoProps) {
     <Image
       width={155}
       height={37}
+      quality={100}
+      unoptimized={true}
       priority
       alt="Astra logo"
       className={cn('w-[9.69rem]', className)}
