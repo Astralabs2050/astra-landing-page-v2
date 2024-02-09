@@ -17,7 +17,7 @@ export function Sidebar({ user }: SidebarProps) {
 
   return (
     <aside className="w-full px-4 py-14">
-      <nav>
+      <nav className="sticky top-[calc(var(--header-height)+3.5rem)]">
         <ul className="grid gap-[0.9rem]">
           {nav.map(({ path, title, Icon }, index) => (
             <li key={index}>

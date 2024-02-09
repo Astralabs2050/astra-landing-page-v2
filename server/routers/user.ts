@@ -27,7 +27,7 @@ export const userRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const id = ctx.session.user.sub as string
 
-      await ctx.prisma.user.create({
+      return await ctx.prisma.user.create({
         data: {
           id,
           role: input.role,
@@ -48,7 +48,7 @@ export const userRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await ctx.prisma.user.update({
+      return await ctx.prisma.user.update({
         where: { id: ctx.session.user.sub },
         data: input,
       })

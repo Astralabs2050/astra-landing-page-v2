@@ -1,18 +1,11 @@
 import React from 'react'
 import { Header, Sidebar } from '@/components/common'
-import { trpcCaller } from '@/server/utils'
 import { redirect } from 'next/navigation'
+import { getUser } from '@/server/actions/user'
 
 interface DashboardLayoutProps {
   brand: React.ReactNode
   creator: React.ReactNode
-}
-
-async function getUser() {
-  const trpc = await trpcCaller()
-  const user = await trpc.user.get()
-
-  return user
 }
 
 export default async function DashboardLayout({
@@ -27,9 +20,9 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex w-[100vw] flex-col">
-      <main className="flex h-screen w-full grow flex-col">
+      <main className="flex min-h-screen w-full grow flex-col">
         <Header user={user} />
-        <div className="grid grow grid-cols-[var(--sidebar-width),1fr] border-t border-solid border-gray-6">
+        <div className="grid grow grid-cols-[var(--sidebar-width),1fr]">
           <Sidebar user={user} />
           <div className="border-l border-solid border-gray-6  p-10">
             {user?.role === 'BRAND' ? brand : creator}

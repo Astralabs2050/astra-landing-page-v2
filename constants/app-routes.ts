@@ -4,4 +4,8 @@ export const routes = {
   login: '/api/auth/login',
   logout: '/api/auth/logout',
   verifyEmail: '/auth/verify-email',
+  dashboard: {
+    base: '/dashboard',
+    space: '/dashboard/space',
+  },
 }

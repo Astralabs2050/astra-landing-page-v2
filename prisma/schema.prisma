@@ -22,6 +22,25 @@ model Role {
   icon        String
 }
 
+enum PieceMaterial {
+  JEANS
+  SILK
+  COTTON
+  LINEN
+  WOOL
+}
+
+enum PieceType {
+  SHIRT
+  SKIRT
+  PANTS
+  JACKET
+  BLOUSE
+  DRESS
+  CAP
+  HEADWARMER
+}
+
 model User {
   key            Int             @id @default(autoincrement())
   onboarded      Boolean         @default(false)
@@ -35,39 +54,59 @@ model User {
 }
 
 model Brand {
-  key        Int      @id @default(autoincrement())
-  email      String
-  name       String
-  bio        String
-  ownerId    String   @unique
-  owner      User     @relation(fields: [ownerId], references: [id])
-  location   Location @relation(fields: [locationId], references: [id])
-  locationId String
-}
-
-model CreatorProfile {
-  key      Int    @id @default(autoincrement())
-  email    String
-  name     String
-  bio      String
-  location String
-  ownerId  String @unique
-  owner    User   @relation(fields: [ownerId], references: [id])
-}
-
-model Location {
-  key         Int     @id @default(autoincrement())
-  id          String  @unique
+  key         Int      @id @default(autoincrement())
+  email       String
   name        String
+  bio         String
+  ownerId     String   @unique
+  owner       User     @relation(fields: [ownerId], references: [id])
+  city        String
   lat         String
   lng         String
   countryCode String
-  admin1      String?
+  province1   String?
+  province2   String?
   zip         String?
-  Brand       Brand[]
+  Design      Design[]
 }
 
-model Look {
-  key Int    @id @default(autoincrement())
-  id  String @unique
+model CreatorProfile {
+  key         Int     @id @default(autoincrement())
+  email       String
+  name        String
+  bio         String
+  location    String
+  ownerId     String  @unique
+  owner       User    @relation(fields: [ownerId], references: [id])
+  city        String
+  lat         String
+  lng         String
+  countryCode String
+  province1   String?
+  province2   String?
+  zip         String?
+}
+
+model Design {
+  key           Int           @id @default(autoincrement())
+  id            String        @unique
+  prompt        String
+  name          String
+  promptResults String[]
+  brandId       String
+  brand         Brand         @relation(fields: [brandId], references: [ownerId])
+  pieces        DesignPiece[]
+}
+
+model DesignPiece {
+  key               Int           @id @default(autoincrement())
+  id                String        @unique
+  pieceCount        Int
+  pricePerPiece     Int
+  sketches          String[]
+  preDesignedPrints String[]
+  designId          String
+  Design            Design        @relation(fields: [designId], references: [id])
+  type              PieceType
+  material          PieceMaterial
 }

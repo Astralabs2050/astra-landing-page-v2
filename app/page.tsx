@@ -5,15 +5,21 @@ import { Button } from '@/components/ui/button'
 import { trpcCaller } from '@/server/utils'
 import { ArrowLeft } from 'lucide-react'
 import { redirect } from 'next/navigation'
+import { getSession } from '@auth0/nextjs-auth0'
+import { Fragment } from 'react'
+import Link from 'next/link'
+import { routes } from '@/constants/app-routes'
 
 export default async function Home() {
+  const session = await getSession()
+
   const trpc = await trpcCaller()
   const roles = await trpc.user.getRoles()
   const user = await trpc.user.get()
 
   async function onboardingProgress() {
     if (user && user.role === 'BRAND') {
-      const brand = await trpc.brand.getUserBrand()
+      const brand = await trpc.brand.get()
       return brand ? 'completed' : 2
     }
 
@@ -21,6 +27,7 @@ export default async function Home() {
   }
 
   const progress = await onboardingProgress()
+  const Cta = progress === 1 ? Link : Fragment
 
   if (progress === 'completed') {
     return redirect('/dashboard')
@@ -33,9 +40,12 @@ export default async function Home() {
       </header>
       <div className="mx-[8.3rem] mb-[2.8rem] grow bg-white px-6 py-16">
         <div className="mb-6 grid grid-cols-3 place-items-start">
-          <Button variant="ghost">
-            <ArrowLeft className="h-4" /> Go Back
-          </Button>
+          <Cta href={routes.logout}>
+            <Button variant="ghost" className="pr-10">
+              <ArrowLeft className="h-4" />{' '}
+              {progress === 1 ? 'Logout' : 'Go Back'}
+            </Button>
+          </Cta>
           <div className="grid w-full place-items-center">
             <Stepper
               current={progress}
@@ -50,7 +60,7 @@ export default async function Home() {
         </div>
         {
           [
-            <Roles key={1} roles={roles} />,
+            <Roles key={1} roles={roles} session={session} />,
             <ProfileForm key={2} user={user} />,
           ][progress - 1]
         }

@@ -1,13 +1,12 @@
+import { z } from 'zod'
+import { prisma } from '../db'
 import {
   createTRPCRouter,
   authenticatedProcedure,
 } from '@/services/trpc-server'
-import { z } from 'zod'
-import { prisma } from '../db'
-import { getLocationId } from '@/lib/location'
 
 export const brandRouter = createTRPCRouter({
-  getUserBrand: authenticatedProcedure.query(async ({ ctx }) => {
+  get: authenticatedProcedure.query(async ({ ctx }) => {
     return ctx.prisma.brand.findUnique({
       where: { ownerId: ctx.session.userId },
     })
@@ -25,6 +24,7 @@ export const brandRouter = createTRPCRouter({
           lng: z.string(),
           countryCode: z.string(),
           admin1: z.string().optional(),
+          admin2: z.string().optional(),
           zip: z.string().optional(),
         }),
       }),
@@ -32,42 +32,56 @@ export const brandRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { name, bio, location } = input
 
-      const locationId = getLocationId({
-        name: location.name,
-        countryCode: location.countryCode,
-        admin1: location.admin1,
-      })
+      const {
+        admin1,
+        admin2,
+        zip,
+        countryCode,
+        lat,
+        lng,
+        name: city,
+      } = location
 
-      const dbLocation = await ctx.prisma.location.upsert({
-        where: { id: locationId },
-        update: {},
-        create: {
-          id: locationId,
-          ...location,
-        },
-      })
+      const data = {
+        name,
+        bio,
+        city,
+        zip,
+        lat,
+        lng,
+        countryCode,
+        email: ctx.session.user.email,
+        ownerId: ctx.session.userId,
+        province1: admin1,
+        province2: admin2,
+      }
 
-      await prisma.brand.upsert({
+      const brand = await prisma.brand.upsert({
         where: { ownerId: ctx.session.userId },
-        create: {
-          name,
-          bio,
-          email: ctx.session.user.email,
-          ownerId: ctx.session.userId,
-          locationId: dbLocation.id,
-        },
-        update: {
-          name,
-          bio,
-          email: input.email,
-          ownerId: ctx.session.userId,
-          locationId: dbLocation.id,
+        create: data,
+        update: data,
+        include: {
+          owner: {
+            select: {
+              onboarded: true,
+            },
+          },
         },
       })
 
-      await ctx.prisma.user.update({
-        where: { id: ctx.session.userId },
-        data: { onboarded: true },
-      })
+      if (!brand.owner.onboarded) {
+        await ctx.prisma.user.update({
+          where: { id: ctx.session.userId },
+          data: { onboarded: true },
+        })
+      }
+
+      return brand
     }),
+
+  getDesigns: authenticatedProcedure.query(async ({ ctx }) => {
+    return ctx.prisma.design.findMany({
+      where: { brandId: ctx.session.userId },
+    })
+  }),
 })
