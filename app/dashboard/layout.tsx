@@ -28,9 +28,9 @@ export default async function DashboardLayout({
   return (
     <div className="flex w-[100vw] flex-col">
       <main className="flex h-screen w-full grow flex-col">
-        <Header />
+        <Header user={user} />
         <div className="grid grow grid-cols-[var(--sidebar-width),1fr] border-t border-solid border-gray-6">
-          <Sidebar />
+          <Sidebar user={user} />
           <div className="border-l border-solid border-gray-6  p-10">
             {user?.role === 'BRAND' ? brand : creator}
           </div>

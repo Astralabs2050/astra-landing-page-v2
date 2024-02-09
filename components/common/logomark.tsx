@@ -13,8 +13,8 @@ export function LogoMark({ className }: LogoProps) {
       height={52}
       priority
       alt="Astra logo"
-      className={cn('w-28', className)}
-      src="https://res.cloudinary.com/kadet/image/upload/v1706869224/astra-lofomark_ocigyd.png"
+      className={cn('size-28', className)}
+      src="/imgs/logomark.png"
     />
   )
 }
