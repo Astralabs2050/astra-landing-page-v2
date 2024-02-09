@@ -27,7 +27,7 @@ const buttonVariants = cva(
         fit: 'h-fit p-0',
       },
       radii: {
-        default: 'rounded-md',
+        default: 'rounded-lg',
         pill: 'rounded-full',
       },
     },
