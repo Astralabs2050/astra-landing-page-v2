@@ -99,6 +99,11 @@ const config = {
       backgroundImage: {
         'blue-radial': 'var(--blue-radial)',
       },
+
+      spacing: {
+        header: 'calc(var(--header-height) + 1px)',
+        sidebar: 'calc(var(--sidebar-width) + 1px)',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

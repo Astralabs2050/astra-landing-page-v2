@@ -14,7 +14,7 @@ interface HeaderProps {
 
 export function Header({ user }: HeaderProps) {
   return (
-    <div className="sticky top-0 z-40 flex h-[var(--header-height)] shrink-0 items-center justify-between border-b border-solid border-gray-6 bg-white px-12">
+    <div className="sticky top-0 z-40 flex h-header shrink-0 items-center justify-between border-b border-solid border-gray-6 bg-white px-12">
       <Logo />
 
       <div className="flex items-center gap-5">
