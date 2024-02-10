@@ -32,9 +32,9 @@ export const PromptResults = () => {
               key={index}
               alt={`Result for: ${prompt}`}
               src={item}
-              width={229}
-              height={265}
-              className="w-full"
+              width={896}
+              height={1152}
+              className="w-full rounded-md"
             />
           ))}
         </div>

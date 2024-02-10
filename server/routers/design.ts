@@ -1,10 +1,9 @@
-import OpenAI from 'openai'
 import { string, z } from 'zod'
 import {
   createTRPCRouter,
   authenticatedProcedure,
 } from '@/services/trpc-server'
-import { env } from '@/env.mjs'
+import { generate } from '@/lib/dreamstudio'
 
 export const designRouter = createTRPCRouter({
   get: authenticatedProcedure
@@ -22,27 +21,28 @@ export const designRouter = createTRPCRouter({
   generateInspiration: authenticatedProcedure
     .input(z.object({ prompt: z.string() }))
     .mutation(async ({ input }) => {
-      const openai = new OpenAI({
-        apiKey: env.OPENAI_API_KEY,
+      const { prompt } = input
+
+      const images = await generate({
+        engineId: 'stable-diffusion-xl-1024-v1-0',
+        width: 896,
+        height: 1152,
+        samples: 2,
+        text_prompts: [
+          {
+            text: prompt,
+            weight: 1,
+          },
+        ],
       })
 
-      const args: Parameters<typeof openai.images.generate>['0'] = {
-        model: 'dall-e-3',
-        size: '1024x1792',
-        response_format: 'url',
-        quality: 'hd',
-        prompt: input.prompt,
-      }
+      console.log('imgs>>>>>>>>>', images[0])
 
-      const results = await Promise.all([
-        openai.images.generate(args),
-        openai.images.generate(args),
-        openai.images.generate(args),
-        openai.images.generate(args),
-      ])
-
-      return results.map(item => {
-        return item.data[0].url!
-      })
+      return [
+        'https://humgswhkgxacucnrzpam.supabase.co/storage/v1/object/public/generations/gen-sample.png',
+        'https://humgswhkgxacucnrzpam.supabase.co/storage/v1/object/public/generations/gen-sample.png',
+        'https://humgswhkgxacucnrzpam.supabase.co/storage/v1/object/public/generations/gen-sample.png',
+        'https://humgswhkgxacucnrzpam.supabase.co/storage/v1/object/public/generations/gen-sample.png',
+      ]
     }),
 })
