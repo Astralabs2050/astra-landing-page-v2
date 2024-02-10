@@ -8,14 +8,22 @@ import { $design } from '@/store/design'
 import Image from 'next/image'
 import { useDesignPrompt } from '@/hooks/use-design-prompt'
 import { PromptResults } from './prompt-results'
+import { Inspiration } from '@/types/models'
+import { cn } from '@/lib/utils'
 
-export const PromptForm = () => {
+interface PromptFormProps {
+  data?: Inspiration
+}
+
+export const PromptForm = ({ data }: PromptFormProps) => {
   const { prompt, imagePrompt, inspiration, generateInspiration, loading } =
     useDesignPrompt()
 
+  const generated = inspiration ?? data
+
   return (
     <Fragment>
-      {!inspiration.length ? (
+      {!generated ? (
         <div className="flex justify-center pt-20">
           <Image
             alt="Empty state"
@@ -26,7 +34,7 @@ export const PromptForm = () => {
           />
         </div>
       ) : (
-        <PromptResults />
+        <PromptResults {...generated} />
       )}
 
       <form
@@ -36,7 +44,7 @@ export const PromptForm = () => {
           generateInspiration()
         }}>
         <div className="relative">
-          {inspiration.length ? (
+          {generated ? (
             <div className="grid w-full place-items-center">
               <Button
                 type="button"
@@ -55,13 +63,18 @@ export const PromptForm = () => {
                 placeholder="Female model wearing multi-coloured jumpsuit"
                 className="h-14 w-full bg-neutral-100 focus-within:ring-0"
                 prepend={
-                  <FileUpload
-                    value={imagePrompt ?? ''}
-                    onFileChange={file => {
-                      $design.setKey('imagePrompt', URL.createObjectURL(file))
-                    }}>
-                    {() => <Picture className="size-6" />}
-                  </FileUpload>
+                  <div
+                    className={cn({
+                      'pointer-events-none opacity-50': loading,
+                    })}>
+                    <FileUpload
+                      value={imagePrompt ?? ''}
+                      onFileChange={file => {
+                        $design.setKey('imagePrompt', URL.createObjectURL(file))
+                      }}>
+                      {() => <Picture className="size-6" />}
+                    </FileUpload>
+                  </div>
                 }
               />
 

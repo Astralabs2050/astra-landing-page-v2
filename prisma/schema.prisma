@@ -54,20 +54,21 @@ model User {
 }
 
 model Brand {
-  key         Int      @id @default(autoincrement())
-  email       String
-  name        String
-  bio         String
-  ownerId     String   @unique
-  owner       User     @relation(fields: [ownerId], references: [id])
-  city        String
-  lat         String
-  lng         String
-  countryCode String
-  province1   String?
-  province2   String?
-  zip         String?
-  Design      Design[]
+  key               Int                 @id @default(autoincrement())
+  email             String
+  name              String
+  bio               String
+  ownerId           String              @unique
+  owner             User                @relation(fields: [ownerId], references: [id])
+  city              String
+  lat               String
+  lng               String
+  countryCode       String
+  province1         String?
+  province2         String?
+  zip               String?
+  Design            Design[]
+  DesignInspiration DesignInspiration[]
 }
 
 model CreatorProfile {
@@ -88,14 +89,13 @@ model CreatorProfile {
 }
 
 model Design {
-  key           Int           @id @default(autoincrement())
-  id            String        @unique
-  prompt        String
-  name          String
-  promptResults String[]
-  brandId       String
-  brand         Brand         @relation(fields: [brandId], references: [ownerId])
-  pieces        DesignPiece[]
+  key         Int                @id @default(autoincrement())
+  id          String             @unique
+  name        String
+  brandId     String
+  brand       Brand              @relation(fields: [brandId], references: [ownerId])
+  pieces      DesignPiece[]
+  inspiration DesignInspiration?
 }
 
 model DesignPiece {
@@ -109,4 +109,16 @@ model DesignPiece {
   Design            Design        @relation(fields: [designId], references: [id])
   type              PieceType
   material          PieceMaterial
+}
+
+model DesignInspiration {
+  key           Int      @id @default(autoincrement())
+  id            String   @unique
+  brandId       String
+  designId      String?  @unique
+  design        Design?  @relation(fields: [designId], references: [id])
+  brand         Brand    @relation(fields: [brandId], references: [ownerId])
+  prompt        String
+  imagePrompt   String?
+  promptResults String[]
 }

@@ -2,7 +2,7 @@ import { env } from '@/env.mjs'
 
 import { numberToHex } from 'viem'
 import { createConfig, configureChains } from 'wagmi'
-import { baseGoerli, base } from 'wagmi/chains'
+import { baseSepolia, base } from 'wagmi/chains'
 import { CHAIN_NAMESPACES } from '@web3auth/base'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 import { Web3AuthConnector } from '@web3auth/web3auth-wagmi-connector'
@@ -11,7 +11,7 @@ import { Web3Auth } from '@web3auth/single-factor-auth'
 import { getPublicCompressed } from '@toruslabs/eccrypto'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [baseGoerli, base],
+  [baseSepolia, base],
   [
     jsonRpcProvider({
       rpc: chain => ({
@@ -23,12 +23,12 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 
 const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: numberToHex(baseGoerli.id),
-  rpcTarget: baseGoerli.rpcUrls.default.http[0],
-  displayName: baseGoerli.name,
-  blockExplorer: baseGoerli.blockExplorers.default.url,
-  ticker: baseGoerli.nativeCurrency.name,
-  tickerName: baseGoerli.name,
+  chainId: numberToHex(baseSepolia.id),
+  rpcTarget: baseSepolia.rpcUrls.default.http[0],
+  displayName: baseSepolia.name,
+  blockExplorer: baseSepolia.blockExplorers.default.url,
+  ticker: baseSepolia.nativeCurrency.name,
+  tickerName: baseSepolia.name,
 }
 
 export const privateKeyProvider = new EthereumPrivateKeyProvider({

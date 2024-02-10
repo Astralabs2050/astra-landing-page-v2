@@ -3,7 +3,10 @@ import {
   createTRPCRouter,
   authenticatedProcedure,
 } from '@/services/trpc-server'
-import { generate } from '@/lib/dreamstudio'
+import { generate } from '@/services/stability'
+import { prepareFile, uploadBucketImage } from '@/services/storage'
+import { StorageBucket } from '@/services/supabase'
+import { nano } from '@/lib/nano'
 
 export const designRouter = createTRPCRouter({
   get: authenticatedProcedure
@@ -20,29 +23,71 @@ export const designRouter = createTRPCRouter({
 
   generateInspiration: authenticatedProcedure
     .input(z.object({ prompt: z.string() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const { prompt } = input
+
+      const hasPeriod = prompt.trim().endsWith('.')
+      const append = hasPeriod ? '' : '.'
+      const tunedPrompt = `${prompt}${append} The photo is to be used as a product image on an e-commerce store, full body photo, simple background, high detail, avoid blurry results.`
 
       const images = await generate({
         engineId: 'stable-diffusion-xl-1024-v1-0',
+        style_preset: '3d-model',
         width: 896,
         height: 1152,
-        samples: 2,
+        samples: 4,
         text_prompts: [
           {
-            text: prompt,
             weight: 1,
+            text: tunedPrompt,
           },
         ],
       })
 
-      console.log('imgs>>>>>>>>>', images[0])
+      const inspoId = nano()
+      const publicUrls: string[] = []
 
-      return [
-        'https://humgswhkgxacucnrzpam.supabase.co/storage/v1/object/public/generations/gen-sample.png',
-        'https://humgswhkgxacucnrzpam.supabase.co/storage/v1/object/public/generations/gen-sample.png',
-        'https://humgswhkgxacucnrzpam.supabase.co/storage/v1/object/public/generations/gen-sample.png',
-        'https://humgswhkgxacucnrzpam.supabase.co/storage/v1/object/public/generations/gen-sample.png',
-      ]
+      for (let index = 0; index < images.length; index++) {
+        const image = images[index]
+
+        const { fileBody, fileType } = await prepareFile(image.blob)
+
+        const fileName = `sample-${index + 1}.${fileType ?? 'png'}`
+        const uploadPath = `/${inspoId}`
+
+        const url = await uploadBucketImage(
+          fileBody,
+          fileName,
+          uploadPath,
+          StorageBucket.GENERATIONS,
+        )
+
+        publicUrls.push(url)
+      }
+
+      return await ctx.prisma.designInspiration.create({
+        data: {
+          prompt,
+          id: inspoId,
+          brandId: ctx.session.userId,
+          promptResults: publicUrls,
+        },
+      })
+    }),
+
+  fetchInspiration: authenticatedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.designInspiration.findUnique({
+        where: { id: input.id },
+        select: {
+          id: true,
+          brandId: true,
+          designId: true,
+          prompt: true,
+          imagePrompt: true,
+          promptResults: true,
+        },
+      })
     }),
 })

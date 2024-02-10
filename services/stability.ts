@@ -26,8 +26,13 @@ export const generate = async (params: GenerationParams) => {
   const json = await res.json()
   const data = json as GenerationResponse
 
-  return data.artifacts.map(image => ({
-    ...image,
-    buffer: Buffer.from(image.base64, 'base64'),
-  }))
+  return data.artifacts.map(image => {
+    const buffer = Buffer.from(image.base64, 'base64')
+
+    return {
+      ...image,
+      buffer,
+      blob: new Blob([buffer]),
+    }
+  })
 }
