@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Image from 'next/image'
-import { Button } from '../ui'
 import Kebab from '@/public/svgs/kebab.svg'
 import Shirt from '@/public/svgs/shirt.svg'
+import ShirtFolded from '@/public/svgs/shirt-folded.svg'
+import Trash from '@/public/svgs/trash.svg'
+import Cube from '@/public/svgs/cube.svg'
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../ui'
+import { Design } from '@/types/models'
 
 interface DesignCardProps {
   title: string
@@ -12,6 +23,7 @@ interface DesignCardProps {
   subtitle: React.ReactNode
   cta?: React.ReactNode
   tag?: React.ReactNode
+  menuContent?: React.ReactNode
 }
 
 export const DesignCard = ({
@@ -20,6 +32,7 @@ export const DesignCard = ({
   subtitle,
   hideIcon,
   cta,
+  menuContent,
 }: DesignCardProps) => {
   return (
     <div className="overflow-hidden rounded-lg border border-solid border-gray-6 bg-white">
@@ -43,16 +56,43 @@ export const DesignCard = ({
             </div>
           </div>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-6 shrink-0 hover:bg-inherit">
-            <Kebab className="size-6 text-blue-1" />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative size-6 shrink-0 hover:bg-inherit">
+                <Kebab className="size-6 text-blue-1" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-40">
+              {menuContent}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {cta}
       </div>
     </div>
+  )
+}
+
+export const DesignCardMenu = ({}: Design) => {
+  return (
+    <Fragment>
+      <DropdownMenuItem>
+        <Cube className="mr-2 size-5" />
+        <span>Turn to 3D</span>
+      </DropdownMenuItem>
+      <DropdownMenuItem>
+        <ShirtFolded className="mr-2 size-5" />
+        <span>Make it Real</span>
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem className="text-destructive focus:bg-destructive focus:text-white">
+        <Trash className="mr-2 size-5" />
+        <span>Delete</span>
+      </DropdownMenuItem>
+    </Fragment>
   )
 }

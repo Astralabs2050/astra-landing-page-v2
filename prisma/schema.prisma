@@ -41,6 +41,11 @@ enum PieceType {
   HEADWARMER
 }
 
+enum JobTarget {
+  DESIGNER
+  MANUFACTURER
+}
+
 model User {
   key            Int             @id @default(autoincrement())
   onboarded      Boolean         @default(false)
@@ -106,6 +111,7 @@ model Design {
   promptResults String[]
   createdAt     DateTime?     @default(now())
   updatedAt     DateTime?     @default(now())
+  Job           Job[]
 }
 
 model DesignPiece {
@@ -121,4 +127,12 @@ model DesignPiece {
   material          PieceMaterial
   createdAt         DateTime?     @default(now())
   updatedAt         DateTime?     @default(now())
+}
+
+model Job {
+  key      Int       @id @default(autoincrement())
+  id       String    @unique
+  designId String
+  design   Design    @relation(fields: [designId], references: [id])
+  target   JobTarget
 }

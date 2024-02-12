@@ -1,7 +1,6 @@
 'use client'
 
 import React, { Fragment } from 'react'
-import Image from 'next/image'
 import Picture from '@/public/svgs/picture.svg'
 import Sparkles from '@/public/svgs/sparkles.svg'
 import { Button, FileUpload, Input, Spinner } from '@/components/ui'
@@ -10,6 +9,8 @@ import { useDesignPrompt } from '@/hooks/use-design-prompt'
 import { PromptResults } from './prompt-results'
 import { cn } from '@/lib/utils'
 import { Design } from '@/types/models'
+import { PromptDialog } from './prompt-dialog'
+import { EmptyState } from '@/components/common/empty-state'
 
 interface PromptFormProps {
   data?: Design | null
@@ -24,15 +25,7 @@ export const PromptForm = ({ data }: PromptFormProps) => {
   return (
     <Fragment>
       {!generated ? (
-        <div className="flex justify-center pt-20">
-          <Image
-            alt="Empty state"
-            src="/imgs/empty-state.png"
-            width={139}
-            height={139}
-            className="size-32"
-          />
-        </div>
+        <EmptyState />
       ) : (
         <PromptResults
           prompt={generated.prompt}
@@ -48,14 +41,7 @@ export const PromptForm = ({ data }: PromptFormProps) => {
         }}>
         <div className="relative">
           {generated ? (
-            <div className="grid w-full place-items-center">
-              <Button
-                type="button"
-                className="min-w-32 rounded-md bg-blue-radial font-normal tracking-normal">
-                <Sparkles className="mr-2 size-5" />
-                Bring Your idea To Life
-              </Button>
-            </div>
+            <PromptDialog id={generated.id} />
           ) : (
             <Fragment>
               <Input

@@ -2,7 +2,7 @@
 
 import React, { Fragment } from 'react'
 import Link from 'next/link'
-import { DesignCard } from '@/components/common/design-card'
+import { DesignCard, DesignCardMenu } from '@/components/common/design-card'
 import { Design } from '@/types/models'
 import { Button, Badge } from '@/components/ui'
 import { routes } from '@/constants/app-routes'
@@ -37,6 +37,7 @@ export const Designs = ({ designs }: DesignsProps) => {
             title={design.name ?? design.prompt}
             image={design.promptResults[0]}
             hideIcon={!design.pieces.length}
+            menuContent={<DesignCardMenu {...design} />}
             subtitle={
               !design.txHash ? (
                 <Badge variant="warning">Draft</Badge>

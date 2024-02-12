@@ -79,17 +79,36 @@ export const brandRouter = createTRPCRouter({
       return brand
     }),
 
-  getDesigns: authenticatedProcedure.query(async ({ ctx }) => {
+  getDesigns: authenticatedProcedure
+    .input(z.object({ excludeDrafts: z.boolean().optional() }).optional())
+    .query(async ({ ctx, input }) => {
+      return ctx.prisma.design.findMany({
+        where: {
+          brandId: ctx.session.userId,
+          txHash: input?.excludeDrafts ? { not: null } : undefined,
+        },
+        orderBy: input?.excludeDrafts
+          ? undefined
+          : [
+              {
+                txHash: { sort: 'desc', nulls: 'last' },
+              },
+              { createdAt: 'desc' },
+            ],
+        include: {
+          pieces: true,
+        },
+      })
+    }),
+
+  getDrafts: authenticatedProcedure.query(async ({ ctx }) => {
     return ctx.prisma.design.findMany({
       where: {
         brandId: ctx.session.userId,
-      },
-      orderBy: [
-        {
-          txHash: { sort: 'desc', nulls: 'last' },
+        txHash: {
+          equals: null,
         },
-        { createdAt: 'desc' },
-      ],
+      },
       include: {
         pieces: true,
       },
