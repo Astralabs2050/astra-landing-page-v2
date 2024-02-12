@@ -51,6 +51,8 @@ model User {
   role           RoleId
   brand          Brand?
   creatorProfile CreatorProfile?
+  createdAt      DateTime?       @default(now())
+  updatedAt      DateTime?       @default(now())
 }
 
 model Brand {
@@ -69,16 +71,18 @@ model Brand {
   zip               String?
   Design            Design[]
   DesignInspiration DesignInspiration[]
+  createdAt         DateTime?           @default(now())
+  updatedAt         DateTime?           @default(now())
 }
 
 model CreatorProfile {
-  key         Int     @id @default(autoincrement())
+  key         Int       @id @default(autoincrement())
   email       String
   name        String
   bio         String
   location    String
-  ownerId     String  @unique
-  owner       User    @relation(fields: [ownerId], references: [id])
+  ownerId     String    @unique
+  owner       User      @relation(fields: [ownerId], references: [id])
   city        String
   lat         String
   lng         String
@@ -86,6 +90,8 @@ model CreatorProfile {
   province1   String?
   province2   String?
   zip         String?
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @default(now())
 }
 
 model Design {
@@ -96,6 +102,8 @@ model Design {
   brand       Brand              @relation(fields: [brandId], references: [ownerId])
   pieces      DesignPiece[]
   inspiration DesignInspiration?
+  createdAt   DateTime?          @default(now())
+  updatedAt   DateTime?          @default(now())
 }
 
 model DesignPiece {
@@ -109,16 +117,20 @@ model DesignPiece {
   Design            Design        @relation(fields: [designId], references: [id])
   type              PieceType
   material          PieceMaterial
+  createdAt         DateTime?     @default(now())
+  updatedAt         DateTime?     @default(now())
 }
 
 model DesignInspiration {
-  key           Int      @id @default(autoincrement())
-  id            String   @unique
+  key           Int       @id @default(autoincrement())
+  id            String    @unique
   brandId       String
-  designId      String?  @unique
-  design        Design?  @relation(fields: [designId], references: [id])
-  brand         Brand    @relation(fields: [brandId], references: [ownerId])
+  designId      String?   @unique
+  design        Design?   @relation(fields: [designId], references: [id])
+  brand         Brand     @relation(fields: [brandId], references: [ownerId])
   prompt        String
   imagePrompt   String?
   promptResults String[]
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @default(now())
 }

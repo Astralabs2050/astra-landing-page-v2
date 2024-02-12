@@ -8,5 +8,6 @@ export const routes = {
     base: '/dashboard',
     space: '/dashboard/space',
     inspiration: '/dashboard/space/inspiration',
+    designs: '/dashboard/designs',
   },
 }
