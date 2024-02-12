@@ -7,6 +7,7 @@ export const routes = {
   dashboard: {
     base: '/dashboard',
     space: '/dashboard/space',
+    create: '/dashboard/space/create',
     inspiration: '/dashboard/space/inspiration',
     designs: '/dashboard/designs',
   },

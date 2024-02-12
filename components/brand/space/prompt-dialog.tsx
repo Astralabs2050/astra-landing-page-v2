@@ -16,13 +16,17 @@ import {
 import { JobTarget } from '@prisma/client'
 import { cn } from '@/lib/utils'
 import { Check } from 'lucide-react'
+import { useRouter } from 'next-nprogress-bar'
+import { routes } from '@/constants/app-routes'
 
 interface PromptDialogProps {
   id: string
 }
 
-export const PromptDialog = ({}: PromptDialogProps) => {
+export const PromptDialog = ({ id }: PromptDialogProps) => {
   const [selected, setSelected] = useState<JobTarget>()
+
+  const router = useRouter()
 
   const options = [
     {
@@ -114,7 +118,14 @@ export const PromptDialog = ({}: PromptDialogProps) => {
                 Cancel
               </Button>
             </DialogClose>
-            <Button radii="pill" size="lg" disabled={!selected}>
+            <Button
+              radii="pill"
+              size="lg"
+              disabled={!selected}
+              onClick={() => {
+                const url = `${routes.dashboard.create}?id=${id}&job=${selected}`
+                router.push(url)
+              }}>
               Continue
             </Button>
           </DialogFooter>

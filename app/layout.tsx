@@ -3,6 +3,7 @@ import '@/style/globals.css'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { Providers } from '@/providers'
+import { Nprogress } from '@/components/ui'
 
 const clashGrotesk = localFont({
   src: [
@@ -26,6 +27,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={clashGrotesk.className}>
+        <Nprogress />
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -46,6 +46,13 @@ enum JobTarget {
   MANUFACTURER
 }
 
+enum SketchView {
+  FRONT
+  SIDE1
+  SIDE2
+  BACK
+}
+
 model User {
   key            Int             @id @default(autoincrement())
   onboarded      Boolean         @default(false)
@@ -99,34 +106,43 @@ model CreatorProfile {
 }
 
 model Design {
-  key           Int           @id @default(autoincrement())
-  id            String        @unique
-  name          String?
-  brandId       String
-  txHash        String?       @unique
-  brand         Brand         @relation(fields: [brandId], references: [ownerId])
-  pieces        DesignPiece[]
-  prompt        String
-  imagePrompt   String?
-  promptResults String[]
-  createdAt     DateTime?     @default(now())
-  updatedAt     DateTime?     @default(now())
-  Job           Job[]
+  key               Int           @id @default(autoincrement())
+  id                String        @unique
+  name              String?
+  brandId           String
+  txHash            String?       @unique
+  brand             Brand         @relation(fields: [brandId], references: [ownerId])
+  prompt            String
+  imagePrompt       String?
+  promptResults     String[]
+  preDesignedPrints String[]
+  createdAt         DateTime?     @default(now())
+  updatedAt         DateTime?     @default(now())
+  Job               Job[]
+  sketches          Sketch[]
+  pieces            DesignPiece[]
 }
 
 model DesignPiece {
-  key               Int           @id @default(autoincrement())
-  id                String        @unique
-  pieceCount        Int
-  pricePerPiece     Int
-  sketches          String[]
-  preDesignedPrints String[]
-  designId          String
-  Design            Design        @relation(fields: [designId], references: [id])
-  type              PieceType
-  material          PieceMaterial
-  createdAt         DateTime?     @default(now())
-  updatedAt         DateTime?     @default(now())
+  key           Int           @id @default(autoincrement())
+  id            String        @unique
+  pieceCount    Int
+  pricePerPiece Int
+  designId      String
+  Design        Design        @relation(fields: [designId], references: [id])
+  type          PieceType
+  material      PieceMaterial
+  createdAt     DateTime?     @default(now())
+  updatedAt     DateTime?     @default(now())
+}
+
+model Sketch {
+  key      Int        @id @default(autoincrement())
+  id       String     @unique
+  url      String
+  designId String
+  design   Design     @relation(fields: [designId], references: [id])
+  view     SketchView
 }
 
 model Job {

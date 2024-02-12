@@ -14,6 +14,9 @@ import {
   DropdownMenuTrigger,
 } from '../ui'
 import { Design } from '@/types/models'
+import { JobTarget } from '@prisma/client'
+import { routes } from '@/constants/app-routes'
+import { useRouter } from 'next-nprogress-bar'
 
 interface DesignCardProps {
   title: string
@@ -50,9 +53,9 @@ export const DesignCard = ({
             <h4 className="mr-3 truncate break-keep text-base font-semibold capitalize">
               {title}
             </h4>
-            <div className="flex items-center space-x-1 text-gray-3">
-              {!hideIcon && <Shirt className="size-5" />}
-              <p className="text-base">{subtitle}</p>
+            <div className="flex items-center text-base text-gray-3">
+              {!hideIcon && <Shirt className="mr-1 size-5" />}
+              {subtitle}
             </div>
           </div>
 
@@ -77,17 +80,28 @@ export const DesignCard = ({
   )
 }
 
-export const DesignCardMenu = ({}: Design) => {
+export const DesignCardMenu = ({ id }: Omit<Design, 'key'>) => {
+  const { push } = useRouter()
+  const { DESIGNER, MANUFACTURER } = JobTarget
+
   return (
     <Fragment>
-      <DropdownMenuItem>
+      <DropdownMenuItem
+        onClick={() => {
+          push(`${routes.dashboard.create}?id=${id}&target=${DESIGNER}`)
+        }}>
         <Cube className="mr-2 size-5" />
         <span>Turn to 3D</span>
       </DropdownMenuItem>
-      <DropdownMenuItem>
+
+      <DropdownMenuItem
+        onClick={() => {
+          push(`${routes.dashboard.create}?id=${id}&target=${MANUFACTURER}`)
+        }}>
         <ShirtFolded className="mr-2 size-5" />
         <span>Make it Real</span>
       </DropdownMenuItem>
+
       <DropdownMenuSeparator />
       <DropdownMenuItem className="text-destructive focus:bg-destructive focus:text-white">
         <Trash className="mr-2 size-5" />

@@ -31,19 +31,21 @@ export const Designs = ({ designs }: DesignsProps) => {
     <Fragment>
       <h2 className="mb-6 text-xl font-medium">Recent Designs</h2>
       <div className="grid grid-cols-4 gap-4">
-        {designs?.map((design, index) => (
+        {designs?.map(({ key, ...design }) => (
           <DesignCard
-            key={index}
+            key={key}
             title={design.name ?? design.prompt}
             image={design.promptResults[0]}
             hideIcon={!design.pieces.length}
             menuContent={<DesignCardMenu {...design} />}
             subtitle={
-              !design.txHash ? (
-                <Badge variant="warning">Draft</Badge>
-              ) : (
-                <Fragment>`${design.pieces.length} Pieces`</Fragment>
-              )
+              <Fragment>
+                {!design.txHash ? (
+                  <Badge variant="warning">Draft</Badge>
+                ) : (
+                  <Fragment>`${design.pieces.length} Pieces`</Fragment>
+                )}
+              </Fragment>
             }
           />
         ))}

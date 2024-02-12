@@ -22,11 +22,13 @@ export const Minted = ({ designs }: MintedProps) => {
           image={design.promptResults[0]}
           hideIcon={!design.pieces.length}
           subtitle={
-            !design.txHash ? (
-              <Badge variant="warning">Draft</Badge>
-            ) : (
-              <Fragment>`${design.pieces.length} Pieces`</Fragment>
-            )
+            <Fragment>
+              {!design.txHash ? (
+                <Badge variant="warning">Draft</Badge>
+              ) : (
+                <Fragment>`${design.pieces.length} Pieces`</Fragment>
+              )}
+            </Fragment>
           }
         />
       ))}

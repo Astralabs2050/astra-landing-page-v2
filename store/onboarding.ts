@@ -1,10 +1,10 @@
-import { string } from 'zod'
+import { z } from 'zod'
 import { map } from 'nanostores'
 import { City } from '@/types/models'
 
 export const $onboarding = map({
-  name: string()._input,
-  bio: string()._input,
+  name: z.string()._input,
+  bio: z.string()._input,
   submitted: false,
   location: null as City | null,
 })

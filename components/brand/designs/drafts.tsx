@@ -18,9 +18,9 @@ export const Drafts = () => {
 
   return (
     <div className="grid grid-cols-4 gap-4">
-      {data?.map((design, index) => (
+      {data?.map(({ key, ...design }) => (
         <DesignCard
-          key={index}
+          key={key}
           title={design.name ?? design.prompt}
           image={design.promptResults[0]}
           hideIcon={true}
