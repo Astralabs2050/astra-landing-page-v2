@@ -1,5 +1,5 @@
 import { env } from '@/env.mjs'
-import { GenerationParams, GenerationResponse } from '@/types/dreamstudio'
+import { GenerationParams, GenerationResponse } from '@/types/stability'
 
 export const generate = async (params: GenerationParams) => {
   const apiKey = env.STABILITY_AI_KEY

@@ -41,6 +41,7 @@ export const Information = ({
 
   return (
     <form
+      className="mx-auto w-[60%]"
       onSubmit={e => {
         e.preventDefault()
         saveInformation()

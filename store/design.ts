@@ -12,7 +12,12 @@ export const $design = map({
 export const newPiece = { pieceCount: 1, pricePerPiece: 0 }
 export const $designform = map({
   name: '',
+  prints: ['', '', ''],
   pieces: [newPiece] as Omit<DesignPiece, 'key' | 'id'>[],
-  sketches: [] as Omit<Sketch, 'key' | 'id'>[],
-  prints: z.array(z.string())._input,
+  sketches: [
+    { view: 'FRONT' },
+    { view: 'SIDE1' },
+    { view: 'SIDE2' },
+    { view: 'BACK' },
+  ] as Omit<Sketch, 'key' | 'id'>[],
 })

@@ -12,6 +12,7 @@ interface FileUploadProps {
   value: string
   name?: string
   className?: string
+  containerClassName?: string
   required?: boolean
   accept?: ('image/png' | 'image/jpeg' | 'image/avif' | 'image/webp')[]
   previewSize?: 'cover' | 'contain'
@@ -33,6 +34,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
       value,
       name,
       className,
+      containerClassName,
       previewSize = 'cover',
     } = props
 
@@ -57,16 +59,20 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
         className={cn(
           'flex w-full flex-col gap-2',
           { 'grid size-fit place-items-center': children },
-          className,
+          containerClassName,
         )}>
         {label && <p className="text-sm font-normal">{label}</p>}
         {children ? (
-          <label className="grid size-fit cursor-pointer place-items-center">
+          <label className="grid size-fit w-full cursor-pointer place-items-center">
             {input}
             {children(file)}
           </label>
         ) : (
-          <label className="group relative grid h-40 w-full cursor-pointer place-items-center overflow-hidden rounded-lg border  bg-contain bg-center">
+          <label
+            className={cn(
+              'group relative grid h-40 w-full cursor-pointer place-items-center overflow-hidden rounded-lg border  bg-contain bg-center',
+              className,
+            )}>
             {input}
             <div
               className={cn(
@@ -77,9 +83,8 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                 },
               )}>
               <Upload className="size-8" />
-              <small className="text-sm font-medium">
-                Max File Size:{' '}
-                <span className="text-yellow-500">{formatBytes(maxSize)}</span>
+              <small className="text-sm font-medium text-gray-3">
+                Max File Size: <span>{formatBytes(maxSize)}</span>
               </small>
             </div>
 

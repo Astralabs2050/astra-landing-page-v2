@@ -40,10 +40,10 @@ export default async function Create({
 
   return (
     <Fragment>
-      <div className="mb-12 grid grid-cols-3 place-items-start items-center">
+      <div className="mb-12 grid grid-cols-[20rem,1fr,20rem] place-items-start items-center">
         <BackButton />
 
-        <div className="space-y-1 text-center">
+        <div className="shrink-0 space-y-1 text-center">
           <h1 className="text-[1.7rem] font-medium">
             {
               [
@@ -59,7 +59,7 @@ export default async function Create({
             {
               [
                 'Select Piece Type and Number of available stock',
-                'Uploading sketches/samples would help improve your outpu',
+                'Uploading sketches/samples would help improve your output',
               ][progress - 1]
             }
           </p>
@@ -70,11 +70,11 @@ export default async function Create({
         </p>
       </div>
 
-      <div className="mx-auto w-[60%]">
+      <div className="mx-auto">
         {
           {
             1: <Information id={id} target={target} key={1} />,
-            2: <Sketches key={2} />,
+            2: <Sketches id={id} target={target} key={2} />,
             3: <Job key={3} />,
           }[progress]
         }
