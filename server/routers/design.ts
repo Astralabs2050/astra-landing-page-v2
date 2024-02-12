@@ -1,4 +1,4 @@
-import { string, z } from 'zod'
+import { z } from 'zod'
 import {
   createTRPCRouter,
   authenticatedProcedure,
@@ -10,14 +10,13 @@ import { nano } from '@/lib/nano'
 
 export const designRouter = createTRPCRouter({
   get: authenticatedProcedure
-    .input(
-      z.object({
-        id: string(),
-      }),
-    )
+    .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.design.findUnique({
         where: { id: input.id },
+        include: {
+          pieces: true,
+        },
       })
     }),
 
@@ -28,7 +27,7 @@ export const designRouter = createTRPCRouter({
 
       const hasPeriod = prompt.trim().endsWith('.')
       const append = hasPeriod ? '' : '.'
-      const tunedPrompt = `${prompt}${append} The photo is to be used as a product image on an e-commerce store, full body photo, simple background, high detail, avoid blurry results.`
+      const tunedPrompt = `${prompt}${append} Full body photo photo to be used as a product image on an e-commerce store, simple background, high detail, avoid blurry or bad images.`
 
       const images = await generate({
         engineId: 'stable-diffusion-xl-1024-v1-0',
@@ -44,7 +43,7 @@ export const designRouter = createTRPCRouter({
         ],
       })
 
-      const inspoId = nano()
+      const id = nano()
       const publicUrls: string[] = []
 
       for (let index = 0; index < images.length; index++) {
@@ -53,40 +52,24 @@ export const designRouter = createTRPCRouter({
         const { fileBody, fileType } = await prepareFile(image.blob)
 
         const fileName = `sample-${index + 1}.${fileType ?? 'png'}`
-        const uploadPath = `/${inspoId}`
+        const uploadPath = `/${id}/inspiration`
 
         const url = await uploadBucketImage(
           fileBody,
           fileName,
           uploadPath,
-          StorageBucket.GENERATIONS,
+          StorageBucket.DESIGNS,
         )
 
         publicUrls.push(url)
       }
 
-      return await ctx.prisma.designInspiration.create({
+      return await ctx.prisma.design.create({
         data: {
+          id,
           prompt,
-          id: inspoId,
           brandId: ctx.session.userId,
           promptResults: publicUrls,
-        },
-      })
-    }),
-
-  fetchInspiration: authenticatedProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
-      return await ctx.prisma.designInspiration.findUnique({
-        where: { id: input.id },
-        select: {
-          id: true,
-          brandId: true,
-          designId: true,
-          prompt: true,
-          imagePrompt: true,
-          promptResults: true,
         },
       })
     }),

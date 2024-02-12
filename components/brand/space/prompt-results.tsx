@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui'
 import { routes } from '@/constants/app-routes'
 import { useDesignPrompt } from '@/hooks/use-design-prompt'
-import { Inspiration } from '@/types/models'
+import { Design } from '@/types/models'
 import { ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -10,7 +10,7 @@ import React from 'react'
 export const PromptResults = ({
   prompt,
   promptResults,
-}: NonNullable<Inspiration>) => {
+}: Pick<Design, 'prompt' | 'promptResults'>) => {
   const { push } = useRouter()
   const { setState } = useDesignPrompt()
 

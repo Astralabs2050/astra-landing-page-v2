@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { trpcCaller } from '@/server/utils'
 import { DesignCard } from '@/components/common/design-card'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui'
+import { Badge, Tabs, TabsList, TabsTrigger } from '@/components/ui'
 
 export default async function BrandDashboard() {
   const trpc = await trpcCaller()
@@ -20,9 +20,16 @@ export default async function BrandDashboard() {
         {designs.map((design, index) => (
           <DesignCard
             key={index}
-            title={design.name}
-            subtitle={`${design.pieces.length} Pieces`}
-            image={design.inspiration?.promptResults[0] ?? ''}
+            title={design.name ?? design.prompt}
+            image={design.promptResults[0]}
+            hideIcon={!design.pieces.length}
+            subtitle={
+              !design.txHash ? (
+                <Badge variant="warning">Draft</Badge>
+              ) : (
+                <Fragment>`${design.pieces.length} Pieces`</Fragment>
+              )
+            }
           />
         ))}
       </div>

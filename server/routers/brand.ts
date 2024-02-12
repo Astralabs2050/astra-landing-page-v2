@@ -81,20 +81,18 @@ export const brandRouter = createTRPCRouter({
 
   getDesigns: authenticatedProcedure.query(async ({ ctx }) => {
     return ctx.prisma.design.findMany({
-      where: { brandId: ctx.session.userId },
+      where: {
+        brandId: ctx.session.userId,
+      },
+      orderBy: [
+        {
+          txHash: { sort: 'desc', nulls: 'last' },
+        },
+        { createdAt: 'desc' },
+      ],
       include: {
-        inspiration: true,
         pieces: true,
       },
     })
   }),
-
-  getDrafts: authenticatedProcedure
-    .input(z.object({ count: z.number().optional() }))
-    .query(async ({ ctx, input }) => {
-      return ctx.prisma.designInspiration.findMany({
-        where: { designId: { equals: null } },
-        take: input.count,
-      })
-    }),
 })

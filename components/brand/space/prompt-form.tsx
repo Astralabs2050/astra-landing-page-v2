@@ -1,18 +1,18 @@
 'use client'
 
 import React, { Fragment } from 'react'
+import Image from 'next/image'
 import Picture from '@/public/svgs/picture.svg'
 import Sparkles from '@/public/svgs/sparkles.svg'
 import { Button, FileUpload, Input, Spinner } from '@/components/ui'
 import { $design } from '@/store/design'
-import Image from 'next/image'
 import { useDesignPrompt } from '@/hooks/use-design-prompt'
 import { PromptResults } from './prompt-results'
-import { Inspiration } from '@/types/models'
 import { cn } from '@/lib/utils'
+import { Design } from '@/types/models'
 
 interface PromptFormProps {
-  data?: Inspiration
+  data?: Design | null
 }
 
 export const PromptForm = ({ data }: PromptFormProps) => {
@@ -34,7 +34,10 @@ export const PromptForm = ({ data }: PromptFormProps) => {
           />
         </div>
       ) : (
-        <PromptResults {...generated} />
+        <PromptResults
+          prompt={generated.prompt}
+          promptResults={generated.promptResults}
+        />
       )}
 
       <form

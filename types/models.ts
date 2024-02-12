@@ -6,7 +6,6 @@ type RouterOutput = inferRouterOutputs<AppRouter>
 export type User = RouterOutput['user']['get'] | null
 export type Brand = RouterOutput['brand']['get'] | null
 export type Design = RouterOutput['brand']['getDesigns'][0]
-export type Inspiration = RouterOutput['design']['fetchInspiration'] | null
 
 export type City = {
   name: string

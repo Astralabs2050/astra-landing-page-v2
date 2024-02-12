@@ -8,7 +8,7 @@ async function fetchInspiration(id?: string) {
   }
 
   const trpc = await trpcCaller()
-  return trpc.design.fetchInspiration({ id })
+  return trpc.design.get({ id })
 }
 
 export default async function Inspiration({
