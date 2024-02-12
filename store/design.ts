@@ -9,10 +9,10 @@ export const $design = map({
   inspiration: null as Omit<Design, 'pieces'> | null,
 })
 
-export const newPiece = { pieceCount: 1 }
+export const newPiece = { pieceCount: 1, pricePerPiece: 0 }
 export const $designform = map({
-  name: z.string(),
+  name: '',
   pieces: [newPiece] as Omit<DesignPiece, 'key' | 'id'>[],
   sketches: [] as Omit<Sketch, 'key' | 'id'>[],
-  prints: z.array(z.string()),
+  prints: z.array(z.string())._input,
 })

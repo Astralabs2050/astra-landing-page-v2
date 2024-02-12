@@ -88,7 +88,7 @@ export const DesignCardMenu = ({ id }: Omit<Design, 'key'>) => {
     <Fragment>
       <DropdownMenuItem
         onClick={() => {
-          push(`${routes.dashboard.create}?id=${id}&target=${DESIGNER}`)
+          push(`${routes.dashboard.create}?target=${DESIGNER}&id=${id}`)
         }}>
         <Cube className="mr-2 size-5" />
         <span>Turn to 3D</span>
@@ -96,7 +96,7 @@ export const DesignCardMenu = ({ id }: Omit<Design, 'key'>) => {
 
       <DropdownMenuItem
         onClick={() => {
-          push(`${routes.dashboard.create}?id=${id}&target=${MANUFACTURER}`)
+          push(`${routes.dashboard.create}?target=${MANUFACTURER}&id=${id}`)
         }}>
         <ShirtFolded className="mr-2 size-5" />
         <span>Make it Real</span>

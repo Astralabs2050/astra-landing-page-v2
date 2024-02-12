@@ -7,6 +7,7 @@ import { generate } from '@/services/stability'
 import { prepareFile, uploadBucketImage } from '@/services/storage'
 import { StorageBucket } from '@/services/supabase'
 import { nano } from '@/lib/nano'
+import { PieceMaterial, PieceType } from '@prisma/client'
 
 export const designRouter = createTRPCRouter({
   get: authenticatedProcedure
@@ -18,6 +19,74 @@ export const designRouter = createTRPCRouter({
           pieces: true,
         },
       })
+    }),
+
+  update: authenticatedProcedure
+    .input(
+      z.object({
+        id: z.string().optional(),
+        name: z.string().optional(),
+        txHash: z.string().optional(),
+        preDesignedPrints: z.array(z.string()).optional(),
+        pieces: z
+          .array(
+            z.object({
+              pieceCount: z.number(),
+              pricePerPiece: z.number(),
+              type: z.nativeEnum(PieceType),
+              material: z.nativeEnum(PieceMaterial),
+            }),
+          )
+          .optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id, name, txHash, pieces, preDesignedPrints } = input
+
+      const previousPieces = await ctx.prisma.designPiece.findMany({
+        where: { designId: id },
+      })
+
+      const updated = await ctx.prisma.design.upsert({
+        where: { id },
+        create: {
+          name,
+          txHash,
+          preDesignedPrints,
+          id: nano(),
+          brandId: ctx.session.userId,
+          pieces: {
+            createMany: {
+              data:
+                pieces?.map(piece => ({
+                  ...piece,
+                  id: nano(),
+                })) ?? [],
+            },
+          },
+        },
+        update: {
+          name,
+          txHash,
+          preDesignedPrints,
+          updatedAt: new Date(),
+          pieces: {
+            createMany: {
+              data:
+                pieces?.map(piece => ({
+                  ...piece,
+                  id: nano(),
+                })) ?? [],
+            },
+          },
+        },
+      })
+
+      await ctx.prisma.designPiece.deleteMany({
+        where: { id: { in: previousPieces.map(item => item.id) } },
+      })
+
+      return updated
     }),
 
   generateInspiration: authenticatedProcedure

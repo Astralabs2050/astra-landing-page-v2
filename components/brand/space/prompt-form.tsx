@@ -9,7 +9,7 @@ import { useDesignPrompt } from '@/hooks/use-design-prompt'
 import { PromptResults } from './prompt-results'
 import { cn } from '@/lib/utils'
 import { Design } from '@/types/models'
-import { PromptDialog } from './prompt-dialog'
+import { JobTargetDialog } from '@/components/common/job-target-dialog'
 import { EmptyState } from '@/components/common/empty-state'
 
 interface PromptFormProps {
@@ -41,7 +41,14 @@ export const PromptForm = ({ data }: PromptFormProps) => {
         }}>
         <div className="relative">
           {generated ? (
-            <PromptDialog id={generated.id} />
+            <JobTargetDialog id={generated.id}>
+              <Button
+                type="button"
+                className="min-w-32 rounded-md bg-blue-radial font-normal tracking-normal">
+                <Sparkles className="mr-2 size-5" />
+                Bring Your idea To Life
+              </Button>
+            </JobTargetDialog>
           ) : (
             <Fragment>
               <Input

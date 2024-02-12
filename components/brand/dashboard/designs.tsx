@@ -34,7 +34,7 @@ export const Designs = ({ designs }: DesignsProps) => {
         {designs?.map(({ key, ...design }) => (
           <DesignCard
             key={key}
-            title={design.name ?? design.prompt}
+            title={design.name ?? design.prompt ?? 'Outfit'}
             image={design.promptResults[0]}
             hideIcon={!design.pieces.length}
             menuContent={<DesignCardMenu {...design} />}

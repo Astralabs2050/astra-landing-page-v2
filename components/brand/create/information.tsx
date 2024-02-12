@@ -9,24 +9,49 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  Spinner,
 } from '@/components/ui'
 import { useDesignForm } from '@/hooks/use-design-form'
 import Trash from '@/public/svgs/trash.svg'
-import { DesignPiece, PieceType } from '@prisma/client'
+import {
+  DesignPiece,
+  JobTarget,
+  PieceMaterial,
+  PieceType,
+} from '@prisma/client'
 import { Plus, X } from 'lucide-react'
 import { newPiece } from '@/store/design'
 import { cn } from '@/lib/utils'
 
-export const Information = () => {
-  const { pieces, updateState, updatePiece } = useDesignForm()
+export const Information = ({
+  id,
+  target,
+}: {
+  id?: string
+  target: JobTarget
+}) => {
+  const {
+    name,
+    pieces,
+    updateState,
+    updatePiece,
+    saveInformation,
+    savingInfo,
+  } = useDesignForm(target, id)
 
   return (
-    <form>
+    <form
+      onSubmit={e => {
+        e.preventDefault()
+        saveInformation()
+      }}>
       <Input
         required
         placeholder="Give your outfit a name"
-        label="Name of Outfit"
         className="px-4"
+        value={name}
+        onChange={e => updateState('name', e.target.value)}
+        label={<span className="font-medium">Name of Outfit</span>}
       />
 
       {pieces.map((piece, index) => (
@@ -53,24 +78,30 @@ export const Information = () => {
             </div>
 
             <div className="space-y-4">
-              <Select
-                required
-                value={pieces[index].type}
-                onValueChange={value => updatePiece(index, 'type', value)}>
-                <SelectTrigger className="w-full px-4 font-medium capitalize">
-                  <SelectValue
-                    placeholder="Select piece type"
-                    className="text-base capitalize"
-                  />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.values(PieceType).map(type => (
-                    <SelectItem key={type} value={type} className="capitalize">
-                      {type.toLowerCase()}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="grid gap-2">
+                <p className="text-base tracking-wide">Select Piece Type</p>
+                <Select
+                  required
+                  value={pieces[index].type}
+                  onValueChange={value => updatePiece(index, 'type', value)}>
+                  <SelectTrigger className="w-full px-4 font-medium capitalize">
+                    <SelectValue
+                      placeholder="Select piece type"
+                      className="text-base capitalize"
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.values(PieceType).map(type => (
+                      <SelectItem
+                        key={type}
+                        value={type}
+                        className="capitalize">
+                        {type.toLowerCase()}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
               {pieces[index].type && (
                 <div className="mx-10 flex items-center justify-between rounded-lg bg-neutral-50 p-5">
@@ -93,6 +124,33 @@ export const Information = () => {
                   </Button>
                 </div>
               )}
+            </div>
+
+            <div className="grid gap-2">
+              <p className="text-base tracking-wide">
+                What material is this piece made of?
+              </p>
+              <Select
+                required
+                value={pieces[index].material}
+                onValueChange={value => updatePiece(index, 'material', value)}>
+                <SelectTrigger className="w-full px-4 font-medium capitalize">
+                  <SelectValue
+                    placeholder="Select piece Material"
+                    className="text-base capitalize"
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.values(PieceMaterial).map(material => (
+                    <SelectItem
+                      key={material}
+                      value={material}
+                      className="capitalize">
+                      {material.toLowerCase()}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -156,8 +214,17 @@ export const Information = () => {
       </div>
 
       <div className="mt-6 grid place-items-center">
-        <Button size="lg" radii="pill" className="min-w-72">
-          Next
+        <Button
+          disabled={savingInfo}
+          type="submit"
+          size="lg"
+          radii="pill"
+          className="min-w-72">
+          {savingInfo ? (
+            <Spinner text="Just a moment" spinnerClass="fill-black w-5 h-5" />
+          ) : (
+            'Next'
+          )}
         </Button>
       </div>
     </form>

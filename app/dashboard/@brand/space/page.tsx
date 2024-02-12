@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui'
 import { routes } from '@/constants/app-routes'
+import { JobTargetDialog } from '@/components/common/job-target-dialog'
 
 export default function Space() {
   return (
@@ -16,9 +17,12 @@ export default function Space() {
       />
 
       <div className="mx-auto grid w-fit grid-cols-2 gap-2 pt-4">
-        <Button variant="outline" size="lg" disabled>
-          Upload Designs
-        </Button>
+        <JobTargetDialog>
+          <Button variant="outline" size="lg" className="w-full">
+            Upload Designs
+          </Button>
+        </JobTargetDialog>
+
         <Link href={routes.dashboard.inspiration}>
           <Button size="lg">Generate Inspiration (3 free trials)</Button>
         </Link>

@@ -112,7 +112,7 @@ model Design {
   brandId           String
   txHash            String?       @unique
   brand             Brand         @relation(fields: [brandId], references: [ownerId])
-  prompt            String
+  prompt            String?
   imagePrompt       String?
   promptResults     String[]
   preDesignedPrints String[]

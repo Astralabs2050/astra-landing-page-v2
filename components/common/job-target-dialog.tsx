@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import Sparkles from '@/public/svgs/sparkles.svg'
+'use client'
+
+import React, { PropsWithChildren, useState } from 'react'
 import CreditCard from '@/public/svgs/credit-card-refresh.svg'
 import ShirtFolded from '@/public/svgs/shirt-folded.svg'
 import Cube from '@/public/svgs/cube.svg'
@@ -19,11 +20,11 @@ import { Check } from 'lucide-react'
 import { useRouter } from 'next-nprogress-bar'
 import { routes } from '@/constants/app-routes'
 
-interface PromptDialogProps {
-  id: string
+interface JobTypeDialogProps extends PropsWithChildren {
+  id?: string
 }
 
-export const PromptDialog = ({ id }: PromptDialogProps) => {
+export const JobTargetDialog = ({ id, children }: JobTypeDialogProps) => {
   const [selected, setSelected] = useState<JobTarget>()
 
   const router = useRouter()
@@ -46,14 +47,7 @@ export const PromptDialog = ({ id }: PromptDialogProps) => {
   return (
     <div className="grid w-full place-items-center">
       <Dialog>
-        <DialogTrigger asChild>
-          <Button
-            type="button"
-            className="min-w-32 rounded-md bg-blue-radial font-normal tracking-normal">
-            <Sparkles className="mr-2 size-5" />
-            Bring Your idea To Life
-          </Button>
-        </DialogTrigger>
+        <DialogTrigger asChild>{children}</DialogTrigger>
 
         <DialogContent className="sm:max-w-[550px]">
           <DialogHeader className="flex flex-row items-center justify-between">
@@ -123,7 +117,8 @@ export const PromptDialog = ({ id }: PromptDialogProps) => {
               size="lg"
               disabled={!selected}
               onClick={() => {
-                const url = `${routes.dashboard.create}?id=${id}&job=${selected}`
+                const end = id ? `&id=${id}` : ''
+                const url = `${routes.dashboard.create}?target=${selected}${end}`
                 router.push(url)
               }}>
               Continue

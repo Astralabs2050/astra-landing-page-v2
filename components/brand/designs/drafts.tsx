@@ -21,7 +21,7 @@ export const Drafts = () => {
       {data?.map(({ key, ...design }) => (
         <DesignCard
           key={key}
-          title={design.name ?? design.prompt}
+          title={design.name ?? design.prompt ?? 'Outfit'}
           image={design.promptResults[0]}
           hideIcon={true}
           subtitle={<Badge variant="warning">Draft</Badge>}

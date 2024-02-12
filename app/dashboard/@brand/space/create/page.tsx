@@ -10,13 +10,17 @@ import { Job } from '@/components/brand/create/job'
 type Params = {
   searchParams: {
     id: string | undefined
-    target: JobTarget | undefined
     step: number | undefined
+    target: JobTarget
   }
 }
 
 async function getDesign({ id, target }: Params['searchParams']) {
-  if (!id || !target || !JobTarget[target]) {
+  if (!target || !JobTarget[target]) {
+    return null
+  }
+
+  if (!id) {
     return undefined
   }
 
@@ -51,7 +55,7 @@ export default async function Create({
               ][progress - 1]
             }
           </h1>
-          <p hidden={progress === 3} className="text-gray-3">
+          <p hidden={progress === 3} className="tracking-wide text-gray-3">
             {
               [
                 'Select Piece Type and Number of available stock',
@@ -69,7 +73,7 @@ export default async function Create({
       <div className="mx-auto w-[60%]">
         {
           {
-            1: <Information key={1} />,
+            1: <Information id={id} target={target} key={1} />,
             2: <Sketches key={2} />,
             3: <Job key={3} />,
           }[progress]

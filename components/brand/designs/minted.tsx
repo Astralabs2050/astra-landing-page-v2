@@ -18,7 +18,7 @@ export const Minted = ({ designs }: MintedProps) => {
       {designs.map((design, index) => (
         <DesignCard
           key={index}
-          title={design.name ?? design.prompt}
+          title={design.name ?? design.prompt ?? 'Outfit'}
           image={design.promptResults[0]}
           hideIcon={!design.pieces.length}
           subtitle={

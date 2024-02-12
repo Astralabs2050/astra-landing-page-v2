@@ -132,7 +132,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
 
           <CommandDialog open={open} onOpenChange={setOpen}>
             <CommandInput
-              className=" text-base"
+              className="text-base"
               placeholder="Enter to search..."
               onValueChange={value => {
                 setLoadingCities(true)
