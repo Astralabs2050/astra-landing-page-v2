@@ -43,14 +43,22 @@ export const Designs = ({ designs }: DesignsProps) => {
                 {!design.txHash ? (
                   <Badge variant="warning">Draft</Badge>
                 ) : (
-                  <Fragment>`${design.pieces.length} Pieces`</Fragment>
+                  <Fragment>
+                    {design.pieces.length} Piece
+                    {design.pieces.length > 1 && 's'}
+                  </Fragment>
                 )}
               </Fragment>
             }
           />
         ))}
       </div>
-      <Button className="mx-auto">View All</Button>
+
+      <div>
+        <Link href={routes.dashboard.designs}>
+          <Button className="mx-auto">View All</Button>
+        </Link>
+      </div>
     </Fragment>
   )
 }

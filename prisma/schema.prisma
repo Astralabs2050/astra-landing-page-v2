@@ -167,12 +167,12 @@ model Sketch {
 }
 
 model Job {
-  key            Int              @id @default(autoincrement())
-  id             String           @unique
-  designId       String
-  design         Design           @relation(fields: [designId], references: [id])
-  target         JobTarget
-  JobApplication JobApplication[]
+  key          Int              @id @default(autoincrement())
+  id           String           @unique
+  designId     String
+  design       Design           @relation(fields: [designId], references: [id])
+  target       JobTarget
+  applications JobApplication[]
 }
 
 model JobApplication {

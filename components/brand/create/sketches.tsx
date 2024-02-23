@@ -14,7 +14,7 @@ export const Sketches = ({ target, design }: FormPageProps) => {
     prints,
     updateState,
     uploadSketchesAndPrints,
-    updating,
+    loading,
     processing,
   } = useDesignForm(target, design)
 
@@ -99,9 +99,9 @@ export const Sketches = ({ target, design }: FormPageProps) => {
           size="lg"
           radii="pill"
           className="min-w-[40%]"
-          disabled={updating || processing}
+          disabled={loading || processing}
           onClick={uploadSketchesAndPrints}>
-          {updating || processing ? (
+          {loading || processing ? (
             <Spinner text="Just a moment" spinnerClass="fill-black w-5 h-5" />
           ) : target === 'DESIGNER' ? (
             'Turn to 3D'

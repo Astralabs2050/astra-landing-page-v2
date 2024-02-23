@@ -1,6 +1,6 @@
 import React from 'react'
 import { trpcCaller } from '@/server/utils'
-import { Drafts, Minted } from '@/components/brand/designs'
+import { CreatedJobs, Drafts, Minted } from '@/components/brand/designs'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
 
 export default async function BrandDashboard() {
@@ -22,6 +22,10 @@ export default async function BrandDashboard() {
 
       <TabsContent value="drafts">
         <Drafts />
+      </TabsContent>
+
+      <TabsContent value="created-jobs">
+        <CreatedJobs />
       </TabsContent>
     </Tabs>
   )

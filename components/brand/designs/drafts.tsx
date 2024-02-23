@@ -4,6 +4,7 @@ import React from 'react'
 import { api } from '@/services/trpc-client'
 import { DesignCard, DesignCardMenu } from '@/components/common'
 import { Badge, Spinner } from '@/components/ui'
+import { EmptyState } from '@/components/common/empty-state'
 
 export const Drafts = () => {
   const { data, isLoading } = api.brand.getDrafts.useQuery()
@@ -14,6 +15,10 @@ export const Drafts = () => {
         <Spinner />
       </div>
     )
+  }
+
+  if (data && !data.length) {
+    return <EmptyState text="No Items" />
   }
 
   return (

@@ -1,19 +1,40 @@
 'use client'
 
 import React from 'react'
-import { LogoMark } from '@/components/common'
-import { Button } from '@/components/ui'
+import Link from 'next/link'
+import { LogoMark, Notice } from '@/components/common'
+import { Button, Spinner } from '@/components/ui'
 import { useDesignForm } from '@/hooks/use-design-form'
 import { FormPageProps } from '@/types/design-forms'
+import { routes } from '@/constants/app-routes'
+import { useRouter } from 'next-nprogress-bar'
 
 export const Job = ({ target, design }: FormPageProps) => {
-  const { data } = useDesignForm(target, design)
+  const router = useRouter()
+
+  const { data, loading, mintAndCreateJob, completed } = useDesignForm(
+    target,
+    design,
+  )
 
   const totalPrice = () => {
     return (
       data?.pieces.reduce((cumm, curr) => {
         return cumm + curr.pricePerPiece
       }, 0) ?? 0
+    )
+  }
+
+  if (completed) {
+    return (
+      <Notice
+        title="Congratulations!"
+        subtitle={`Your outfit has been successfully minted as an NFT, and ${target === 'DESIGNER' ? 'a design job has been created.' : 'has been sent out to manufacturers. You will receive a list of applicants shortly'} `}
+        cta={{
+          text: 'Proceed',
+          action: () => router.push(routes.dashboard.designs),
+        }}
+      />
     )
   }
 
@@ -65,12 +86,18 @@ export const Job = ({ target, design }: FormPageProps) => {
       </div>
 
       <div className="mt-10 grid grid-cols-2 gap-4 px-4">
-        <Button variant="outline" radii="pill" size="lg">
-          Cancel
-        </Button>
+        <Link href={routes.dashboard.designs} className="inline-block w-full">
+          <Button variant="outline" radii="pill" size="lg" className="w-full">
+            Cancel
+          </Button>
+        </Link>
 
-        <Button radii="pill" size="lg">
-          Pay Now
+        <Button radii="pill" size="lg" onClick={mintAndCreateJob}>
+          {loading ? (
+            <Spinner text="Just a moment" spinnerClass="fill-black w-5 h-5" />
+          ) : (
+            'Pay Now'
+          )}
         </Button>
       </div>
     </div>

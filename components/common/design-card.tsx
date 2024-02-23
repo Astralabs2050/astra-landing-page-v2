@@ -47,8 +47,8 @@ export const DesignCard = ({
         className="aspect-auto w-full"
       />
 
-      <div className="space-y-4">
-        <div className="flex justify-between space-x-4 p-4">
+      <div className="space-y-4 p-4">
+        <div className="flex justify-between space-x-4">
           <div className="max-w-[11rem]">
             <h4 className="mr-3 truncate break-keep text-base font-semibold capitalize">
               {title}
@@ -80,7 +80,7 @@ export const DesignCard = ({
   )
 }
 
-export const DesignCardMenu = ({ id }: Omit<Design, 'key'>) => {
+export const DesignCardMenu = ({ id }: Omit<Design, 'key' | 'sketches'>) => {
   const { push } = useRouter()
   const { DESIGNER, MANUFACTURER } = JobTarget
 

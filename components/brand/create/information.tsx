@@ -27,7 +27,7 @@ export const Information = ({ target, design }: FormPageProps) => {
     updateState,
     updatePiece,
     saveInformation,
-    updating,
+    loading,
     generated,
   } = useDesignForm(target, design)
 
@@ -201,12 +201,12 @@ export const Information = ({ target, design }: FormPageProps) => {
 
       <div className="mt-6 grid place-items-center">
         <Button
-          disabled={updating}
+          disabled={loading}
           type="submit"
           size="lg"
           radii="pill"
           className="min-w-72">
-          {updating ? (
+          {loading ? (
             <Spinner text="Just a moment" spinnerClass="fill-black w-5 h-5" />
           ) : (
             'Next'

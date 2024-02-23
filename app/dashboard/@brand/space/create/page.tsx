@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react'
 import { JobTarget } from '@prisma/client'
 import { trpcCaller } from '@/server/utils'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { BackButton } from '@/components/common/back-button'
 import { Information } from '@/components/brand/create/information'
 import { Sketches } from '@/components/brand/create/sketches'
 import { Job } from '@/components/brand/create/job'
 import { Params } from '@/types/design-forms'
+import { routes } from '@/constants/app-routes'
 
 async function getDesign({ id, target }: Params['searchParams']) {
   if (!target || !JobTarget[target]) {
@@ -29,6 +30,10 @@ export default async function Create({
 
   if (design === null) {
     return notFound()
+  }
+
+  if (!!design?.txHash) {
+    return redirect(routes.dashboard.designs)
   }
 
   return (

@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import { DesignCard } from '@/components/common/design-card'
 import { Design } from '@/types/models'
-import { Badge } from '@/components/ui'
 import { EmptyState } from '@/components/common/empty-state'
 
 interface MintedProps {
@@ -20,14 +19,9 @@ export const Minted = ({ designs }: MintedProps) => {
           key={index}
           title={design.name ?? design.prompt ?? 'Outfit'}
           image={design.promptResults[0]}
-          hideIcon={!design.pieces.length}
           subtitle={
             <Fragment>
-              {!design.txHash ? (
-                <Badge variant="warning">Draft</Badge>
-              ) : (
-                <Fragment>`${design.pieces.length} Pieces`</Fragment>
-              )}
+              {design.pieces.length} Piece{design.pieces.length > 1 && 's'}
             </Fragment>
           }
         />

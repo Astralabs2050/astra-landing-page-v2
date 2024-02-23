@@ -60,7 +60,6 @@ export const designRouter = createTRPCRouter({
         where: { designId: id },
       })
 
-      console.log(sketches, '>>>')
       const updated = await ctx.prisma.design.upsert({
         where: { id },
         create: {
@@ -68,6 +67,7 @@ export const designRouter = createTRPCRouter({
           txHash,
           preDesignedPrints,
           brandId: ctx.session.userId,
+          createdAt: new Date(),
           id: nano(),
         },
         update: {
@@ -97,13 +97,17 @@ export const designRouter = createTRPCRouter({
         },
       })
 
-      await ctx.prisma.designPiece.deleteMany({
-        where: { id: { in: previousPieces.map(item => item.id) } },
-      })
+      if (pieces?.length) {
+        await ctx.prisma.designPiece.deleteMany({
+          where: { id: { in: previousPieces.map(item => item.id) } },
+        })
+      }
 
-      await ctx.prisma.sketch.deleteMany({
-        where: { id: { in: previousSketches.map(item => item.id) } },
-      })
+      if (sketches?.length) {
+        await ctx.prisma.sketch.deleteMany({
+          where: { id: { in: previousSketches.map(item => item.id) } },
+        })
+      }
 
       return updated
     }),
@@ -158,6 +162,7 @@ export const designRouter = createTRPCRouter({
           prompt,
           brandId: ctx.session.userId,
           promptResults: publicUrls,
+          createdAt: new Date(),
         },
       })
     }),

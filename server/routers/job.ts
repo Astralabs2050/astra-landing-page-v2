@@ -33,4 +33,20 @@ export const jobRouter = createTRPCRouter({
         },
       })
     }),
+
+  getPostings: authenticatedProcedure.query(async ({ ctx }) => {
+    return ctx.prisma.job.findMany({
+      where: {
+        design: { brandId: { equals: ctx.session.userId } },
+      },
+      include: {
+        design: {
+          include: {
+            sketches: true,
+            pieces: true,
+          },
+        },
+      },
+    })
+  }),
 })

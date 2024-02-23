@@ -1,4 +1,5 @@
 import { routes } from '@/constants/app-routes'
+import { nano } from '@/lib/nano'
 import { prepareFile, uploadBucketImage } from '@/services/storage'
 import { StorageBucket } from '@/services/supabase'
 import { api } from '@/services/trpc-client'
@@ -24,6 +25,7 @@ export const useDesignForm = (target: JobTarget, design?: Design) => {
   }
 
   const { mutateAsync, isLoading: updating } = api.design.update.useMutation()
+  const { mutateAsync: createJob, isLoading } = api.job.create.useMutation()
 
   const updatePiece = (
     index: number,
@@ -123,6 +125,11 @@ export const useDesignForm = (target: JobTarget, design?: Design) => {
     }
   }
 
+  const mintAndCreateJob = async () => {
+    await createJob({ txHash: nano(), target, designId: design!.id })
+    $designform.setKey('completed', true)
+  }
+
   useEffect(() => {
     if (!design) {
       return
@@ -153,8 +160,9 @@ export const useDesignForm = (target: JobTarget, design?: Design) => {
     ...designform,
     updatePiece,
     saveInformation,
-    updating,
+    mintAndCreateJob,
     uploadSketchesAndPrints,
+    loading: updating || isLoading,
     generated: design?.promptResults,
     updateState: $designform.setKey,
     data: design,
