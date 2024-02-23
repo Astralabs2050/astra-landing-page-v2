@@ -2,13 +2,26 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { Button, FileUpload } from '@/components/ui'
+import { Button, FileUpload, Spinner } from '@/components/ui'
 import { useDesignForm } from '@/hooks/use-design-form'
 import { JobTarget, SketchView } from '@prisma/client'
 import { cn } from '@/lib/utils'
 
-export const Sketches = ({ target }: { id?: string; target: JobTarget }) => {
-  const { sketches, prints, updateState } = useDesignForm('DESIGNER')
+export const Sketches = ({
+  target,
+  id,
+}: {
+  id?: string
+  target: JobTarget
+}) => {
+  const {
+    sketches,
+    prints,
+    updateState,
+    uploadSketchesAndPrints,
+    updating,
+    processing,
+  } = useDesignForm(target, id)
 
   return (
     <div className="mx-6 space-y-8">
@@ -87,8 +100,19 @@ export const Sketches = ({ target }: { id?: string; target: JobTarget }) => {
       </div>
 
       <div className="flex items-center justify-center pt-4">
-        <Button size="lg" radii="pill" className="min-w-[40%]">
-          {target === 'DESIGNER' ? 'Turn to 3D' : 'Create a physical version'}
+        <Button
+          size="lg"
+          radii="pill"
+          className="min-w-[40%]"
+          disabled={updating || processing}
+          onClick={uploadSketchesAndPrints}>
+          {updating || processing ? (
+            <Spinner text="Just a moment" spinnerClass="fill-black w-5 h-5" />
+          ) : target === 'DESIGNER' ? (
+            'Turn to 3D'
+          ) : (
+            'Create a physical version'
+          )}
         </Button>
       </div>
     </div>

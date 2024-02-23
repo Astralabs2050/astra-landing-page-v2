@@ -1,6 +1,7 @@
 'use client'
 
 import React, { Fragment } from 'react'
+import Image from 'next/image'
 import {
   Button,
   Input,
@@ -19,7 +20,7 @@ import {
   PieceMaterial,
   PieceType,
 } from '@prisma/client'
-import { Plus, X } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { newPiece } from '@/store/design'
 import { cn } from '@/lib/utils'
 
@@ -36,7 +37,8 @@ export const Information = ({
     updateState,
     updatePiece,
     saveInformation,
-    savingInfo,
+    updating,
+    generated,
   } = useDesignForm(target, id)
 
   return (
@@ -46,6 +48,21 @@ export const Information = ({
         e.preventDefault()
         saveInformation()
       }}>
+      {generated?.length && (
+        <div className="mb-6 grid grid-cols-4 gap-4">
+          {generated?.map((item, index) => (
+            <Image
+              key={index}
+              alt={`Result for: ${prompt}`}
+              src={item}
+              width={896}
+              height={1152}
+              className="w-full rounded-md"
+            />
+          ))}
+        </div>
+      )}
+
       <Input
         required
         placeholder="Give your outfit a name"
@@ -103,28 +120,6 @@ export const Information = ({
                   </SelectContent>
                 </Select>
               </div>
-
-              {pieces[index].type && (
-                <div className="mx-10 flex items-center justify-between rounded-lg bg-neutral-50 p-5">
-                  <div>
-                    <p className="text-lg font-semibold capitalize">
-                      {pieces[index].type.toLowerCase()}
-                    </p>
-                    <p className="text-sm text-gray-3">
-                      Modelling Price: $50/Piece
-                    </p>
-                  </div>
-
-                  <Button
-                    variant="ghost"
-                    size="fit"
-                    type="button"
-                    className="mr-1"
-                    onClick={() => updatePiece(index, 'type', null)}>
-                    <X className="size-5" />
-                  </Button>
-                </div>
-              )}
             </div>
 
             <div className="grid gap-2">
@@ -216,12 +211,12 @@ export const Information = ({
 
       <div className="mt-6 grid place-items-center">
         <Button
-          disabled={savingInfo}
+          disabled={updating}
           type="submit"
           size="lg"
           radii="pill"
           className="min-w-72">
-          {savingInfo ? (
+          {updating ? (
             <Spinner text="Just a moment" spinnerClass="fill-black w-5 h-5" />
           ) : (
             'Next'

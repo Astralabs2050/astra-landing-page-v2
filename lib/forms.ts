@@ -24,6 +24,7 @@ export const handleFileChange = (
 
     if (file.size > maxSize) {
       alert(`File size must be no larger than ${formatBytes(maxSize)}`)
+      return
     }
 
     callback(file)

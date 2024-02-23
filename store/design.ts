@@ -20,4 +20,5 @@ export const $designform = map({
     { view: 'SIDE2' },
     { view: 'BACK' },
   ] as Omit<Sketch, 'key' | 'id'>[],
+  processing: false,
 })

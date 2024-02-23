@@ -3,11 +3,11 @@ import {
   createTRPCRouter,
   authenticatedProcedure,
 } from '@/services/trpc-server'
-import { generate } from '@/services/stability'
-import { prepareFile, uploadBucketImage } from '@/services/storage'
-import { StorageBucket } from '@/services/supabase'
 import { nano } from '@/lib/nano'
-import { PieceMaterial, PieceType } from '@prisma/client'
+import { generate } from '@/services/stability'
+import { StorageBucket } from '@/services/supabase'
+import { prepareFile, uploadBucketImage } from '@/services/storage'
+import { PieceMaterial, PieceType, SketchView } from '@prisma/client'
 
 export const designRouter = createTRPCRouter({
   get: authenticatedProcedure
@@ -27,6 +27,14 @@ export const designRouter = createTRPCRouter({
         id: z.string().optional(),
         name: z.string().optional(),
         txHash: z.string().optional(),
+        sketches: z
+          .array(
+            z.object({
+              url: z.string(),
+              view: z.nativeEnum(SketchView),
+            }),
+          )
+          .optional(),
         preDesignedPrints: z.array(z.string()).optional(),
         pieces: z
           .array(
@@ -41,35 +49,41 @@ export const designRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { id, name, txHash, pieces, preDesignedPrints } = input
+      const { id, name, txHash, pieces, preDesignedPrints, sketches } = input
+
+      const previousSketches = await ctx.prisma.sketch.findMany({
+        where: { designId: id },
+      })
 
       const previousPieces = await ctx.prisma.designPiece.findMany({
         where: { designId: id },
       })
 
+      console.log(sketches, '>>>')
       const updated = await ctx.prisma.design.upsert({
         where: { id },
         create: {
           name,
           txHash,
           preDesignedPrints,
-          id: nano(),
           brandId: ctx.session.userId,
-          pieces: {
-            createMany: {
-              data:
-                pieces?.map(piece => ({
-                  ...piece,
-                  id: nano(),
-                })) ?? [],
-            },
-          },
+          id: nano(),
         },
         update: {
           name,
           txHash,
           preDesignedPrints,
           updatedAt: new Date(),
+          sketches: {
+            createMany: {
+              data:
+                sketches?.map(sketch => ({
+                  id: nano(),
+                  url: sketch.url,
+                  view: sketch.view,
+                })) ?? [],
+            },
+          },
           pieces: {
             createMany: {
               data:
@@ -84,6 +98,10 @@ export const designRouter = createTRPCRouter({
 
       await ctx.prisma.designPiece.deleteMany({
         where: { id: { in: previousPieces.map(item => item.id) } },
+      })
+
+      await ctx.prisma.sketch.deleteMany({
+        where: { id: { in: previousSketches.map(item => item.id) } },
       })
 
       return updated

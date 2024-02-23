@@ -28,6 +28,8 @@ enum PieceMaterial {
   COTTON
   LINEN
   WOOL
+  LEATHER
+  POLYESTER
 }
 
 enum PieceType {

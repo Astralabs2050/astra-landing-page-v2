@@ -48,8 +48,12 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
         accept={!accept ? '*' : accept.join(',')}
         multiple={false}
         onChange={event => {
-          handleFileChange(event, onFileChange, maxSize)
-          setFile(event.target.files?.[0])
+          const callback = (file: Blob) => {
+            onFileChange(file)
+            setFile(event.target.files?.[0])
+          }
+
+          handleFileChange(event, callback, maxSize)
         }}
       />
     )

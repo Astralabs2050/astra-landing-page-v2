@@ -43,7 +43,7 @@ export default async function Create({
       <div className="mb-12 grid grid-cols-[20rem,1fr,20rem] place-items-start items-center">
         <BackButton />
 
-        <div className="shrink-0 space-y-1 text-center">
+        <div className="w-full shrink-0 space-y-1 text-center">
           <h1 className="text-[1.7rem] font-medium">
             {
               [

@@ -1,6 +1,11 @@
 import { StorageBucket, supabase } from './supabase'
 
-export const prepareFile = async (blob: Blob) => {
+export const prepareFile = async (input: Blob | string) => {
+  const blob: Blob =
+    typeof input === 'string'
+      ? await fetch(input).then(res => res.blob())
+      : input
+
   const arrayBuffer = await new Response(blob).arrayBuffer()
   const fileBody = new Uint8Array(arrayBuffer)
 
@@ -23,7 +28,7 @@ export const uploadBucketImage = async (
     .from(bucket)
     .upload(encodeURI(`${path}/${fileName}`), file, {
       cacheControl: '15552000', // six months,
-      upsert: false,
+      upsert: true,
     })
 
   if (error) {
