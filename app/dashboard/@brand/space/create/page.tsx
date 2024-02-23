@@ -75,7 +75,7 @@ export default async function Create({
           {
             1: <Information id={id} target={target} key={1} />,
             2: <Sketches id={id} target={target} key={2} />,
-            3: <Job key={3} />,
+            3: <Job id={id} target={target} key={3} />,
           }[progress]
         }
       </div>

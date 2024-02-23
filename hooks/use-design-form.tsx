@@ -115,6 +115,7 @@ export const useDesignForm = (target: JobTarget, id?: string) => {
 
   return {
     ...designform,
+    data,
     updatePiece,
     saveInformation,
     updating,

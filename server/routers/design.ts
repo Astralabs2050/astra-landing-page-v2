@@ -17,6 +17,7 @@ export const designRouter = createTRPCRouter({
         where: { id: input.id },
         include: {
           pieces: true,
+          sketches: true,
         },
       })
     }),
