@@ -13,7 +13,10 @@ export const newPiece = { pieceCount: 1, pricePerPiece: 0 }
 export const $designform = map({
   name: '',
   prints: ['', '', ''],
-  pieces: [newPiece] as Omit<DesignPiece, 'key' | 'id'>[],
+  pieces: [newPiece] as Omit<
+    DesignPiece,
+    'key' | 'id' | 'createdAt' | 'updatedAt'
+  >[],
   sketches: [
     { view: 'FRONT' },
     { view: 'SIDE1' },

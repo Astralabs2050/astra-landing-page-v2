@@ -4,16 +4,11 @@ import React from 'react'
 import Image from 'next/image'
 import { Button, FileUpload, Spinner } from '@/components/ui'
 import { useDesignForm } from '@/hooks/use-design-form'
-import { JobTarget, SketchView } from '@prisma/client'
+import { SketchView } from '@prisma/client'
 import { cn } from '@/lib/utils'
+import { FormPageProps } from '@/types/design-forms'
 
-export const Sketches = ({
-  target,
-  id,
-}: {
-  id?: string
-  target: JobTarget
-}) => {
+export const Sketches = ({ target, design }: FormPageProps) => {
   const {
     sketches,
     prints,
@@ -21,7 +16,7 @@ export const Sketches = ({
     uploadSketchesAndPrints,
     updating,
     processing,
-  } = useDesignForm(target, id)
+  } = useDesignForm(target, design)
 
   return (
     <div className="mx-6 space-y-8">

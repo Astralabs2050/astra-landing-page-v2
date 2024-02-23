@@ -1,13 +1,13 @@
 'use client'
 
+import React from 'react'
 import { LogoMark } from '@/components/common'
 import { Button } from '@/components/ui'
 import { useDesignForm } from '@/hooks/use-design-form'
-import { JobTarget } from '@prisma/client'
-import React from 'react'
+import { FormPageProps } from '@/types/design-forms'
 
-export const Job = ({ target, id }: { id?: string; target: JobTarget }) => {
-  const { data } = useDesignForm(target, id)
+export const Job = ({ target, design }: FormPageProps) => {
+  const { data } = useDesignForm(target, design)
 
   const totalPrice = () => {
     return (

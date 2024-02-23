@@ -14,23 +14,13 @@ import {
 } from '@/components/ui'
 import { useDesignForm } from '@/hooks/use-design-form'
 import Trash from '@/public/svgs/trash.svg'
-import {
-  DesignPiece,
-  JobTarget,
-  PieceMaterial,
-  PieceType,
-} from '@prisma/client'
+import { DesignPiece, PieceMaterial, PieceType } from '@prisma/client'
 import { Plus } from 'lucide-react'
 import { newPiece } from '@/store/design'
 import { cn } from '@/lib/utils'
+import { FormPageProps } from '@/types/design-forms'
 
-export const Information = ({
-  id,
-  target,
-}: {
-  id?: string
-  target: JobTarget
-}) => {
+export const Information = ({ target, design }: FormPageProps) => {
   const {
     name,
     pieces,
@@ -39,7 +29,7 @@ export const Information = ({
     saveInformation,
     updating,
     generated,
-  } = useDesignForm(target, id)
+  } = useDesignForm(target, design)
 
   return (
     <form

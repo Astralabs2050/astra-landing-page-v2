@@ -89,22 +89,41 @@ model Brand {
 }
 
 model CreatorProfile {
-  key         Int       @id @default(autoincrement())
-  email       String
-  name        String
-  bio         String
-  location    String
-  ownerId     String    @unique
-  owner       User      @relation(fields: [ownerId], references: [id])
-  city        String
-  lat         String
-  lng         String
-  countryCode String
-  province1   String?
-  province2   String?
-  zip         String?
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @default(now())
+  key            Int              @id @default(autoincrement())
+  email          String
+  name           String
+  bio            String
+  location       String
+  ownerId        String           @unique
+  owner          User             @relation(fields: [ownerId], references: [id])
+  city           String
+  lat            String
+  lng            String
+  countryCode    String
+  province1      String?
+  province2      String?
+  zip            String?
+  createdAt      DateTime?        @default(now())
+  updatedAt      DateTime?        @default(now())
+  JobApplication JobApplication[]
+  skills         CreatorSkill[]
+  CreatorWork    CreatorWork[]
+}
+
+model CreatorSkill {
+  key      Int              @id @default(autoincrement())
+  title    String           @unique
+  creators CreatorProfile[]
+}
+
+model CreatorWork {
+  key         Int            @id @default(autoincrement())
+  title       String
+  description String?
+  Tags        String[]
+  shots       String[]
+  creatorId   String
+  creator     CreatorProfile @relation(fields: [creatorId], references: [ownerId])
 }
 
 model Design {
@@ -148,9 +167,19 @@ model Sketch {
 }
 
 model Job {
-  key      Int       @id @default(autoincrement())
-  id       String    @unique
-  designId String
-  design   Design    @relation(fields: [designId], references: [id])
-  target   JobTarget
+  key            Int              @id @default(autoincrement())
+  id             String           @unique
+  designId       String
+  design         Design           @relation(fields: [designId], references: [id])
+  target         JobTarget
+  JobApplication JobApplication[]
+}
+
+model JobApplication {
+  key         Int            @id @default(autoincrement())
+  id          String         @unique
+  jobId       String
+  applicantId String
+  job         Job            @relation(fields: [jobId], references: [id])
+  applicant   CreatorProfile @relation(fields: [applicantId], references: [ownerId])
 }

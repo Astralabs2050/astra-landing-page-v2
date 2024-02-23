@@ -6,14 +6,7 @@ import { BackButton } from '@/components/common/back-button'
 import { Information } from '@/components/brand/create/information'
 import { Sketches } from '@/components/brand/create/sketches'
 import { Job } from '@/components/brand/create/job'
-
-type Params = {
-  searchParams: {
-    id: string | undefined
-    step: number | undefined
-    target: JobTarget
-  }
-}
+import { Params } from '@/types/design-forms'
 
 async function getDesign({ id, target }: Params['searchParams']) {
   if (!target || !JobTarget[target]) {
@@ -73,9 +66,9 @@ export default async function Create({
       <div className="mx-auto">
         {
           {
-            1: <Information id={id} target={target} key={1} />,
-            2: <Sketches id={id} target={target} key={2} />,
-            3: <Job id={id} target={target} key={3} />,
+            1: <Information target={target} design={design} />,
+            2: <Sketches target={target} design={design} />,
+            3: <Job target={target} design={design} />,
           }[progress]
         }
       </div>

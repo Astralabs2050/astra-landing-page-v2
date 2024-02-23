@@ -97,6 +97,7 @@ export const brandRouter = createTRPCRouter({
             ],
         include: {
           pieces: true,
+          sketches: true,
         },
       })
     }),
