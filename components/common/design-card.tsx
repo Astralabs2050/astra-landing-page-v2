@@ -1,22 +1,13 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import Kebab from '@/public/svgs/kebab.svg'
 import Shirt from '@/public/svgs/shirt.svg'
-import ShirtFolded from '@/public/svgs/shirt-folded.svg'
-import Trash from '@/public/svgs/trash.svg'
-import Cube from '@/public/svgs/cube.svg'
 import {
   Button,
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui'
-import { Design } from '@/types/models'
-import { JobTarget } from '@prisma/client'
-import { routes } from '@/constants/app-routes'
-import { useRouter } from 'next-nprogress-bar'
 
 interface DesignCardProps {
   title: string
@@ -68,7 +59,7 @@ export const DesignCard = ({
                 <Kebab className="size-6 text-blue-1" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuContent align="end" className="min-w-40">
               {menuContent}
             </DropdownMenuContent>
           </DropdownMenu>
@@ -77,36 +68,5 @@ export const DesignCard = ({
         {cta}
       </div>
     </div>
-  )
-}
-
-export const DesignCardMenu = ({ id }: Omit<Design, 'key' | 'sketches'>) => {
-  const { push } = useRouter()
-  const { DESIGNER, MANUFACTURER } = JobTarget
-
-  return (
-    <Fragment>
-      <DropdownMenuItem
-        onClick={() => {
-          push(`${routes.dashboard.create}?target=${DESIGNER}&id=${id}`)
-        }}>
-        <Cube className="mr-2 size-5" />
-        <span>Turn to 3D</span>
-      </DropdownMenuItem>
-
-      <DropdownMenuItem
-        onClick={() => {
-          push(`${routes.dashboard.create}?target=${MANUFACTURER}&id=${id}`)
-        }}>
-        <ShirtFolded className="mr-2 size-5" />
-        <span>Make it Real</span>
-      </DropdownMenuItem>
-
-      <DropdownMenuSeparator />
-      <DropdownMenuItem className="text-destructive focus:bg-destructive focus:text-white">
-        <Trash className="mr-2 size-5" />
-        <span>Delete</span>
-      </DropdownMenuItem>
-    </Fragment>
   )
 }

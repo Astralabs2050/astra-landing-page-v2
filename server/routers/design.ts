@@ -18,6 +18,7 @@ export const designRouter = createTRPCRouter({
         include: {
           pieces: true,
           sketches: true,
+          jobs: true,
         },
       })
     }),

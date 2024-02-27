@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react'
 import { DesignCard } from '@/components/common/design-card'
-import { Design } from '@/types/models'
+import { Designs } from '@/types/models'
 import { EmptyState } from '@/components/common/empty-state'
+import { DesignCardMenu } from '@/components/common/design-card-menu'
 
 interface MintedProps {
-  designs: Design[]
+  designs: Designs
 }
 
 export const Minted = ({ designs }: MintedProps) => {
@@ -19,6 +20,7 @@ export const Minted = ({ designs }: MintedProps) => {
           key={index}
           title={design.name ?? design.prompt ?? 'Outfit'}
           image={design.promptResults[0]}
+          menuContent={<DesignCardMenu {...design} />}
           subtitle={
             <Fragment>
               {design.pieces.length} Piece{design.pieces.length > 1 && 's'}

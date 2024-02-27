@@ -1,14 +1,13 @@
 'use client'
 
 import React, { Fragment } from 'react'
-import Suitcase from '@/public/svgs/suitcase.svg'
 import { DesignCard } from '@/components/common'
 import { DesignCardMenu } from '@/components/common/design-card-menu'
 import { EmptyState } from '@/components/common/empty-state'
 import { Button, Spinner } from '@/components/ui'
 import { api } from '@/services/trpc-client'
 
-export const CreatedJobs = () => {
+export const OngoingJobs = () => {
   const { data, isLoading } = api.job.getPostings.useQuery()
 
   if (isLoading) {
@@ -39,8 +38,7 @@ export const CreatedJobs = () => {
           }
           cta={
             <Button variant="outline" className="w-full text-sm" size="sm">
-              <Suitcase className="mr-2 size-4" />
-              View Applications
+              Currently in Production
             </Button>
           }
         />

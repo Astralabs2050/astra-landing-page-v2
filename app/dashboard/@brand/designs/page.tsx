@@ -1,7 +1,12 @@
 import React from 'react'
 import { trpcCaller } from '@/server/utils'
-import { CreatedJobs, Drafts, Minted } from '@/components/brand/designs'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
+import {
+  CreatedJobs,
+  OngoingJobs,
+  Drafts,
+  Minted,
+} from '@/components/brand/designs'
 
 export default async function BrandDashboard() {
   const trpc = await trpcCaller()
@@ -26,6 +31,10 @@ export default async function BrandDashboard() {
 
       <TabsContent value="created-jobs">
         <CreatedJobs />
+      </TabsContent>
+
+      <TabsContent value="ongoing-jobs">
+        <OngoingJobs />
       </TabsContent>
     </Tabs>
   )

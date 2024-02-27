@@ -139,7 +139,7 @@ model Design {
   preDesignedPrints String[]
   createdAt         DateTime?     @default(now())
   updatedAt         DateTime?     @default(now())
-  Job               Job[]
+  jobs              Job[]
   sketches          Sketch[]
   pieces            DesignPiece[]
 }
@@ -173,6 +173,8 @@ model Job {
   design       Design           @relation(fields: [designId], references: [id])
   target       JobTarget
   applications JobApplication[]
+
+  @@unique([designId, target])
 }
 
 model JobApplication {
