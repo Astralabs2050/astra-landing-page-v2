@@ -6,7 +6,7 @@ import { format } from 'date-fns'
 import Image from 'next/image'
 import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
-import { base } from 'viem/chains'
+import { baseSepolia } from 'viem/chains'
 
 export const OnChainCert = ({
   children,
@@ -15,6 +15,7 @@ export const OnChainCert = ({
   promptResults,
   sketches,
   createdAt,
+  txHash,
 }: PropsWithChildren & Partial<Design>) => {
   const images = promptResults?.length ? promptResults : sketches
 
@@ -66,7 +67,9 @@ export const OnChainCert = ({
           </div>
 
           <div>
-            <Link target="_blank" href={base.blockExplorers.default.url}>
+            <Link
+              target="_blank"
+              href={`https://sepolia.basescan.org/tx/${txHash}`}>
               <p className="flex items-center space-x-1 text-base font-semibold">
                 <ExternalLink className="size-4" />
                 <span>View On Block Explorer</span>

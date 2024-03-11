@@ -92,7 +92,11 @@ export const Job = ({ target, design }: FormPageProps) => {
           </Button>
         </Link>
 
-        <Button radii="pill" size="lg" onClick={mintAndCreateJob}>
+        <Button
+          radii="pill"
+          size="lg"
+          disabled={loading}
+          onClick={mintAndCreateJob}>
           {loading ? (
             <Spinner text="Just a moment" spinnerClass="fill-black w-5 h-5" />
           ) : (

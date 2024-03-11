@@ -1,5 +1,4 @@
 import { routes } from '@/constants/app-routes'
-import { nano } from '@/lib/nano'
 import { prepareFile, uploadBucketImage } from '@/services/storage'
 import { StorageBucket } from '@/services/supabase'
 import { api } from '@/services/trpc-client'
@@ -10,6 +9,9 @@ import { useStore } from '@nanostores/react'
 import { JobTarget } from '@prisma/client'
 import { useRouter } from 'next-nprogress-bar'
 import { useEffect, useRef } from 'react'
+import { useContractWrite } from 'wagmi'
+import { astraNFTABI } from '@/abis'
+import { contracts } from '@/constants/contracts'
 
 export const useDesignForm = (target: JobTarget, design?: Design) => {
   const init = useRef(false)
@@ -26,6 +28,13 @@ export const useDesignForm = (target: JobTarget, design?: Design) => {
 
   const { mutateAsync, isLoading: updating } = api.design.update.useMutation()
   const { mutateAsync: createJob, isLoading } = api.job.create.useMutation()
+
+  const { writeAsync, isLoading: sigining } = useContractWrite({
+    abi: astraNFTABI,
+    address: contracts.nft,
+    functionName: 'mint',
+    args: [1],
+  })
 
   const updatePiece = (
     index: number,
@@ -126,8 +135,14 @@ export const useDesignForm = (target: JobTarget, design?: Design) => {
   }
 
   const mintAndCreateJob = async () => {
-    await createJob({ txHash: nano(), target, designId: design!.id })
-    $designform.setKey('completed', true)
+    try {
+      const mint = await writeAsync()
+      await createJob({ txHash: mint.hash, target, designId: design!.id })
+
+      $designform.setKey('completed', true)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -162,7 +177,7 @@ export const useDesignForm = (target: JobTarget, design?: Design) => {
     saveInformation,
     mintAndCreateJob,
     uploadSketchesAndPrints,
-    loading: updating || isLoading,
+    loading: updating || isLoading || sigining,
     generated: design?.promptResults,
     updateState: $designform.setKey,
     data: design,
