@@ -10,7 +10,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const auth = useWeb3Auth()
   const account = useAccount()
 
-  if (!account.address) {
+  if (auth.user?.onboarded && !account.address) {
     return <Spinner fullScreen />
   }
 

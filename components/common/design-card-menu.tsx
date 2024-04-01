@@ -6,7 +6,7 @@ import Trash from '@/public/svgs/trash.svg'
 import Cube from '@/public/svgs/cube.svg'
 import { routes } from '@/constants/app-routes'
 import { Design } from '@/types/models'
-import { JobTarget } from '@prisma/client'
+import { CreatorType } from '@prisma/client'
 import { useRouter } from 'next-nprogress-bar'
 import { Fragment } from 'react'
 import { Button, DropdownMenuItem, DropdownMenuSeparator } from '../ui'
@@ -15,7 +15,7 @@ import { OnChainCert } from './on-chain-cert'
 
 export const DesignCardMenu = (props: Partial<Design>) => {
   const { push } = useRouter()
-  const { DESIGNER, MANUFACTURER } = JobTarget
+  const { DESIGNER, MANUFACTURER } = CreatorType
 
   const isDesignJob =
     props.jobs?.[0].target === 'DESIGNER' ||

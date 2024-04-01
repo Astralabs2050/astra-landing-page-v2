@@ -6,14 +6,14 @@ import { $designform } from '@/store/design'
 import { Design } from '@/types/models'
 import { ValuesOf } from '@/types/utils'
 import { useStore } from '@nanostores/react'
-import { JobTarget } from '@prisma/client'
+import { CreatorType } from '@prisma/client'
 import { useRouter } from 'next-nprogress-bar'
 import { useEffect, useRef } from 'react'
 import { useContractWrite } from 'wagmi'
 import { astraNFTABI } from '@/abis'
 import { contracts } from '@/constants/contracts'
 
-export const useDesignForm = (target: JobTarget, design?: Design) => {
+export const useDesignForm = (target: CreatorType, design?: Design) => {
   const init = useRef(false)
 
   const designform = useStore($designform)

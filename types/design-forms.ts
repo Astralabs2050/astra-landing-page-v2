@@ -1,11 +1,11 @@
-import { JobTarget } from '@prisma/client'
+import { CreatorType } from '@prisma/client'
 import { Design } from './models'
 
 export type Params = {
   searchParams: {
     id?: string | undefined
     step?: number | undefined
-    target: JobTarget
+    target: CreatorType
   }
 }
 

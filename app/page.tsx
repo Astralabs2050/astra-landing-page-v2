@@ -1,5 +1,5 @@
 import { Logo } from '@/components/common'
-import { Roles, Stepper } from '@/components/onboarding'
+import { CreatorWorks, Roles, Stepper } from '@/components/onboarding'
 import ProfileForm from '@/components/onboarding/profile-form'
 import { Button } from '@/components/ui/button'
 import { trpcCaller } from '@/server/utils'
@@ -23,6 +23,13 @@ export default async function Home() {
       return brand ? 'completed' : 2
     }
 
+    if (user && (user.role === 'DESIGNER' || user.role === 'MANUFACTURER')) {
+      const creator = await trpc.creator.get()
+      const work = await trpc.creator.getWorkSamples()
+
+      return work.length ? 'completed' : creator ? 3 : 2
+    }
+
     return 1
   }
 
@@ -34,11 +41,11 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex h-screen w-screen flex-col bg-gray-6">
-      <header className="flex h-header items-center justify-between px-12">
+    <main className="flex min-h-screen w-screen flex-col bg-gray-6">
+      <header className="sticky top-0 z-20 flex h-header items-center justify-between bg-gray-6 px-12">
         <Logo />
       </header>
-      <div className="mx-[8.3rem] mb-[2.8rem] grow bg-white px-6 py-16">
+      <div className="relative mx-[8.3rem] mb-[2.8rem] grow bg-white px-6 py-16">
         <div className="mb-6 grid grid-cols-3 place-items-start">
           <Cta href={routes.logout}>
             <Button variant="ghost" className="pr-10">
@@ -52,7 +59,7 @@ export default async function Home() {
               count={
                 user?.role !== 'DESIGNER' && user?.role !== 'MANUFACTURER'
                   ? 2
-                  : 4
+                  : 3
               }
             />
           </div>
@@ -62,6 +69,7 @@ export default async function Home() {
           [
             <Roles key={1} roles={roles} session={session} />,
             <ProfileForm key={2} user={user} />,
+            <CreatorWorks key={3} />,
           ][progress - 1]
         }
       </div>

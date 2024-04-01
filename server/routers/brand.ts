@@ -1,9 +1,9 @@
 import { z } from 'zod'
-import { prisma } from '../db'
 import {
   createTRPCRouter,
   authenticatedProcedure,
 } from '@/services/trpc-server'
+import { basicProfileInput } from '../utils/router-inputs'
 
 export const brandRouter = createTRPCRouter({
   get: authenticatedProcedure.query(async ({ ctx }) => {
@@ -13,50 +13,26 @@ export const brandRouter = createTRPCRouter({
   }),
 
   update: authenticatedProcedure
-    .input(
-      z.object({
-        name: z.string(),
-        bio: z.string(),
-        email: z.string().optional(),
-        location: z.object({
-          name: z.string(),
-          lat: z.string(),
-          lng: z.string(),
-          countryCode: z.string(),
-          admin1: z.string().optional(),
-          admin2: z.string().optional(),
-          zip: z.string().optional(),
-        }),
-      }),
-    )
+    .input(basicProfileInput)
     .mutation(async ({ ctx, input }) => {
       const { name, bio, location } = input
-
-      const {
-        admin1,
-        admin2,
-        zip,
-        countryCode,
-        lat,
-        lng,
-        name: city,
-      } = location
+      const { name: city, ...rest } = location
 
       const data = {
         name,
         bio,
         city,
-        zip,
-        lat,
-        lng,
-        countryCode,
+        zip: rest.zip,
+        lat: rest.lat,
+        lng: rest.lng,
+        countryCode: rest.countryCode,
         email: ctx.session.user.email,
         ownerId: ctx.session.userId,
-        province1: admin1,
-        province2: admin2,
+        province1: rest.admin1,
+        province2: rest.admin2,
       }
 
-      const brand = await prisma.brand.upsert({
+      const brand = await ctx.prisma.brand.upsert({
         where: { ownerId: ctx.session.userId },
         create: data,
         update: data,

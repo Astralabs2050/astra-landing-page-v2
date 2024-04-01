@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTrigger,
 } from '@/components/ui'
-import { JobTarget } from '@prisma/client'
+import { CreatorType } from '@prisma/client'
 import { cn } from '@/lib/utils'
 import { Check } from 'lucide-react'
 import { useRouter } from 'next-nprogress-bar'
@@ -25,7 +25,7 @@ interface JobTypeDialogProps extends PropsWithChildren {
 }
 
 export const JobTargetDialog = ({ id, children }: JobTypeDialogProps) => {
-  const [selected, setSelected] = useState<JobTarget>()
+  const [selected, setSelected] = useState<CreatorType>()
 
   const router = useRouter()
 
@@ -34,13 +34,13 @@ export const JobTargetDialog = ({ id, children }: JobTypeDialogProps) => {
       title: 'Turn to 3D',
       description: 'Turn your idea into 3D for AR/VR sales in a virtual store',
       Icon: Cube,
-      value: JobTarget.DESIGNER,
+      value: CreatorType.DESIGNER,
     },
     {
       title: 'Make it Real',
       description: 'Find a tailor or manufacturer to make a sample made',
       Icon: ShirtFolded,
-      value: JobTarget.MANUFACTURER,
+      value: CreatorType.MANUFACTURER,
     },
   ]
 

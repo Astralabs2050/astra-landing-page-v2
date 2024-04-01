@@ -43,7 +43,7 @@ enum PieceType {
   HEADWARMER
 }
 
-enum JobTarget {
+enum CreatorType {
   DESIGNER
   MANUFACTURER
 }
@@ -93,7 +93,6 @@ model CreatorProfile {
   email          String
   name           String
   bio            String
-  location       String
   ownerId        String           @unique
   owner          User             @relation(fields: [ownerId], references: [id])
   city           String
@@ -113,14 +112,16 @@ model CreatorProfile {
 model CreatorSkill {
   key      Int              @id @default(autoincrement())
   title    String           @unique
+  id       String           @unique
   creators CreatorProfile[]
 }
 
 model CreatorWork {
   key         Int            @id @default(autoincrement())
+  id          String         @unique
   title       String
   description String?
-  Tags        String[]
+  tags        String[]
   shots       String[]
   creatorId   String
   creator     CreatorProfile @relation(fields: [creatorId], references: [ownerId])
@@ -171,7 +172,7 @@ model Job {
   id           String           @unique
   designId     String
   design       Design           @relation(fields: [designId], references: [id])
-  target       JobTarget
+  target       CreatorType
   applications JobApplication[]
 
   @@unique([designId, target])

@@ -1,10 +1,11 @@
-import { z } from 'zod'
 import { map } from 'nanostores'
 import { City } from '@/types/models'
+import { CreatorWork } from '@prisma/client'
 
 export const $onboarding = map({
-  name: z.string()._input,
-  bio: z.string()._input,
+  name: '',
+  bio: '',
   submitted: false,
   location: null as City | null,
+  works: [] as Pick<CreatorWork, 'description' | 'shots' | 'title'>[],
 })

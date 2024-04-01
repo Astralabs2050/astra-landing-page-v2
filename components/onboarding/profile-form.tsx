@@ -42,6 +42,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
     submitted,
     submitting,
     saveBrandProfile,
+    saveCreatorProfile,
   } = useOnboarding()
 
   if (submitted) {
@@ -70,7 +71,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
         className="mx-auto mt-16 grid w-[60%] gap-8"
         onSubmit={e => {
           e.preventDefault()
-          saveBrandProfile()
+          user?.role === 'BRAND' ? saveBrandProfile() : saveCreatorProfile()
         }}>
         <Fragment>
           <Input

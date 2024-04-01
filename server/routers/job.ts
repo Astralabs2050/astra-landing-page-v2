@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { nano } from '@/lib/nano'
-import { JobTarget } from '@prisma/client'
+import { CreatorType } from '@prisma/client'
 import {
   createTRPCRouter,
   authenticatedProcedure,
@@ -12,7 +12,7 @@ export const jobRouter = createTRPCRouter({
       z.object({
         designId: z.string(),
         txHash: z.string(),
-        target: z.nativeEnum(JobTarget),
+        target: z.nativeEnum(CreatorType),
       }),
     )
     .mutation(async ({ ctx, input }) => {

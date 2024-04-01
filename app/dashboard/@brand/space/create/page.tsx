@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { JobTarget } from '@prisma/client'
+import { CreatorType } from '@prisma/client'
 import { trpcCaller } from '@/server/utils'
 import { notFound, redirect } from 'next/navigation'
 import { BackButton } from '@/components/common/back-button'
@@ -10,7 +10,7 @@ import { Params } from '@/types/design-forms'
 import { routes } from '@/constants/app-routes'
 
 async function getDesign({ id, target }: Params['searchParams']) {
-  if (!target || !JobTarget[target]) {
+  if (!target || !CreatorType[target]) {
     return null
   }
 
