@@ -6,7 +6,6 @@ import { format } from 'date-fns'
 import Image from 'next/image'
 import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
-import { baseSepolia } from 'viem/chains'
 
 export const OnChainCert = ({
   children,

@@ -18,10 +18,13 @@ export const jobRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { target, designId, txHash } = input
 
+      const now = new Date()
+
       const design = await ctx.prisma.design.update({
         where: { id: designId },
         data: {
           txHash,
+          updatedAt: now,
         },
       })
 
@@ -42,6 +45,31 @@ export const jobRouter = createTRPCRouter({
       include: {
         design: {
           include: {
+            sketches: true,
+            pieces: true,
+          },
+        },
+      },
+    })
+  }),
+
+  getListings: authenticatedProcedure.query(async ({ ctx }) => {
+    const user = await ctx.prisma.user.findUnique({
+      where: { id: ctx.session.userId },
+    })
+
+    if (!user || user.role === 'BRAND') {
+      return []
+    }
+
+    return ctx.prisma.job.findMany({
+      where: {
+        target: user?.role,
+      },
+      include: {
+        design: {
+          include: {
+            brand: true,
             sketches: true,
             pieces: true,
           },

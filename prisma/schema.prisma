@@ -171,6 +171,8 @@ model Job {
   key          Int              @id @default(autoincrement())
   id           String           @unique
   designId     String
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @default(now())
   design       Design           @relation(fields: [designId], references: [id])
   target       CreatorType
   applications JobApplication[]

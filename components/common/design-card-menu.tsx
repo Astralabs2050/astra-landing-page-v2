@@ -18,8 +18,8 @@ export const DesignCardMenu = (props: Partial<Design>) => {
   const { DESIGNER, MANUFACTURER } = CreatorType
 
   const isDesignJob =
-    props.jobs?.[0].target === 'DESIGNER' ||
-    props.jobs?.[1].target === 'DESIGNER'
+    props.jobs?.[0]?.target === 'DESIGNER' ||
+    props.jobs?.[1]?.target === 'DESIGNER'
 
   return (
     <Fragment>
