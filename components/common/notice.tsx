@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { Logo } from '.'
 import Image from 'next/image'
@@ -14,7 +16,7 @@ interface NoticeProps {
 
 export const Notice = ({ title, subtitle, cta }: NoticeProps) => {
   return (
-    <div className="fixed inset-0 z-30 grid place-items-center bg-gray-6">
+    <div className="fixed inset-0 z-40 grid place-items-center bg-gray-6">
       <div className="grid w-[31rem] gap-7 rounded-2xl bg-white p-6">
         <div className="relative grid h-56 w-full place-items-center overflow-hidden rounded-lg bg-center">
           <Logo className="absolute m-auto w-[20rem]" />

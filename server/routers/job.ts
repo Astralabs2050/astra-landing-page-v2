@@ -85,6 +85,11 @@ export const jobRouter = createTRPCRouter({
     return ctx.prisma.job.findMany({
       where: {
         target: user?.role,
+        applications: {
+          none: {
+            applicantId: ctx.session.userId,
+          },
+        },
       },
       include: {
         design: {
@@ -97,4 +102,40 @@ export const jobRouter = createTRPCRouter({
       },
     })
   }),
+
+  apply: authenticatedProcedure
+    .input(
+      z.object({
+        jobId: z.string(),
+        negotiations: z.boolean(),
+        charge: z.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.jobApplication.create({
+        data: {
+          id: nano(),
+          jobId: input.jobId,
+          applicantCharge: input.charge,
+          applicantId: ctx.session.userId,
+          openToNegotiations: input.negotiations,
+        },
+      })
+    }),
+
+  getApplications: authenticatedProcedure
+    .input(z.object({ jobId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return await ctx.prisma.jobApplication.findMany({
+        where: { jobId: input.jobId },
+      })
+    }),
+
+  getApplication: authenticatedProcedure
+    .input(z.object({ jobId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.jobApplication.findFirst({
+        where: { jobId: input.jobId, applicantId: ctx.session.userId },
+      })
+    }),
 })

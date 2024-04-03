@@ -181,10 +181,12 @@ model Job {
 }
 
 model JobApplication {
-  key         Int            @id @default(autoincrement())
-  id          String         @unique
-  jobId       String
-  applicantId String
-  job         Job            @relation(fields: [jobId], references: [id])
-  applicant   CreatorProfile @relation(fields: [applicantId], references: [ownerId])
+  key                Int            @id @default(autoincrement())
+  id                 String         @unique
+  jobId              String
+  applicantId        String
+  applicantCharge    Int
+  openToNegotiations Boolean        @default(false)
+  job                Job            @relation(fields: [jobId], references: [id])
+  applicant          CreatorProfile @relation(fields: [applicantId], references: [ownerId])
 }

@@ -2,13 +2,27 @@ import React from 'react'
 import Image from 'next/image'
 import Download from '@/public/svgs/download.svg'
 import { trpcCaller } from '@/server/utils'
-import { Button, Checkbox, Input } from '@/components/ui'
+import { Button } from '@/components/ui'
 import { ChevronLeft, Info } from 'lucide-react'
 import { Collapsible } from '@/components/common'
+import { AmountInput } from '@/components/creator/job-application/amount-input'
+import { SubmitApplication } from '@/components/creator/job-application/submit-application'
+import { notFound } from 'next/navigation'
+import { ApplicationNotice } from '@/components/creator/job-application/application-notice'
 
 export default async function JobApply({ params }: { params: { id: string } }) {
   const trpc = await trpcCaller()
   const job = await trpc.job.get({ id: params.id })
+
+  if (!job) {
+    return notFound()
+  }
+
+  const application = await trpc.job.getApplication({ jobId: job.id })
+
+  if (application) {
+    return <ApplicationNotice />
+  }
 
   return (
     <div className="space-y-12">
@@ -26,7 +40,7 @@ export default async function JobApply({ params }: { params: { id: string } }) {
       </div>
 
       <div className="dashed-border grid grid-cols-4 gap-4 p-2">
-        {job?.design.promptResults?.map((item, index) => (
+        {job.design.promptResults?.map((item, index) => (
           <Image
             width={220}
             height={225}
@@ -43,17 +57,17 @@ export default async function JobApply({ params }: { params: { id: string } }) {
           <div className="flex gap-20">
             <div>
               <p className="text-gray-3">Name of Outfit</p>
-              <p className="text-xl font-medium">{job?.design.name}</p>
+              <p className="text-xl font-medium">{job.design.name}</p>
             </div>
 
             <div>
               <p className="text-gray-3">AI Prompt</p>
-              <p className="text-xl font-medium">{job?.design.prompt}</p>
+              <p className="text-xl font-medium">{job.design.prompt}</p>
             </div>
           </div>
 
           <div className="flex gap-20">
-            {job?.design.pieces.map((piece, index) => (
+            {job.design.pieces.map((piece, index) => (
               <div key={index}>
                 <p className="text-gray-3">Piece {index + 1}</p>
                 <p className="text-xl font-medium">
@@ -103,30 +117,12 @@ export default async function JobApply({ params }: { params: { id: string } }) {
               </p>
             </div>
 
-            <div className="space-y-6">
-              <Input
-                name="amount"
-                placeholder="$0.00"
-                type="number"
-                className="h-[3.25rem] min-w-80 rounded-[37px] px-6 text-right"
-              />
-
-              <div className="flex items-center gap-2 text-lg text-gray-3">
-                <Checkbox
-                  id="negotiations"
-                  className="ml-auto size-5"
-                  title="Hello"
-                />
-                <label htmlFor="negotiations">I am open to negotiations</label>
-              </div>
-            </div>
+            <AmountInput />
           </div>
         </div>
       </Collapsible>
 
-      <Button size="lg" radii="pill">
-        Send Application
-      </Button>
+      <SubmitApplication jobId={job.id} />
     </div>
   )
 }
