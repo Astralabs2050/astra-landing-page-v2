@@ -7,6 +7,26 @@ import {
 } from '@/services/trpc-server'
 
 export const jobRouter = createTRPCRouter({
+  get: authenticatedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.job.findUnique({
+        where: { id: input.id },
+        include: {
+          design: {
+            include: {
+              sketches: true,
+              pieces: true,
+            },
+          },
+        },
+      })
+    }),
+
   create: authenticatedProcedure
     .input(
       z.object({

@@ -1,8 +1,9 @@
+import React from 'react'
+import Link from 'next/link'
 import { trpcCaller } from '@/server/utils'
 import { formatDistance } from 'date-fns'
-import React from 'react'
 import { Button } from '@/components/ui'
-import { File } from 'lucide-react'
+import { Bookmark } from 'lucide-react'
 
 export default async function CreatorDashboard() {
   const trpc = await trpcCaller()
@@ -47,9 +48,11 @@ export default async function CreatorDashboard() {
 
               <div className="grid grid-cols-2 gap-4">
                 <Button variant="outline" radii="pill" className="gap-2">
-                  <File className="size-4" /> View Job Files
+                  <Bookmark className="size-4" /> Save for Later
                 </Button>
-                <Button radii="pill">Apply Now</Button>
+                <Link href={`/dashboard/job/${item.id}/apply`}>
+                  <Button radii="pill">Apply Now</Button>
+                </Link>
               </div>
             </div>
           )
