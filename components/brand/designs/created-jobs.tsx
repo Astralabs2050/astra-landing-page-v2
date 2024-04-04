@@ -7,6 +7,8 @@ import { DesignCardMenu } from '@/components/common/design-card-menu'
 import { EmptyState } from '@/components/common/empty-state'
 import { Button, Spinner } from '@/components/ui'
 import { api } from '@/services/trpc-client'
+import Link from 'next/link'
+import { routes } from '@/constants/app-routes'
 
 export const CreatedJobs = () => {
   const { data, isLoading } = api.job.getPostings.useQuery()
@@ -38,10 +40,14 @@ export const CreatedJobs = () => {
             </Fragment>
           }
           cta={
-            <Button variant="outline" className="w-full text-sm" size="sm">
-              <Suitcase className="mr-2 size-4" />
-              View Applications
-            </Button>
+            <Link
+              className="inline-block w-full"
+              href={routes.dashboard.job + `/${job.id}/applications`}>
+              <Button variant="outline" className="w-full text-sm" size="sm">
+                <Suitcase className="mr-2 size-4" />
+                View Applications
+              </Button>
+            </Link>
           }
         />
       ))}

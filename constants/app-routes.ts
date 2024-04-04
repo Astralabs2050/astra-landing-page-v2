@@ -10,5 +10,6 @@ export const routes = {
     create: '/dashboard/space/create',
     inspiration: '/dashboard/space/inspiration',
     designs: '/dashboard/designs',
+    job: '/dashboard/job',
   },
 }

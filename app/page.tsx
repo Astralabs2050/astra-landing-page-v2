@@ -69,7 +69,7 @@ export default async function Home() {
           [
             <Roles key={1} roles={roles} session={session} />,
             <ProfileForm key={2} user={user} />,
-            <CreatorWorks key={3} />,
+            <CreatorWorks user={user} key={3} />,
           ][progress - 1]
         }
       </div>

@@ -15,8 +15,13 @@ import {
   SheetTrigger,
 } from '../ui/sheet'
 import { Edit, Plus, Trash } from 'lucide-react'
+import { User } from '@prisma/client'
 
-export const CreatorWorks = () => {
+interface CreatorWorksProps {
+  user?: User | null
+}
+
+export const CreatorWorks = ({ user }: CreatorWorksProps) => {
   const router = useRouter()
 
   const {
@@ -121,7 +126,7 @@ export const CreatorWorks = () => {
               <div className="-mt-6 flex w-full border-b border-solid border-gray-6 pb-6">
                 <Button type="button" variant="secondary" className="ml-auto">
                   <Plus className="mr-2 size-4" />
-                  Add New Piece
+                  Upload more work
                 </Button>
               </div>
             ) : (
@@ -213,17 +218,19 @@ export const CreatorWorks = () => {
         </Sheet>
       </div>
 
-      <Button
-        type="submit"
-        className="mx-auto mt-auto w-[90%]"
-        disabled={submitting || !works.length}
-        onClick={saveCreatorSamples}>
-        {submitting ? (
-          <Spinner text="Submitting" spinnerClass="fill-black w-5 h-5" />
-        ) : (
-          'Next'
-        )}
-      </Button>
+      {user && (
+        <Button
+          type="submit"
+          className="mx-auto mt-auto w-[90%]"
+          disabled={submitting || !works.length}
+          onClick={() => saveCreatorSamples(user.id)}>
+          {submitting ? (
+            <Spinner text="Submitting" spinnerClass="fill-black w-5 h-5" />
+          ) : (
+            'Next'
+          )}
+        </Button>
+      )}
     </div>
   )
 }

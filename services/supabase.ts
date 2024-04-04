@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 export enum StorageBucket {
   PROMPTS = 'prompts',
   DESIGNS = 'designs',
+  CREATORS = 'creators',
 }
 
 export const supabase = createClient(

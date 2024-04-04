@@ -3,8 +3,8 @@ import Image from 'next/image'
 import Download from '@/public/svgs/download.svg'
 import { trpcCaller } from '@/server/utils'
 import { Button } from '@/components/ui'
-import { ChevronLeft, Info } from 'lucide-react'
-import { Collapsible } from '@/components/common'
+import { Info } from 'lucide-react'
+import { Collapsible, DashboardHeader } from '@/components/common'
 import { AmountInput } from '@/components/creator/job-application/amount-input'
 import { SubmitApplication } from '@/components/creator/job-application/submit-application'
 import { notFound } from 'next/navigation'
@@ -26,18 +26,10 @@ export default async function JobApply({ params }: { params: { id: string } }) {
 
   return (
     <div className="space-y-12">
-      <div className="flex items-center gap-3">
-        <Button variant="ghost" size="icon">
-          <ChevronLeft />
-        </Button>
-
-        <div>
-          <h1 className="text-2xl font-semibold">Send Your Applciation</h1>
-          <p className="text-lg text-gray-3">
-            Apply for this job, and the client would reach out to you.
-          </p>
-        </div>
-      </div>
+      <DashboardHeader
+        title="Send Your Applciation"
+        subtitle="Apply for this job, and the client would reach out to you."
+      />
 
       <div className="dashed-border grid grid-cols-4 gap-4 p-2">
         {job.design.promptResults?.map((item, index) => (

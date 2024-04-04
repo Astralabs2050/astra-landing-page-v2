@@ -1,10 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
+import Filter from '@/public/svgs/filter.svg'
 import { trpcCaller } from '@/server/utils'
 import { formatDistance } from 'date-fns'
 import { Button } from '@/components/ui'
 import { Bookmark } from 'lucide-react'
 import { EmptyState } from '@/components/common/empty-state'
+import { DashboardHeader } from '@/components/common'
 
 export default async function CreatorDashboard() {
   const trpc = await trpcCaller()
@@ -14,12 +16,18 @@ export default async function CreatorDashboard() {
   return (
     <div className="space-y-12">
       <div className="flex items-end justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold">Hello, {creator?.name} 👋</h1>
-          <p className=" text-xl text-gray-3">
-            Here are the available jobs waiting for you to apply
-          </p>
-        </div>
+        <DashboardHeader
+          backButton={false}
+          title={`Hello, ${creator?.name} 👋`}
+          subtitle="Here are the available jobs waiting for you to apply"
+        />
+
+        <Button
+          variant="outline"
+          className="flex items-center gap-2 !border-gray-5">
+          <Filter className="size-6" />
+          Filter & Sort
+        </Button>
       </div>
 
       {!jobs.length ? (

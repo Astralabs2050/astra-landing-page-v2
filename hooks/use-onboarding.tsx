@@ -8,6 +8,8 @@ import { api } from '@/services/trpc-client'
 import { useStore } from '@nanostores/react'
 import { $onboarding } from '@/store/onboarding'
 import { useRouter } from 'next-nprogress-bar'
+import { prepareFile, uploadBucketImage } from '@/services/storage'
+import { StorageBucket } from '@/services/supabase'
 
 export const useOnboarding = () => {
   const [open, setOpen] = useState(false)
@@ -60,9 +62,44 @@ export const useOnboarding = () => {
     router.refresh()
   }
 
-  const saveCreatorSamples = async () => {
-    await saveWork({ samples: onboarding.works })
-    $onboarding.setKey('submitted', true)
+  const saveCreatorSamples = async (creatorId: string) => {
+    $onboarding.setKey('submitting', true)
+    const works = [] as typeof onboarding.works
+
+    try {
+      for (const work of onboarding.works) {
+        const shots = [...work.shots]
+
+        for (let i = 0; i < shots.length; i++) {
+          const shot = shots[i]
+
+          const { fileBody, fileType } = await prepareFile(shot)
+          const fileName = `shot-${i + 1}.${fileType ?? 'png'}`
+          const uploadPath = `/${creatorId.replace('|', '-')}/work-samples`
+
+          const url = await uploadBucketImage(
+            fileBody,
+            fileName,
+            uploadPath,
+            StorageBucket.CREATORS,
+          )
+
+          shots[i] = url
+        }
+
+        works.push({
+          ...work,
+          shots,
+        })
+      }
+
+      await saveWork({ samples: works })
+      $onboarding.setKey('submitted', true)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      $onboarding.setKey('submitting', false)
+    }
   }
 
   const handleInput = useMemo(() => {
@@ -133,6 +170,7 @@ export const useOnboarding = () => {
     saveCreatorProfile,
     saveCreatorSamples,
     setFormValue: $onboarding.setKey,
-    submitting: isLoading || loadingCreator || savingWork,
+    submitting:
+      isLoading || loadingCreator || savingWork || onboarding.submitting,
   }
 }

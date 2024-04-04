@@ -128,14 +128,33 @@ export const jobRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.jobApplication.findMany({
         where: { jobId: input.jobId },
+        include: {
+          applicant: {
+            include: {
+              owner: true,
+              CreatorWork: true,
+            },
+          },
+        },
       })
     }),
 
   getApplication: authenticatedProcedure
-    .input(z.object({ jobId: z.string() }))
+    .input(z.object({ jobId: z.string(), applicantId: z.string().optional() }))
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.jobApplication.findFirst({
-        where: { jobId: input.jobId, applicantId: ctx.session.userId },
+        where: {
+          jobId: input.jobId,
+          applicantId: input.applicantId ?? ctx.session.userId,
+        },
+        include: {
+          applicant: {
+            include: {
+              owner: true,
+              CreatorWork: true,
+            },
+          },
+        },
       })
     }),
 })
