@@ -1,16 +1,14 @@
 import { Spinner } from '@/components/ui'
-import { useWeb3Auth } from '@/hooks'
+import { useWeb3AuthSolana } from '@/hooks/use-web3-auth-solana'
 import React, { createContext, PropsWithChildren, useContext } from 'react'
-import { useAccount } from 'wagmi'
 
-type AuthContextType = ReturnType<typeof useWeb3Auth>
+type AuthContextType = ReturnType<typeof useWeb3AuthSolana>
 const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 
 export function AuthProvider({ children }: PropsWithChildren) {
-  const auth = useWeb3Auth()
-  const account = useAccount()
+  const auth = useWeb3AuthSolana()
 
-  if (auth.user?.onboarded && !account.address) {
+  if (auth.user?.onboarded && !auth.solanaWallet) {
     return <Spinner fullScreen />
   }
 

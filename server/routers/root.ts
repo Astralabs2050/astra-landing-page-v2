@@ -4,6 +4,7 @@ import { brandRouter } from './brand'
 import { designRouter } from './design'
 import { jobRouter } from './job'
 import { creatorRouter } from './creator'
+import { nftRouter } from './nft'
 
 export const appRouter = createTRPCRouter({
   user: userRouter,
@@ -11,6 +12,7 @@ export const appRouter = createTRPCRouter({
   creator: creatorRouter,
   design: designRouter,
   job: jobRouter,
+  nft: nftRouter,
 })
 
 export type AppRouter = typeof appRouter
