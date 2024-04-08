@@ -1,26 +1,30 @@
 import { api } from '@/services/trpc-client'
 import { useAuth } from '@/providers/auth-provider'
+import { useState } from 'react'
 
 export const useSolanaNFTMint = () => {
+  const [minting, setMinting] = useState(false)
+
   const { solanaWallet } = useAuth()
-  const { mutateAsync, isLoading } = api.nft.mintNFT.useMutation()
+  const { mutateAsync } = api.nft.mintNFT.useMutation()
 
   const mintNFT = async (imageUrl: string) => {
     if (!solanaWallet) {
       throw new Error('Wallet not found')
     }
 
+    setMinting(true)
+
     const accounts = await solanaWallet.requestAccounts()
     const userAddress = accounts[0]
-
     const nft = await mutateAsync({ imageUrl, userAddress })
-    console.log(nft)
 
+    setMinting(false)
     return nft
   }
 
   return {
-    isLoading,
+    minting,
     mintNFT,
   }
 }

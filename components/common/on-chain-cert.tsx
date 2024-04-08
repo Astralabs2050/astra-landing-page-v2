@@ -68,7 +68,7 @@ export const OnChainCert = ({
           <div>
             <Link
               target="_blank"
-              href={`https://sepolia.basescan.org/tx/${txHash}`}>
+              href={`https://explorer.solana.com/address/${txHash}/metadata?cluster=devnet`}>
               <p className="flex items-center space-x-1 text-base font-semibold">
                 <ExternalLink className="size-4" />
                 <span>View On Block Explorer</span>
