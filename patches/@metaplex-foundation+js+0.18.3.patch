@@ -1,0 +1,14 @@
+diff --git a/node_modules/@metaplex-foundation/js/package.json b/node_modules/@metaplex-foundation/js/package.json
+index 901b804..e9c1adf 100644
+--- a/node_modules/@metaplex-foundation/js/package.json
++++ b/node_modules/@metaplex-foundation/js/package.json
+@@ -8,7 +8,8 @@
+   "exports": {
+     ".": {
+       "import": "./dist/esm/index.mjs",
+-      "require": "./dist/cjs/index.cjs"
++      "require": "./dist/cjs/index.cjs",
++      "types": "./dist/types/index.d.ts"
+     }
+   },
+   "files": [

@@ -12,8 +12,9 @@ export const env = createEnv({
     AUTH0_CLIENT_ID: z.string(),
     AUTH0_CLIENT_SECRET: z.string(),
     AUTH0_DOMAIN: z.string(),
-    OPENAI_API_KEY: z.string(),
     STABILITY_AI_KEY: z.string(),
+    COLLECTION_ADDRESS: z.string().optional(),
+    PRIVATE_KEY: z.string().optional(),
   },
 
   client: {

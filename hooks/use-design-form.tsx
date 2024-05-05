@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { routes } from '@/constants/app-routes'
 import { prepareFile, uploadBucketImage } from '@/services/storage'
 import { StorageBucket } from '@/services/supabase'
@@ -9,15 +10,14 @@ import { useStore } from '@nanostores/react'
 import { CreatorType } from '@prisma/client'
 import { useRouter } from 'next-nprogress-bar'
 import { useEffect, useRef } from 'react'
-import { useContractWrite } from 'wagmi'
-import { astraNFTABI } from '@/abis'
-import { contracts } from '@/constants/contracts'
+import { useSolanaNFTMint } from './use-solana-nft-mint'
 
 export const useDesignForm = (target: CreatorType, design?: Design) => {
   const init = useRef(false)
 
   const designform = useStore($designform)
   const router = useRouter()
+  const { mintNFT, minting } = useSolanaNFTMint()
 
   if (design && init.current === false) {
     $designform.setKey('name', design.name ?? '')
@@ -28,13 +28,6 @@ export const useDesignForm = (target: CreatorType, design?: Design) => {
 
   const { mutateAsync, isLoading: updating } = api.design.update.useMutation()
   const { mutateAsync: createJob, isLoading } = api.job.create.useMutation()
-
-  const { writeAsync, isLoading: sigining } = useContractWrite({
-    abi: astraNFTABI,
-    address: contracts.nft,
-    functionName: 'mint',
-    args: [1],
-  })
 
   const updatePiece = (
     index: number,
@@ -135,9 +128,18 @@ export const useDesignForm = (target: CreatorType, design?: Design) => {
   }
 
   const mintAndCreateJob = async () => {
+    if (!design) {
+      throw new Error('Invalid parameters')
+    }
+
     try {
-      const mint = await writeAsync()
-      await createJob({ txHash: mint.hash, target, designId: design!.id })
+      const nft = await mintNFT(design?.promptResults[0])
+
+      await createJob({
+        target,
+        designId: design.id,
+        txHash: nft?.address.toString(),
+      })
 
       $designform.setKey('completed', true)
     } catch (error) {
@@ -167,8 +169,6 @@ export const useDesignForm = (target: CreatorType, design?: Design) => {
 
     $designform.setKey('sketches', sketches)
     $designform.setKey('prints', prints)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [design])
 
   return {
@@ -177,7 +177,7 @@ export const useDesignForm = (target: CreatorType, design?: Design) => {
     saveInformation,
     mintAndCreateJob,
     uploadSketchesAndPrints,
-    loading: updating || isLoading || sigining,
+    loading: updating || isLoading || minting,
     generated: design?.promptResults,
     updateState: $designform.setKey,
     data: design,

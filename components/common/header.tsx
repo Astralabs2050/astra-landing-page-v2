@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Logo } from '@/components/common'
 import { Notifications } from './notifications'
-import { AstraBalance } from './astra-balance'
+// import { AstraBalance } from './astra-balance'
 import { User } from '@/types/models'
 import { Button } from '../ui'
 import { routes } from '@/constants/app-routes'
@@ -19,7 +19,7 @@ export function Header({ user }: HeaderProps) {
 
       <div className="flex items-center gap-5">
         <Notifications />
-        <AstraBalance />
+        {/* <AstraBalance /> */}
         {user.role === 'BRAND' ? (
           <Link href={routes.dashboard.space}>
             <Button radii="pill" size="lg">

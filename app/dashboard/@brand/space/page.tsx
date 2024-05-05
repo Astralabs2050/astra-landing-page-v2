@@ -9,6 +9,7 @@ export default function Space() {
   return (
     <Fragment>
       <Image
+        priority
         alt="creative space banner"
         src="/imgs/creative-space-banner.png"
         width={291}
