@@ -17,7 +17,7 @@ export default async function BrandDashboard() {
             {brand?.name}
           </span>
         </h1>
-        <p className=" text-gray-3">Welcome to your Dashboard!</p>
+        <p className="text-gray-3">Welcome to your Dashboard!</p>
       </div>
 
       <Analytics brand={brand} />

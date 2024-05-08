@@ -15,6 +15,9 @@ export function Sidebar({ user }: SidebarProps) {
   const nav = routes[user.role]
   const pathname = usePathname()
 
+  console.log('User Role:', user.role)
+  console.log('Navigation routes:', nav)
+
   return (
     <aside className="w-full px-4 py-14">
       <nav className="sticky top-[calc(var(--header-height)+3.5rem)]">
