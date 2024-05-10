@@ -2,6 +2,7 @@ import React from 'react'
 import { LuSearch } from 'react-icons/lu'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { FiFlag } from 'react-icons/fi'
+import { trpcCaller } from '@/server/utils'
 
 function SearchBar() {
   return (
@@ -29,7 +30,8 @@ function MessagePreview() {
   )
 }
 
-function MessageBox() {
+export default async function MessageBox() {
+  const trpc = await trpcCaller()
   return (
     <div className="flex w-full">
       <div className="flex w-[374px] flex-col justify-center ">
@@ -39,7 +41,7 @@ function MessageBox() {
           <MessagePreview /> {/* Duplicate for example */}
         </div>
       </div>
-      <div className="fixed left-[695px] top-[30px] h-[100vh] border"></div>
+      <div className="fixed left-[695px] top-[30px] h-[100vh] border-l-[1px]"></div>
 
       <div className="flex w-[786px] flex-col justify-between">
         <div className=" fixed w-[786px]  border-b-[1px]">
@@ -71,8 +73,6 @@ function MessageBox() {
     </div>
   )
 }
-
-export default MessageBox
 
 // import React from 'react'
 // import { LuSearch } from 'react-icons/lu'
