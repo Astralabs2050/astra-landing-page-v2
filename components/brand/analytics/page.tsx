@@ -2,12 +2,13 @@
 
 import React from 'react'
 import { IoReloadSharp } from 'react-icons/io5'
-import LineChartComponent from './index' // Adjusted import path
+import { LineChartComponent1, LineChartComponent2 } from './index' // Adjusted import path
 
 interface AnalyticsStat {
   id: number
   title: string
   resultNumber: string
+  data1: React.ReactNode
 }
 
 interface LookData {
@@ -21,11 +22,13 @@ const analytics: AnalyticsStat[] = [
     id: 1,
     title: 'Total Outfits sold',
     resultNumber: '3084',
+    data1: <LineChartComponent1 />,
   },
   {
     id: 2,
     title: 'Views this month',
     resultNumber: '8235',
+    data1: <LineChartComponent2 />,
   },
 ]
 
@@ -51,14 +54,12 @@ export default function BrandAnalytics() {
           {analytics.map(stat => (
             <div
               key={stat.id}
-              className="flex w-[347px] flex-col justify-between rounded-[10px] border p-[30px]">
+              className="flex w-[347px] rounded-[10px] border p-[20px]">
               <div>
-                <p className="mb-[20px]">{stat.title}</p>
+                <p className="mb-[20px] text-[14px]">{stat.title}</p>
                 <p className="text-[32px] font-[600]">{stat.resultNumber}</p>
               </div>
-              <div className="mt-[20px] h-[200px]">
-                <LineChartComponent />
-              </div>
+              <div className="mt-[43px] h-[50px] w-[250px]">{stat.data1}</div>
             </div>
           ))}
         </div>
