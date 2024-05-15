@@ -1,5 +1,10 @@
+import EarningsPage from '@/components/creator/earnings'
 import React from 'react'
 
 export default function Earnings() {
-  return <div>Creator Earnings</div>
+  return (
+    <div>
+      <EarningsPage />
+    </div>
+  )
 }

@@ -7,6 +7,7 @@ import Hut from '@/public/svgs/hut.svg'
 import Analytics from '@/public/svgs/analytics.svg'
 import Messages from '@/public/svgs/messages.svg'
 import Gear from '@/public/svgs/gear.svg'
+import earning from '@/public/svgs/earning.svg'
 
 const brandRoutes = [
   {
@@ -51,6 +52,11 @@ const creatorRoutes = [
     title: 'Dashboard',
     path: '/dashboard',
     Icon: PC,
+  },
+  {
+    title: 'Earnings',
+    path: '/dashboard/earnings',
+    Icon: earning,
   },
   {
     title: 'Messages',

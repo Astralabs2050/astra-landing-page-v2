@@ -26,9 +26,11 @@ export default function Settings() {
   ]
 
   return (
-    <div className="flex justify-center gap-[30px]">
+    <div className="mt-[70px] flex justify-center gap-[30px]">
       {AccountData.map(setting => (
-        <div key={setting.id} className="h-[241px] w-[300px] border p-[40px]">
+        <div
+          key={setting.id}
+          className="h-[241px] w-[300px] border p-[40px] hover:bg-gray-100">
           <p className="mb-[30px] text-[50px] font-semibold">{setting.icon}</p>
           <p className="mb-[5px] text-[18px] font-semibold">{setting.Name}</p>
           <p className="text-[15px]">{setting.Title}</p>
