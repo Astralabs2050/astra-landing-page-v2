@@ -30,7 +30,7 @@ export default function Settings() {
       {AccountData.map(setting => (
         <div
           key={setting.id}
-          className="h-[241px] w-[300px] border p-[40px] hover:bg-gray-100">
+          className="h-[241px] w-[300px] border p-[40px] hover:bg-[#F8F8F8]">
           <p className="mb-[30px] text-[50px] font-semibold">{setting.icon}</p>
           <p className="mb-[5px] text-[18px] font-semibold">{setting.Name}</p>
           <p className="text-[15px]">{setting.Title}</p>
