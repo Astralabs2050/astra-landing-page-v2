@@ -5,7 +5,6 @@ import { trpcCaller } from '@/server/utils'
 import { Scale, Lock, Expand, MapPin, Mail } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { Button } from '@/components/ui'
-import { useRouter } from 'next/router'
 
 export default async function JobApplicants({
   params,
