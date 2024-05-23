@@ -5,6 +5,7 @@ import { trpcCaller } from '@/server/utils'
 import { Scale, Lock, Expand, MapPin, Mail } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { Button } from '@/components/ui'
+import { useRouter } from 'next/router'
 
 export default async function JobApplicants({
   params,
@@ -133,10 +134,11 @@ export default async function JobApplicants({
             radii="pill"
             size="lg"
             className="border-destructive text-destructive hover:text-destructive">
-            Decline Terms
+            Decline
           </Button>
+
           <Button radii="pill" size="lg">
-            Accept Terms
+            Pay Now
           </Button>
         </div>
       </div>

@@ -4,7 +4,6 @@ import PC from '@/public/svgs/pc.svg'
 import LightBulb from '@/public/svgs/light-bulb.svg'
 import Shirt from '@/public/svgs/shirt.svg'
 import Hut from '@/public/svgs/hut.svg'
-import Analytics from '@/public/svgs/analytics.svg'
 import Messages from '@/public/svgs/messages.svg'
 import Gear from '@/public/svgs/gear.svg'
 import Earning from '@/public/svgs/earning.svg'
@@ -29,11 +28,6 @@ const brandRoutes = [
     title: 'My Virtual Store',
     path: '/dashboard/store',
     Icon: Hut,
-  },
-  {
-    title: 'Brand Analytics',
-    path: '/dashboard/analytics',
-    Icon: Analytics,
   },
   {
     title: 'Messages',

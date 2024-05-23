@@ -1,34 +1,79 @@
-import React from 'react'
-import { MdOutlineDownloadForOffline } from 'react-icons/md'
-import virtualstore from '../../../public/imgs/visualstore.png'
-// import Image from 'next/image'
+'use client' // Add this directive at the top
 
-export default function Store() {
-  const style = {
-    backgroundImage: `url(${virtualstore.src})`, // Assuming using the default loader from Next.js
-    backgroundSize: 'cover', // Cover the entire div area
-    backgroundPosition: 'center', // Center the background image
-    width: '601px', // Example width, adjust as necessary
-    height: '400px', // Example height, adjust as necessary
-    display: 'flex', // For aligning content within the div
-    alignItems: 'center', // Align content vertically
-    marginTop: '40px',
-    justifyContent: 'center', // Align content horizontally
+import React, { PureComponent } from 'react'
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts'
+
+const data1 = [
+  { name: 'Page A', uv: 4000, pv: 2400, amt: 8400 },
+  { name: 'Page B', uv: 3000, pv: 1398, amt: 8210 },
+  { name: 'Page C', uv: 2000, pv: 9800, amt: 8290 },
+  { name: 'Page D', uv: 2780, pv: 3908, amt: 8000 },
+  { name: 'Page E', uv: 1890, pv: 4800, amt: 8181 },
+  { name: 'Page F', uv: 2390, pv: 3800, amt: 8500 },
+  { name: 'Page G', uv: 3490, pv: 4300, amt: 8100 },
+]
+const data2 = [
+  { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
+  { name: 'Page B', uv: 3000, pv: 1398, amt: 2210 },
+  { name: 'Page C', uv: 2000, pv: 9800, amt: 2290 },
+  { name: 'Page D', uv: 2780, pv: 3908, amt: 2000 },
+  { name: 'Page E', uv: 1890, pv: 4800, amt: 2181 },
+  { name: 'Page F', uv: 2390, pv: 3800, amt: 2500 },
+  { name: 'Page G', uv: 3490, pv: 4300, amt: 2100 },
+]
+
+export class LineChartComponent1 extends PureComponent {
+  render() {
+    return (
+      <ResponsiveContainer width="100%" height={100}>
+        <LineChart
+          data={data1}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" className="hidden" />
+          <XAxis dataKey="name" className="hidden" />
+          <YAxis className="hidden" />
+          <Tooltip />
+          <Line
+            type="monotone"
+            dataKey="pv"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        </LineChart>
+      </ResponsiveContainer>
+    )
   }
-  return (
-    <div className="flex flex-col items-center justify-center pt-[80px]">
-      <p className="text-[40px] font-[600] text-[black]">
-        Customise your Astraverse Store
-      </p>
-      <p className="flex items-center gap-[10px]">
-        <MdOutlineDownloadForOffline className="text-[20px] font-[400] text-[#4F4F4F]" />
-        Click here to place your 3D designs in your virtual store.
-      </p>
-      <div style={style}>
-        <button className="h-[42px] w-[162px] rounded-[32px] border border-white bg-black text-white">
-          Customise Store
-        </button>
-      </div>
-    </div>
-  )
+}
+
+export class LineChartComponent2 extends PureComponent {
+  render() {
+    return (
+      <ResponsiveContainer width="100%" height={100}>
+        <LineChart
+          data={data2}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" className="hidden" />
+          <XAxis dataKey="name" className="hidden" />
+          <YAxis className="hidden" />
+          <Tooltip />
+          <Line
+            type="monotone"
+            dataKey="pv"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        </LineChart>
+      </ResponsiveContainer>
+    )
+  }
 }

@@ -13,7 +13,7 @@ export const useDesignPrompt = () => {
 
   const generateInspiration = async () => {
     const result = await mutateAsync({ prompt: design.prompt })
-
+    // @ts-expect-error mismatch
     $design.setKey('inspiration', result)
     router.push(`${routes.dashboard.inspiration}?generated=${result.id}`)
   }

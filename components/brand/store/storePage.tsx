@@ -39,7 +39,7 @@ const data: LookData[] = [
   { look: 'Autumn Boots', sold: 70, tried: 25 },
 ]
 
-export default function BrandAnalytics() {
+export default function Store() {
   return (
     <div>
       <div className="flex flex-col items-center justify-center">
@@ -110,7 +110,7 @@ export default function BrandAnalytics() {
                 <div className="flex items-center gap-[20px]">
                   {/* Placeholder image, replace with actual image source */}
                   <img
-                    src="#"
+                    src="/"
                     alt="image"
                     className="size-[50px] object-cover"
                   />

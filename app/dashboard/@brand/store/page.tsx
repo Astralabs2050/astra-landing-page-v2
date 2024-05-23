@@ -1,4 +1,4 @@
-import Store from '@/components/brand/store'
+import Store from '@/components/brand/store/storePage'
 import React from 'react'
 
 export default function VirtualStore() {
