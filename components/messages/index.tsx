@@ -16,7 +16,6 @@ function SearchBar() {
     </div>
   )
 }
-
 function MessagePreview() {
   return (
     <div className="flex h-[146px] w-[354px] flex-col gap-[5px] rounded-[20px] p-[15px] hover:bg-[#F8F8F8]">
@@ -29,7 +28,6 @@ function MessagePreview() {
     </div>
   )
 }
-
 export default async function MessageBox() {
   const trpc = await trpcCaller()
   return (
@@ -42,7 +40,6 @@ export default async function MessageBox() {
         </div>
       </div>
       <div className="fixed left-[695px] top-[30px] h-[100vh] border-l-[1px]"></div>
-
       <div className="flex w-[786px] flex-col justify-between">
         <div className=" fixed top-[88px] flex h-[89px] w-[786px] border-b-[1px] border-l bg-white pt-[20px]">
           <div className="fixed flex w-full items-center justify-between px-[20px] ">
@@ -64,7 +61,6 @@ export default async function MessageBox() {
           </div>
         </div>
         {/* end */}
-
         <div className="fixed top-[75vh] flex items-center gap-[50px] border-t-[1px] px-[20px] pt-[40px]">
           <textarea
             placeholder="Type a message..."
