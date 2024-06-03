@@ -136,9 +136,11 @@ export default async function JobApplicants({
             Decline
           </Button>
 
-          <Button radii="pill" size="lg">
-            Pay Now
-          </Button>
+          <Link href="/payment">
+            <Button radii="pill" size="lg">
+              Pay Now
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
