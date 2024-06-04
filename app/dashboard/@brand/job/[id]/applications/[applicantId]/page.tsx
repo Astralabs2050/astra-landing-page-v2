@@ -135,7 +135,12 @@ export default async function JobApplicants({
             className="border-destructive text-destructive hover:text-destructive">
             Decline
           </Button>
+
           <Link href={'/payment'}>
+
+
+          <Link href="/payment">
+
             <Button radii="pill" size="lg">
               Pay Now
             </Button>

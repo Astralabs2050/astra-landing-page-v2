@@ -77,8 +77,8 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@typescript-eslint/eslint-plugin": "^6.19.1",
-    "@typescript-eslint/parser": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
     "@wagmi/core": "^1.x",
     "@web3auth/no-modal": "^7.x",
     "@web3auth/openlogin-adapter": "^7.x",
@@ -95,6 +95,6 @@
     "prettier-plugin-tailwindcss": "^0.5.11",
     "prisma": "^5.13.0",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5"
+    "typescript": "^5.4.5"
   }
 }
