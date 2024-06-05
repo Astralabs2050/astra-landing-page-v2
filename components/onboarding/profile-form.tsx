@@ -97,7 +97,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
           id="bio"
           placeholder={
             user?.role === 'BRAND'
-              ? 'Sticthes by Astra is a fashion...'
+              ? 'Stitches by Astra is a fashion...'
               : 'Write a bio'
           }
           label={
