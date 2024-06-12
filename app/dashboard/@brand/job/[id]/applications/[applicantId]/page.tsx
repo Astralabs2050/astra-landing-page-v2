@@ -137,10 +137,6 @@ export default async function JobApplicants({
           </Button>
 
           <Link href={'/payment'}>
-
-
-          <Link href="/payment">
-
             <Button radii="pill" size="lg">
               Pay Now
             </Button>

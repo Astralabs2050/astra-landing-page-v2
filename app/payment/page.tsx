@@ -1,14 +1,29 @@
-import React from 'react'
+'use client'
+
+import React, { useState, ChangeEvent } from 'react'
 import Visa from '@/public/svgs/visa.svg'
 import Stripe from '@/public/svgs/stripe.svg'
 import Master from '@/public/svgs/master.svg'
 import Paypal from '@/public/svgs/paypal.svg'
 import { IoMdArrowBack } from 'react-icons/io'
 import { IoArrowForward } from 'react-icons/io5'
-import Link from 'next/link'
-import { routes } from '@/constants/app-routes'
+import { Button, ButtonProps } from '@/components/ui'
+import { useRouter } from 'next-nprogress-bar'
 
-export default async function Payment() {
+export default function Payment({ onClick }: ButtonProps) {
+  const router = useRouter()
+  const [expiry, setExpiry] = useState('')
+
+  const handleExpiryChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target
+    const formattedExpiry = value
+      .replace(/\D/g, '') // Remove non-numeric characters
+      .replace(/(\d{2})(\d{1,2})/, '$1/$2') // Add "/" after the first two numbers
+      .substring(0, 5) // Ensure max length of 5 characters (MM/YY)
+
+    setExpiry(formattedExpiry)
+  }
+
   return (
     <div className="mx-auto max-w-[673px] rounded-lg border bg-white p-6 shadow-md">
       <h2 className="mb-4 text-[13.95px]">Billing Address</h2>
@@ -18,7 +33,7 @@ export default async function Payment() {
           <div className=" flex items-center gap-[10px] text-[10.9px]">
             <input
               type="checkbox"
-              className="size-[10.9px] rounded-full focus:ring-blue-500"
+              className="size-[10.9px] rounded-full  bg-black checked:bg-black"
             />
             Pay With Credit Card
           </div>
@@ -28,18 +43,27 @@ export default async function Payment() {
             <Master className="h-[24.9px] w-[35.8px]" />
           </div>
         </div>
-        <div className="mt-[20px] flex justify-between">
+        <div className="mt-[20px] flex justify-between gap-[12px] ">
           <div className="">
-            <p className="text-[10.9px]">Name on card</p>
+            <label className="text-[10.9px]">Name on card</label>
+            <br />
             <input
               type="text"
               className="h-[34.56px] w-[402.49px] rounded-[6.23px] border bg-white pl-[10px] outline-none"
             />
           </div>
           <div className="">
-            <p className="text-[10.9px]">Expiry</p>
+            <label htmlFor="expiry" className="text-[10.9px]">
+              Expiry
+            </label>
             <input
               type="text"
+              id="expiry"
+              name="expiry"
+              value={expiry}
+              onChange={handleExpiryChange}
+              maxLength={5} // Maximum length of "MM/YY"
+              placeholder="MM/YY"
               className="h-[34.56px] w-[87.16px] rounded-[6.23px] border bg-white pl-[10px] outline-none"
             />
           </div>
@@ -51,6 +75,8 @@ export default async function Payment() {
             <p className="text-[10.9px]">Card number</p>
             <input
               type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
               className="h-[34.56px] w-[402.49px] rounded-[6.23px] border bg-white pl-[10px] outline-none"
             />
           </div>
@@ -115,12 +141,12 @@ export default async function Payment() {
       {/* Additional payment methods can be added here */}
 
       <div className="mt-6 flex justify-end gap-[25px]">
-        <Link href={`${routes.dashboard.job}/applications`}>
-          <button className="flex h-[37.6px] w-[160.31px] items-center justify-center gap-[7px] rounded-[6.2px] border  bg-white shadow-md">
-            <IoMdArrowBack />
-            Back
-          </button>
-        </Link>
+        <Button
+          onClick={() => onClick ?? router.back()}
+          className="flex h-[37.6px] w-[160.31px] items-center justify-center gap-[7px] rounded-[6.2px] border bg-white text-black  shadow-md hover:bg-[#e9e6e6]">
+          <IoMdArrowBack />
+          Back
+        </Button>
 
         <button className="flex h-[37.6px] w-[160.31px] items-center justify-center gap-[7px] rounded-[6.2px] border bg-black text-white">
           Next
