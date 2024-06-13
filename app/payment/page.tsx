@@ -7,10 +7,10 @@ import Master from '@/public/svgs/master.svg'
 import Paypal from '@/public/svgs/paypal.svg'
 import { IoMdArrowBack } from 'react-icons/io'
 import { IoArrowForward } from 'react-icons/io5'
-import { Button, ButtonProps } from '@/components/ui'
+import { Button } from '@/components/ui'
 import { useRouter } from 'next-nprogress-bar'
 
-export default function Payment({ onClick }: ButtonProps) {
+export default function Payment() {
   const router = useRouter()
   const [expiry, setExpiry] = useState('')
 
@@ -142,7 +142,7 @@ export default function Payment({ onClick }: ButtonProps) {
 
       <div className="mt-6 flex justify-end gap-[25px]">
         <Button
-          onClick={() => onClick ?? router.back()}
+          onClick={() => router.back()}
           className="flex h-[37.6px] w-[160.31px] items-center justify-center gap-[7px] rounded-[6.2px] border bg-white text-black  shadow-md hover:bg-[#e9e6e6]">
           <IoMdArrowBack />
           Back
