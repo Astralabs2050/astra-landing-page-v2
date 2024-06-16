@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { api } from '@/services/trpc-client'
 import { cn } from '@/lib/utils'
 import { Spinner } from '../ui'
-import { Role } from '@prisma/client'
+import type { Role } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
 interface RoleProps {
