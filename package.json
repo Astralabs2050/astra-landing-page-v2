@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "lint-staged",
-    "postinstall": "prisma generate && husky"
+    "postinstall": "prisma generate && husky && npx patch-package"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"

@@ -25,7 +25,7 @@ export default async function PaymentLayout({
         <Header user={user} />
         <div className="m-auto flex items-center justify-center">
           <Payment user={user} />
-          <div className="border-l border-solid border-gray-6  p-10">
+          <div className="border-l border-solid border-gray-6 p-10">
             {user?.role === 'BRAND' ? brand : creator}
           </div>
         </div>

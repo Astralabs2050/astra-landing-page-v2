@@ -66,7 +66,6 @@ export const useWeb3AuthSolana = () => {
       return
     }
 
-    // @ts-expect-error hello
     web3auth.init(privateKeyProvider).then(() => {
       /** subscribe to web3auth events */
       web3auth.on(ADAPTER_EVENTS.CONNECTED, async () => {
