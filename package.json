@@ -15,7 +15,7 @@
   "dependencies": {
     "@auth0/nextjs-auth0": "^3.5.0",
     "@babel/runtime": "7.x",
-    "@metaplex-foundation/js": "^0.18.3",
+    "@metaplex-foundation/js": "0.18.3",
     "@nanostores/react": "^0.7.1",
     "@prisma/client": "^5.13.0",
     "@radix-ui/react-accordion": "^1.1.2",
