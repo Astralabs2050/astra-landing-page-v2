@@ -53,6 +53,11 @@ const creatorRoutes = [
     Icon: Earning,
   },
   {
+    title: 'Ongoing Jobs',
+    path: '/dashboard/ongoingJobs',
+    Icon: Earning,
+  },
+  {
     title: 'Messages',
     path: '/dashboard/messages',
     Icon: Messages,

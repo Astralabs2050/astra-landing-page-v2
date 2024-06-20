@@ -12,4 +12,5 @@ export const routes = {
     designs: '/dashboard/designs',
     job: '/dashboard/job',
   },
+  payment: '/payment',
 }

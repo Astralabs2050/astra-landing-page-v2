@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import { Header } from '@/components/common'
 import { redirect } from 'next/navigation'
 import { getUser } from '@/server/actions/user'
 import Payment from './page'
 
-interface PaymentLayoutProps {
+// Define the props type
+interface PaymentLayoutProps extends PropsWithChildren {
   brand: React.ReactNode
   creator: React.ReactNode
 }
