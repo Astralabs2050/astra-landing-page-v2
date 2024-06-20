@@ -41,13 +41,8 @@ export class LineChartComponent1 extends PureComponent {
           <XAxis dataKey="name" className="hidden" />
           <YAxis className="hidden" />
           <Tooltip />
-          <Line
-            type="monotone"
-            dataKey="pv"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+          <Line type="monotone" dataKey="pv" stroke="#8884d8" dot={false} />
+          <Line type="monotone" dataKey="uv" stroke="#82ca9d" dot={false} />
         </LineChart>
       </ResponsiveContainer>
     )
@@ -65,13 +60,8 @@ export class LineChartComponent2 extends PureComponent {
           <XAxis dataKey="name" className="hidden" />
           <YAxis className="hidden" />
           <Tooltip />
-          <Line
-            type="monotone"
-            dataKey="pv"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+          <Line type="monotone" dataKey="pv" stroke="#8884d8" dot={false} />
+          <Line type="monotone" dataKey="uv" stroke="#82ca9d" dot={false} />
         </LineChart>
       </ResponsiveContainer>
     )

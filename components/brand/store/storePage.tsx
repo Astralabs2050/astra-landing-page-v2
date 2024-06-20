@@ -1,6 +1,6 @@
 'use client' // Add this directive at the top
 
-import React from 'react'
+import React, { useState } from 'react'
 import { IoReloadSharp } from 'react-icons/io5'
 import { LineChartComponent1, LineChartComponent2 } from './index' // Adjusted import path
 
@@ -40,6 +40,15 @@ const data: LookData[] = [
 ]
 
 export default function Store() {
+  const [loading, setLoading] = useState(false)
+
+  const handleReload = () => {
+    setLoading(true)
+    setTimeout(() => {
+      window.location.reload()
+    }, 1000) // Simulate loading for 1 second
+  }
+
   return (
     <div>
       <div className="flex flex-col items-center justify-center">
@@ -83,9 +92,20 @@ export default function Store() {
           </select>
         </div>
 
-        <button className="flex items-center justify-center gap-[12px] rounded-[12px] border px-[20px]">
-          <IoReloadSharp />
-          Refresh
+        <button
+          onClick={handleReload}
+          className="flex items-center justify-center gap-[12px] rounded-[12px] border px-[20px]">
+          {loading ? (
+            <div className=" flex items-center gap-[10px]" role="status">
+              <span className="visually-hidden flex  size-4 animate-spin ">
+                {' '}
+                <IoReloadSharp />
+              </span>
+              Refresh
+            </div>
+          ) : (
+            <>Refresh</>
+          )}
         </button>
       </div>
 
