@@ -1,8 +1,10 @@
-'use client' // Add this directive at the top
+'use client'
 
 import React, { useState } from 'react'
 import { IoReloadSharp } from 'react-icons/io5'
-import { LineChartComponent1, LineChartComponent2 } from './index' // Adjusted import path
+import { LineChartComponent1, LineChartComponent2 } from './index'
+import VirtualStore from '@/public/svgs/virtualStore.svg'
+import Image from 'next/image'
 
 interface AnalyticsStat {
   id: number
@@ -15,7 +17,12 @@ interface LookData {
   look: string
   sold: number
   tried: number
+  image: string | React.ReactNode
+  id: string
+  price: number
+  email: string
 }
+// example of the dataset coming from backend
 
 const analytics: AnalyticsStat[] = [
   {
@@ -33,10 +40,42 @@ const analytics: AnalyticsStat[] = [
 ]
 
 const data: LookData[] = [
-  { look: 'Summer Outfit', sold: 150, tried: 45 },
-  { look: 'Winter Jacket', sold: 90, tried: 35 },
-  { look: 'Spring Dress', sold: 200, tried: 60 },
-  { look: 'Autumn Boots', sold: 70, tried: 25 },
+  {
+    look: 'Urban Ember',
+    sold: 2,
+    tried: 0,
+    image: <VirtualStore />,
+    price: 879.89,
+    email: 'kronos888@hotmail.com',
+    id: '#AST12345',
+  },
+  {
+    look: 'Metropolitan State',
+    sold: 2,
+    tried: 1,
+    image: <VirtualStore />,
+    price: 879.89,
+    email: 'kronos888@hotmail.com',
+    id: '#AST12346',
+  },
+  {
+    look: 'Cyber-Physical Fashion NFTs',
+    sold: 2,
+    tried: 1,
+    image: <VirtualStore />,
+    price: 879.89,
+    email: 'kronos888@hotmail.com',
+    id: '#AST12347',
+  },
+  {
+    look: 'Cyber-Physical Fashion NFTs',
+    sold: 2,
+    tried: 0,
+    image: <VirtualStore />,
+    price: 879.89,
+    email: 'kronos888@hotmail.com',
+    id: '#AST12348',
+  },
 ]
 
 export default function Store() {
@@ -46,7 +85,7 @@ export default function Store() {
     setLoading(true)
     setTimeout(() => {
       window.location.reload()
-    }, 1000) // Simulate loading for 1 second
+    }, 1000)
   }
 
   return (
@@ -84,7 +123,6 @@ export default function Store() {
         <div className="flex gap-[30px]">
           <select className="flex h-[56px] w-[180px] items-center justify-center rounded-[5px] border px-[20px] outline-none">
             <option>Most tried on</option>
-            <option>ghhgh</option>
           </select>
           <select className="flex h-[56px] w-[180px] items-center justify-center rounded-[5px] border px-[20px] outline-none">
             <option>This Month</option>
@@ -97,8 +135,7 @@ export default function Store() {
           className="flex items-center justify-center gap-[12px] rounded-[12px] border px-[20px]">
           {loading ? (
             <div className=" flex items-center gap-[10px]" role="status">
-              <span className="visually-hidden flex  size-4 animate-spin ">
-                {' '}
+              <span className="visually-hidden flex size-4 animate-spin">
                 <IoReloadSharp />
               </span>
               Refresh
@@ -113,13 +150,22 @@ export default function Store() {
         <thead>
           <tr>
             <th className="border-b-2 border-gray-200 px-5 py-3 text-left text-xs font-semibold tracking-wider text-gray-600">
-              Uploaded Look
+              Outfit ID
             </th>
             <th className="border-b-2 border-gray-200 px-5 py-3 text-left text-xs font-semibold tracking-wider text-gray-600">
-              No. of Pieces Sold
+              Name of outfit
             </th>
             <th className="border-b-2 border-gray-200 px-5 py-3 text-left text-xs font-semibold tracking-wider text-gray-600">
-              No. of Times Tried On
+              Outfit Price (ASTRAS)
+            </th>
+            <th className="border-b-2 border-gray-200 px-5 py-3 text-left text-xs font-semibold tracking-wider text-gray-600">
+              User Email
+            </th>
+            <th className="border-b-2 border-gray-200 px-5 py-3 text-left text-xs font-semibold tracking-wider text-gray-600">
+              Try on count
+            </th>
+            <th className="border-b-2 border-gray-200 px-5 py-3 text-left text-xs font-semibold tracking-wider text-gray-600">
+              Buy count
             </th>
           </tr>
         </thead>
@@ -127,18 +173,32 @@ export default function Store() {
           {data.map((item, index) => (
             <tr key={index}>
               <td className="border-b border-gray-200 bg-white p-5 text-sm">
+                {item.id}
+              </td>
+              <td className="border-b border-gray-200 bg-white p-5 text-sm">
                 <div className="flex items-center gap-[20px]">
-                  {/* Placeholder image, replace with actual image source */}
-                  <img
-                    src="/"
-                    alt="image"
-                    className="size-[50px] object-cover"
-                  />
+                  {typeof item.image === 'string' ? (
+                    <Image
+                      src={item.image}
+                      alt="image"
+                      className="size-[50px] object-cover"
+                      width={50}
+                      height={50}
+                    />
+                  ) : (
+                    <div className="size-[50px]">{item.image}</div>
+                  )}
                   <div>
                     <p>{item.look}</p>
                     <p>No. of Pieces: 3 pieces</p>
                   </div>
                 </div>
+              </td>
+              <td className="border-b border-gray-200 bg-white p-5 text-sm">
+                {item.price}
+              </td>
+              <td className="border-b border-gray-200 bg-white p-5 text-sm">
+                {item.email}
               </td>
               <td className="border-b border-gray-200 bg-white p-5 text-sm">
                 {item.sold}
