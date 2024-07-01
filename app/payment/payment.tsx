@@ -10,9 +10,15 @@ import { IoArrowForward } from 'react-icons/io5'
 import { Button } from '@/components/ui'
 import { useRouter } from 'next-nprogress-bar'
 
-export default function Payment() {
+type Props = {
+  user: object
+}
+
+export function Payment({ user }: Props) {
   const router = useRouter()
   const [expiry, setExpiry] = useState('')
+
+  console.log(user)
 
   const handleExpiryChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target
