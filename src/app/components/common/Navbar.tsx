@@ -20,7 +20,7 @@ const Navbar = () => {
     const viewportWidth = window.innerWidth;
 
     if (viewportWidth >= 1024) {
-      let scrollThreshold = 200;
+      const scrollThreshold = 200;
 
       if (!ticking) {
         window.requestAnimationFrame(() => {
