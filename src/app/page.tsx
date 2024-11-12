@@ -31,15 +31,16 @@ export default function Home() {
         <LoadingText />
       ) : (
         <div
-          className={`bg-black transition-transform duration-1000 ease-out ${
+          className={`bg-black transition-transform duration-1000 ease-out relative ${
             isLoading
               ? "-translate-y-full opacity-0"
               : "translate-y-0 opacity-100"
           }`}
+          id="home"
         >
           <Navbar />
           <Hero />
-          <div className="flex flex-col gap-[120px] px-[97px]">
+          <div className="flex flex-col gap-[80px] lg:gap-[120px] px-3 md:px-10 lg:px-[97px]">
             <Grants />
             <HowAstraWorks />
             <JoinAsAMaker />
@@ -47,7 +48,7 @@ export default function Home() {
           </div>
           <JoinWaitlist />
           <div className="h-[1182px] bg-[url('/images/faq-bg.png')] bg-cover bg-no-repeat -mt-80" />
-          <div className="-mt-[850px] flex flex-col gap-[120px] px-[97px] mb-[120px]">
+          <div className="flex flex-col gap-[80px] lg:gap-[120px] px-3 md:px-10 lg:px-[97px] lg:mb-[120px]">
             <FAQs />
             <AsSeenIn />
             <PreviousWork />

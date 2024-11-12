@@ -42,10 +42,10 @@ const AccordionItem = ({
     <div className={!isLastItem ? "border-b-[0.6px] border-[#616161]" : ""}>
       <button
         onClick={toggleAccordion}
-        className="w-full flex gap-[27px] items-center py-[25px] text-[28px] focus:outline-none"
+        className="w-full flex gap-4 lg:gap-[27px] items-center py-4 lg:py-[25px] text-lg lg:text-[28px] focus:outline-none"
       >
         <span
-          className={`text-2xl transition-transform duration-300 ease-in-out ${
+          className={`text-2xl transition-transform duration-300 ease-in-out max-w-[20.74px] lg:max-w-full ${
             isOpen ? "rotate-45" : "rotate-0"
           }`}
         >
@@ -57,10 +57,12 @@ const AccordionItem = ({
       </button>
       <div
         className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+          isOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="text-[#9B9B9B] pb-[25px] px-[50px]">{content}</div>
+        <div className="text-[#9B9B9B] text-sm lg:text-base pb-[25px] px-[50px]">
+          {content}
+        </div>
       </div>
     </div>
   );

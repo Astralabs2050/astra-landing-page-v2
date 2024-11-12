@@ -1,3 +1,5 @@
+import Image from "next/image";
+import CustomH2 from "./common/CustomH2";
 import CustomSlider from "./common/CustomSlider";
 
 const PreviousWork = () => {
@@ -35,10 +37,36 @@ const PreviousWork = () => {
   ];
   return (
     <section className="overflow-hidden">
-      <h2 className="text-[48px] font-sfui-semibold text-center mb-10">
-        Previous Work
-      </h2>
-      <CustomSlider slides={slides} />
+      <CustomH2 text="Previous Work" />
+      <div className="hidden lg:block">
+        <CustomSlider slides={slides} />
+      </div>
+      <div className="lg:hidden mb-[100px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className="min-w-full border border-[#4B4B4B7A] rounded-[25px] overflow-hidden bg-[url('/images/work-cover-bg-mobile.png')] bg-cover bg-no-repeat md:px-5 px-[38px] lg:hover:border-[#91919199] pb-[78px]"
+            >
+              <div className="relative max-w-[334px] max-h-[334px] rounded-[10px] overflow-hidden pt-[41px]">
+                <Image
+                  src={`/images/previous-work/${slide.id}.png`}
+                  alt={slide.title}
+                  width={1000}
+                  height={1000}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+              <div className="max-w-[448px] text-center">
+                <h3 className="text-[22px] font-sfui-medium mb-2 mt-[30px]">
+                  {slide.title}
+                </h3>
+                <p className="text-sm text-[#9B9B9B]">{slide.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };

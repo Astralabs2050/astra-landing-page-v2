@@ -25,7 +25,7 @@ const CustomButton = ({
   return (
     <button
       onClick={onClick}
-      className={`${getStyle()} min-w-[257px] py-3 px-6 rounded-[50px] text-center font-sfui-semibold text-lg transition-all duration-300 ease-out transform hover:scale-[1.03] ${className}`}
+      className={`${getStyle()} min-w-[257px] py-2 lg:py-3 px-6 rounded-[50px] text-center font-sfui-semibold lg:text-lg transition-all duration-300 ease-out transform hover:scale-[1.03] ${className}`}
     >
       {text}
     </button>
