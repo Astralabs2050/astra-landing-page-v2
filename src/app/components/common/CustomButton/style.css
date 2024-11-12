@@ -1,0 +1,46 @@
+/* Keyframe for faster, slimmer shimmer effect */
+@keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  /* Light theme shimmer */
+  .bg-gradient-light::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%; /* Allows for continuous movement */
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .bg-gradient-light:hover::before {
+    opacity: 1;
+    animation: shimmer 1.2s infinite linear;
+  }
+  
+  /* Dark theme shimmer */
+  .bg-gradient-dark::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 20%, rgba(200, 200, 200, 0.6) 50%, rgba(255, 255, 255, 0) 80%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .bg-gradient-dark:hover::before {
+    opacity: 1;
+    animation: shimmer 1.2s infinite linear;
+  }
+  
