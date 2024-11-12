@@ -1,4 +1,5 @@
 import CustomGridBox from "./common/CustomGridBox";
+import CustomH2 from "./common/CustomH2";
 
 const AsSeenIn = () => {
   const logos = [
@@ -13,9 +14,7 @@ const AsSeenIn = () => {
   ];
   return (
     <section>
-      <h2 className="text-[48px] font-sfui-semibold text-center mb-10">
-        As Seen In
-      </h2>
+      <CustomH2 text="As Seen In" />
       <CustomGridBox destination="as-seen-in" logos={logos} />
     </section>
   );

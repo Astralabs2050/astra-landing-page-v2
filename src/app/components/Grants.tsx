@@ -1,4 +1,5 @@
 import CustomGridBox from "./common/CustomGridBox";
+import CustomH2 from "./common/CustomH2";
 
 const Grants = () => {
   const logos = [
@@ -14,9 +15,7 @@ const Grants = () => {
 
   return (
     <section>
-      <h2 className="text-[48px] font-sfui-semibold text-center mb-10">
-        With Grants and Incubation from:
-      </h2>
+      <CustomH2 text="With Grants and Incubation from:" />
       <CustomGridBox destination="grants" logos={logos} />
     </section>
   );
