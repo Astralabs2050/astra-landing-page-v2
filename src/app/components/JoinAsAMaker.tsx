@@ -54,9 +54,8 @@ const JoinAsAMaker = () => {
           <div
             key={`${img}+${idx}`}
             className={` ${
-              img !== "left" && img !== "right" ? "" : ""
-              // animate-pulse-glow
-            }`}
+              img !== "left" && img !== "right" ? "animate-pulse-glow" : ""
+            } max-h-[203px] overflow-hidden`}
           >
             <Image
               src={`/images/join-as-a-maker/${img}.png`}
@@ -72,16 +71,16 @@ const JoinAsAMaker = () => {
         {tab_images.map((img, idx) => (
           <div
             key={`${img}+${idx}`}
-            className={`min-w-[201px] min-h-[230px] ${
+            className={`min-w-[201px] ${
               img !== "left" && img !== "right" ? "animate-pulse-glow" : ""
-            }`}
+            } max-h-[250px] overflow-hidden`}
           >
             <Image
               src={`/images/join-as-a-maker/${img}.png`}
               alt="img place holder"
               width={1000}
               height={1000}
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-auto"
             />
           </div>
         ))}

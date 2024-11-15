@@ -2,7 +2,7 @@ import "./style.css";
 
 const LoadingText = () => {
   return (
-    <div className="flex items-center justify-center h-screen bg-black text-white max-h-[100vh] overflow-hidden">
+    <div className="flex items-center justify-center h-screen bg-black text-white overflow-hidden">
       <div className="text-container font-conthrax flex gap-20">
         {["A", "S", "T", "R", "A", " ", " ", " ", ".", ".", "."].map(
           (char, idx) => (

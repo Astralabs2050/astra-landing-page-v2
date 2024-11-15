@@ -55,7 +55,11 @@ const Hero = () => {
             text="Join The Waitlist"
             onClick={() => handleScroll("join-waitlist")}
           />
-          <CustomButton theme="dark" text="Chat With Us" onClick={() => null} />
+          <CustomButton
+            theme="dark"
+            text="Chat With Us"
+            onClick={() => handleScroll("join-waitlist")}
+          />
         </motion.div>
       </div>
       <div className="-mt-10 lg:-mt-40 rounded-b-[25px] lg:rounded-b-[50px] overflow-hidden">

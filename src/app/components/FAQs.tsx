@@ -3,25 +3,23 @@ import CustomAccordion from "./common/CustomAccordion";
 const FAQs = () => {
   const data = [
     {
-      title: "Who owns the design created?",
+      title: "Who owns designs made?",
       content:
-        "We make it possible to save your designs on the blockchain, to prove you generated the unique designs which can then be brought to life. Your prompt is your art, so if you come up with a unique design, please save it so there’s proof that you did it first!",
+        "The designs generated are tokenised and owned by the creator, with a small slice of ownership attributed the AI that helped generate the design.",
     },
     {
-      title: "Do you vet partners selected?",
+      title: "How do you vet?",
       content:
-        "Yes, we vet all partners carefully to ensure quality and alignment with our values and goals.",
+        "Being a decentralised platform we plan on being permissionless and will admit makers that can share proof of work, but protect buyers with smart contracts that only release funds based on milestones completed.",
     },
     {
-      title: "What blockchain is this built on?",
+      title: "What blockchain?",
       content:
-        "We are built on a secure and scalable blockchain that supports our vision for the platform.",
+        "We plan on being multichain and allowing as many blockchains, but we will be starting with Stellar, Solana and Sui.",
     },
   ];
   return (
-    <section
-      className="flex flex-col lg:flex-row justify-between -mt-[850px]"
-    >
+    <section className="flex flex-col lg:flex-row justify-between -mt-[850px]">
       <h2 className="text-[22px] lg:text-[48px] font-sfui-semibold leading-[55px] lg:max-w-[380px] mb-[36px] lg:mb-0 text-white">
         Frequently Ask Questions
       </h2>

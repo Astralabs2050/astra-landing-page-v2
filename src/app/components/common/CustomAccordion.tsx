@@ -60,7 +60,7 @@ const AccordionItem = ({
           isOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="text-[#9B9B9B] text-sm lg:text-base pb-[25px] px-[50px]">
+        <div className="text-[#9B9B9B] text-sm lg:text-base pb-[25px] px-[40px] lg:px-[50px]">
           {content}
         </div>
       </div>

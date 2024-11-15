@@ -1,10 +1,18 @@
 import handleScroll from "@/app/utils/handleScroll";
 import toKebabCase from "@/app/utils/toKebabCase";
 import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   const menu = ["Home", "How it works", "Get in touch", "FAQs"];
-  const socials = ["linkedin", "twitter", "instagram"];
+  const socials = [
+    { id: "linkedin", link: "https://www.linkedin.com/company/astravr/" },
+    { id: "twitter", link: "https://x.com/astraverse2050?s=21" },
+    {
+      id: "instagram",
+      link: "https://www.instagram.com/astraverse2050/profilecard/?igsh=MW8wNWFpemo5czc=",
+    },
+  ];
   const currentYear = new Date().getFullYear();
 
   return (
@@ -26,8 +34,8 @@ const Footer = () => {
       >
         {socials.map((item, index) => (
           <li
-            key={item}
-            className={`cursor-pointer py-[25px] group ${
+            key={item.id}
+            className={`cursor-pointer py-[25px] ${
               index === 0
                 ? "pr-[35px] lg:pr-20"
                 : index === socials.length - 1
@@ -35,13 +43,15 @@ const Footer = () => {
                 : "px-20 border-x border-[#2C2C2C]"
             }`}
           >
-            <Image
-              src={`/icons/socials/${item}.svg`}
-              alt={item}
-              width={1000}
-              height={1000}
-              className="object-cover w-full max-w-[27px] lg:max-w-full h-full group-hover:animate-soft-shake"
-            />
+            <Link href={item.link} target="blank">
+              <Image
+                src={`/icons/socials/${item.id}.svg`}
+                alt={item.id}
+                width={1000}
+                height={1000}
+                className="object-cover w-full max-w-[27px] lg:max-w-full h-full hover:animate-soft-shake"
+              />
+            </Link>
           </li>
         ))}
       </ul>

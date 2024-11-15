@@ -3,6 +3,7 @@
 import Image from "next/image";
 import coin from "../../../public/images/astra-token/coin.png";
 import CustomButton from "./common/CustomButton";
+import Link from "next/link";
 
 const AstraToken = () => {
   return (
@@ -26,12 +27,14 @@ const AstraToken = () => {
           <p className="font-sfui-semibold text-[22px] lg:text-[30px] mb-2 lg:mb-[15px]">
             Want To Be An Early Investor?
           </p>
-          <CustomButton
-            theme="light"
-            text="Join Our Token Presale"
-            className="px-[42px]"
-            onClick={() => null}
-          />
+          <Link href="http://docsend.com/view/ipegvbqtd5bdtepr" target="blank">
+            <CustomButton
+              theme="light"
+              text="Join Our Token Presale"
+              className="px-[42px]"
+              onClick={() => null}
+            />
+          </Link>
         </div>
       </div>
     </section>
