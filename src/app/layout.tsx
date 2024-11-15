@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import CustomCursor from "./components/common/CustomCursor";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const conthrax = localFont({
   src: "./fonts/conthrax-sb.otf",
@@ -54,6 +56,21 @@ export default function RootLayout({
       >
         <CustomCursor />
         {children}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          toastClassName="relative flex items-center bg-[#111] text-gray-100 border rounded-lg shadow-[0_0_10px_rgba(50,50,50,0.5),0_0_20px_rgba(50,50,50,0.3)] p-4"
+          bodyClassName="text-base font-medium"
+          icon={false}
+        />
       </body>
     </html>
   );

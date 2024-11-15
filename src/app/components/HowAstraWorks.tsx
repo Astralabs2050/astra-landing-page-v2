@@ -30,7 +30,7 @@ const HowAstraWorks = () => {
   ];
 
   return (
-    <section id="how-it-works">
+    <section>
       <CustomH2 text="How Astra Works" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         {lists.map((list) => (
