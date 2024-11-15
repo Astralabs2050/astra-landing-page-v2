@@ -9,7 +9,7 @@ const Grants = () => {
     "epic",
     "cambridge",
     "stellar",
-    "nvidia",
+    "nvidia", 
     "brinc",
   ];
 
@@ -17,6 +17,7 @@ const Grants = () => {
     <section>
       <CustomH2 text="With Grants and Incubation from:" />
       <CustomGridBox destination="grants" logos={logos} />
+      <div id="how-it-works" />
     </section>
   );
 };

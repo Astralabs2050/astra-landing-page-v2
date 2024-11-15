@@ -14,10 +14,10 @@ const AstraToken = () => {
       </div>
       <div className="text-center max-w-[606px] mx-auto mt-5 lg:mt-[35px]">
         <div className="mb-[30px]">
-          <h2 className="text-[26px] lg:text-[45px] font-sfui-semibold tracking-[-1px]">
+          <h2 className="text-[26px] lg:text-[45px] font-sfui-semibold tracking-[-1px] text-white">
             Powered by the Astra Token
           </h2>
-          <p className="text-[#9B9B9B] text-sm lg:text-[20px] mt-2 lg:mt-[15px]">
+          <p className="text-[#9B9B9B] text-sm lg:text-[20px] lg:leading-[30px] mt-2 lg:mt-[15px]">
             A Utility Token Used To Generate Unique Designs With AI and Vote On
             Features To Be Built.
           </p>

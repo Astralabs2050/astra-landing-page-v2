@@ -21,9 +21,8 @@ const FAQs = () => {
   return (
     <section
       className="flex flex-col lg:flex-row justify-between -mt-[850px]"
-      id="faqs"
     >
-      <h2 className="text-[22px] lg:text-[48px] font-sfui-semibold leading-[55px] lg:max-w-[380px] mb-[36px] lg:mb-0">
+      <h2 className="text-[22px] lg:text-[48px] font-sfui-semibold leading-[55px] lg:max-w-[380px] mb-[36px] lg:mb-0 text-white">
         Frequently Ask Questions
       </h2>
       <CustomAccordion data={data} />

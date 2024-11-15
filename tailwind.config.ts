@@ -8,9 +8,14 @@ export default {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        futuristic: "0 0 10px rgba(80, 80, 255, 0.5), 0 0 15px rgba(80, 80, 255, 0.3)",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        toastBg: "rgba(20, 20, 20, 0.9)",
+        toastProgress: "#00ffcc",
       },
       fontFamily: {
         conthrax: ["var(--font-conthrax)", "sans-serif"],
