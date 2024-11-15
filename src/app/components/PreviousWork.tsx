@@ -58,7 +58,7 @@ const PreviousWork = () => {
                 />
               </div>
               <div className="max-w-[448px] text-center">
-                <h3 className="text-[22px] font-sfui-medium mb-2 mt-[30px]">
+                <h3 className="text-[22px] font-sfui-medium mb-2 mt-[30px] text-white">
                   {slide.title}
                 </h3>
                 <p className="text-sm text-[#9B9B9B]">{slide.description}</p>
