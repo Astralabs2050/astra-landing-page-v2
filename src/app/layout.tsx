@@ -46,7 +46,7 @@ export const metadata: Metadata = {
       "The fashion factory of the future. Revolutionize fashion with Astra: AI-powered designs, NFTs, VR shopping, and blockchain technology.",
     images: [
       {
-        url: "http://locahost:3000/images/seo-cover.jpeg",
+        url: "https://www.astraverse.xyz/images/seo-cover.jpeg",
         alt: "astra",
       },
     ],
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: "Astra",
     description:
       "The fashion factory of the future. Revolutionize fashion with Astra: AI-powered designs, NFTs, VR shopping, and blockchain technology.",
-    images: "http://astraverse.xyz/images/seo-cover.jpeg",
+    images: "https://www.astraverse.xyz/images/seo-cover.jpeg",
     creator: "@astraverse2050",
   },
 };
