@@ -38,7 +38,29 @@ const sfuitext_heavy = localFont({
 
 export const metadata: Metadata = {
   title: "Astra",
-  description: "The fashion factory of the future",
+  description:
+    "The fashion factory of the future. Revolutionize fashion with Astra: AI-powered designs, NFTs, VR shopping, and blockchain technology.",
+  openGraph: {
+    title: "Astra",
+    description:
+      "The fashion factory of the future. Revolutionize fashion with Astra: AI-powered designs, NFTs, VR shopping, and blockchain technology.",
+    images: [
+      {
+        url: "http://locahost:3000/images/seo-cover.jpeg",
+        alt: "astra",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Astra",
+    description:
+      "The fashion factory of the future. Revolutionize fashion with Astra: AI-powered designs, NFTs, VR shopping, and blockchain technology.",
+    images: "http://astraverse.xyz/images/seo-cover.jpeg",
+    creator: "@astraverse2050",
+  },
 };
 
 export default function RootLayout({
