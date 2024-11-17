@@ -35,7 +35,7 @@ export default function Home() {
             isLoading
               ? "-translate-y-full opacity-0"
               : "translate-y-0 opacity-100"
-          }`}
+          } max-w-[1440px] mx-auto`}
           id="home"
         >
           <Navbar />
