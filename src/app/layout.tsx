@@ -46,7 +46,7 @@ export const metadata: Metadata = {
       "The fashion factory of the future. Revolutionize fashion with Astra: AI-powered designs, NFTs, VR shopping, and blockchain technology.",
     images: [
       {
-        url: "https://www.astraverse.xyz/images/seo-cover.jpeg",
+        url: "https://www.astraverse.xyz/images/seo-cover.png",
         alt: "astra",
       },
     ],
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: "Astra",
     description:
       "The fashion factory of the future. Revolutionize fashion with Astra: AI-powered designs, NFTs, VR shopping, and blockchain technology.",
-    images: "https://www.astraverse.xyz/images/seo-cover.jpeg",
+    images: "https://www.astraverse.xyz/images/seo-cover.png",
     creator: "@astraverse2050",
   },
 };
@@ -72,6 +72,9 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/astra.svg" sizes="any" />
+        <meta name="twitter:image" content="/images/seo-cover.jpeg" />
+        <meta property="og:image" content="/images/seo-cover.jpeg" />
+        <meta property="og:image:alt" content="astra" />
       </head>
       <body
         className={`${conthrax.variable} ${sfuitext_reg.variable} ${sfuitext_med.variable} ${sfuitext_semibold.variable} ${sfuitext_bold.variable} ${sfuitext_heavy.variable} antialiased`}
