@@ -9,7 +9,7 @@ const AstraToken = () => {
   return (
     <section className=" bg-[url('/images/astra-token/mobile-bg.png')] lg:bg-[url('/images/astra-token/bg.png')] rounded-[25px] bg-cover bg-no-repeat py-[70px] lg:py-[86px] text-center group px-[35px] lg:px-0">
       <div className="max-w-[176px] mx-auto rotate-y-180">
-        <div className="w-[144px] lg:w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180 ">
+        <div className="w-[144px] lg:w-full h-full transition-transform duration-700 transform-style-3d group-hover:rotate-y-180">
           <Image src={coin} alt="astra coin" className="backface-hidden " />
         </div>
       </div>

@@ -39,8 +39,9 @@ const JoinAsAMaker = () => {
           Join Astra as A maker
         </h2>
         <p className="text-sm lg:text-[20px] lg:leading-[30px] text-[#9B9B9B] mt-2 mb-[30px] lg:my-[30px]">
-          Are you skilled at making ideas into real things? Join Astra and get a
-          rare Astranaut NFT for free
+          Are you skilled at making ideas into real things? Join Astra as a
+          maker and get daily jobs shared with you. You also get a rare
+          Astranaut NFT as a member of our community.
         </p>
         <CustomButton
           theme="light"
@@ -71,9 +72,9 @@ const JoinAsAMaker = () => {
         {tab_images.map((img, idx) => (
           <div
             key={`${img}+${idx}`}
-            className={`min-w-[201px] ${
+            className={`min-w-[201px] max-h-[203px] ${
               img !== "left" && img !== "right" ? "animate-pulse-glow" : ""
-            } max-h-[250px] overflow-hidden`}
+            } overflow-hidden`}
           >
             <Image
               src={`/images/join-as-a-maker/${img}.png`}
