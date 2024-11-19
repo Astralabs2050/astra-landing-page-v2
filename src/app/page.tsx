@@ -12,7 +12,7 @@ import PreviousWork from "./components/PreviousWork";
 import Footer from "./components/common/Footer";
 import HowAstraWorks from "./components/HowAstraWorks";
 import { Suspense, useState, useEffect } from "react";
-import LoadingText from "./components/common/LoadingText";
+import PageLoader from "./components/common/PageLoader";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,16 +26,16 @@ export default function Home() {
   }, []);
 
   return (
-    <Suspense fallback={<LoadingText />}>
+    <Suspense fallback={<PageLoader />}>
       {isLoading ? (
-        <LoadingText />
+        <PageLoader />
       ) : (
         <div
           className={`bg-black transition-transform duration-1000 ease-out relative ${
             isLoading
               ? "-translate-y-full opacity-0"
               : "translate-y-0 opacity-100"
-          }`}
+          } max-w-[1440px] mx-auto`}
           id="home"
         >
           <Navbar />
