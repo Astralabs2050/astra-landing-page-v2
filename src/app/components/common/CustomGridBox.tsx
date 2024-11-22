@@ -12,7 +12,7 @@ const CustomGridBox = ({
       {logos.map((logo) => (
         <div
           key={logo}
-          className="bg-black flex items-center justify-center p-8 lg:p-10 group relative overflow-hidden cursor-pointer lg:hover:border-[#91919199] transition-all duration-500 ease-out border border-transparent"
+          className="bg-black flex items-center justify-center p-8 lg:p-10 relative overflow-hidden cursor-pointer lg:hover:border-[#91919199] transition-all duration-500 ease-out border border-transparent"
         >
           <Image
             src={`/icons/${destination}/${logo}.svg`}
