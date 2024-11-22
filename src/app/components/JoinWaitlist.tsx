@@ -26,10 +26,8 @@ const JoinWaitlist = () => {
   const toastErrorStyle = {
     className:
       "bg-gradient-to-r from-[#2a0000] to-[#550505] border border-[#ff6b6b] text-[#ffb3b3] rounded-lg shadow-[0_0_15px_rgba(255,107,107,0.3),0_0_30px_rgba(255,107,107,0.2)]",
-    progressClassName:
-      "bg-gradient-to-r from-[#ff6b6b] to-[#d7385e] animate-pulse",
+    progressClassName: "bg-gradient-to-r from-[#ff6b6b] to-[#d7385e]",
     transition: Slide,
-    autoClose: 3000,
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,13 +36,15 @@ const JoinWaitlist = () => {
     try {
       const response = await joinWaitlist(payload);
       if (response?.status) {
-        toast.success(response?.message, {
-          className:
-            "bg-gradient-to-r from-[#0e201a] to-[#153a30] border border-[#3aa37a] text-[#99d1b0] rounded-lg shadow-[0_0_15px_rgba(58,163,122,0.3),0_0_30px_rgba(58,163,122,0.2)]",
-          progressClassName:
-            "bg-gradient-to-r from-[#3aa37a] to-[#275e4f] animate-pulse",
-          transition: Slide,
-        });
+        toast.success(
+          response?.message ?? "Successfully added to the waitlist",
+          {
+            className:
+              "bg-gradient-to-r from-[#0e201a] to-[#153a30] border border-[#3aa37a] text-[#99d1b0] rounded-lg shadow-[0_0_15px_rgba(58,163,122,0.3),0_0_30px_rgba(58,163,122,0.2)]",
+            progressClassName: "bg-gradient-to-r from-[#3aa37a] to-[#275e4f]",
+            transition: Slide,
+          }
+        );
         setPayload(initialPayload);
       } else {
         toast.error(

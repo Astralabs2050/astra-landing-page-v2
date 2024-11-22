@@ -5,6 +5,7 @@ import CustomButton from "./common/CustomButton";
 import art from "../../../public/images/art.png";
 import { motion } from "framer-motion";
 import handleScroll from "../utils/handleScroll";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -55,11 +56,13 @@ const Hero = () => {
             text="Join The Waitlist"
             onClick={() => handleScroll("join-waitlist")}
           />
-          <CustomButton
-            theme="dark"
-            text="Chat With Us"
-            onClick={() => handleScroll("join-waitlist")}
-          />
+          <Link href="https://x.com/astraverse2050?s=21" target="blank">
+            <CustomButton
+              theme="dark"
+              text="Chat With Us"
+              onClick={() => null}
+            />
+          </Link>
         </motion.div>
       </div>
       <div className="-mt-10 lg:-mt-40 rounded-b-[25px] lg:rounded-b-[50px] overflow-hidden">
