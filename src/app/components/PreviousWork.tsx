@@ -48,7 +48,7 @@ const PreviousWork = () => {
               key={index}
               className="min-w-full border border-[#4B4B4B7A] rounded-[25px] overflow-hidden bg-[url('/images/work-cover-bg-mobile.png')] bg-cover bg-no-repeat md:px-5 px-[38px] lg:hover:border-[#91919199] pb-[78px]"
             >
-              <div className="relative max-w-[334px] max-h-[334px] rounded-[10px] overflow-hidden pt-[41px]">
+              <div className="relative max-w-[334px] max-h-[334px] rounded-[10px] overflow-hidden pt-[41px] mx-auto lg:mx-0">
                 <Image
                   src={`/images/previous-work/${slide.id}.png`}
                   alt={slide.title}
@@ -58,7 +58,10 @@ const PreviousWork = () => {
                 />
               </div>
               <div className="max-w-[448px] text-center">
-                <h3 className="text-[22px] font-sfui-medium mb-2 mt-[30px] text-white">
+                <h3
+                  className="text-[22px] font-sfui-medium mb-2 mt-[30px] !text-white"
+                  style={{ color: "white" }}
+                >
                   {slide.title}
                 </h3>
                 <p className="text-sm text-[#9B9B9B]">{slide.description}</p>
