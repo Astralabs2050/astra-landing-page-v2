@@ -7,7 +7,7 @@ const Footer = () => {
   const menu = ["Home", "How it works", "Get in touch", "FAQs"];
   const socials = [
     { id: "linkedin", link: "https://www.linkedin.com/company/astravr/" },
-    { id: "twitter", link: "https://x.com/astraverse2050?s=21" },
+    { id: "twitter", link: "https://x.com/astralabs2050?s=21" },
     {
       id: "instagram",
       link: "https://www.instagram.com/astraverse2050/profilecard/?igsh=MW8wNWFpemo5czc=",
