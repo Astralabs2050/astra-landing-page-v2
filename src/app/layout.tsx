@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     description:
       "The fashion factory of the future. Revolutionize fashion with Astra: AI-powered designs, NFTs, VR shopping, and blockchain technology.",
     images: "https://www.astraverse.xyz/images/seo-cover.png",
-    creator: "@astraverse2050",
+    creator: "@astralabs2025",
   },
 };
 
