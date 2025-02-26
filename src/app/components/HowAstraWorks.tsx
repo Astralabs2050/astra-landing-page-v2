@@ -5,29 +5,29 @@ const HowAstraWorks = () => {
   const lists = [
     {
       id: "design-with-ai",
-      title: "Design Clothes With AI",
+      title: "Design with AI Agents",
       subtitle:
-        "Generate unique designs with AI and save them on the blockchain as NFTs generating digital product passports.",
+        "Generate unique concepts instantly using our advanced AI agents, giving you creative control and limitless possibilities.",
     },
     {
       id: "pay-a-maker",
-      title: "Pay a Maker To Make It Real",
+      title: "Connect with Skilled Makers",
       subtitle:
-        "Pay a maker with escrow smart contracts that release funds to makers based on completed work.",
+        "Use our escrow smart contracts to collaborate securely with top-tier manufacturers—pay only when each milestone is met.",
     },
     {
       id: "receive-sample",
-      title: "Receive Sample In Real Life",
+      title: "Get Physical Samples",
       subtitle:
-        "Receive sample in real life for special occasions or to start a fashion business.",
+        "Receive tangible prototypes delivered right to your door, so you can refine and perfect every detail before final production.",
     },
     {
       id: "sell-to-shoppers",
-      title: "Sell To Shoppers In VR Store",
+      title: "Sell in Physical & Virtual Stores",
       subtitle:
-        "No need for stock, shoppers can shop your design and a maker ships the outfit IRL.",
+        "Launch your designs across multiple channels, from immersive VR showrooms to traditional retail, and reach audiences everywhere.",
     },
-  ];
+];
 
   return (
     <section>
